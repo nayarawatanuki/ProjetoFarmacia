@@ -1,7 +1,7 @@
 
 public abstract class Pessoa {
 	private String nome;
-	private String dataNascimento;	// TODO: Date
+	private String dataNascimento;	// Date
 	private String cpf;
 	
 	Pessoa(String nome, String dataNascimento, String cpf) {

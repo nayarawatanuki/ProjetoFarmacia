@@ -1,5 +1,11 @@
 /Cliente.class
+<<<<<<< HEAD
 /Funcionario$TipoFuncionario.class
 /Funcionario.class
 /Pessoa.class
 /test/
+=======
+/Pessoa.class
+/Funcionario$TipoFuncionario.class
+/Funcionario.class
+>>>>>>> branch 'master' of https://github.com/TrabFacul/ProjetoFarmacia
