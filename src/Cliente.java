@@ -4,7 +4,7 @@ public class Cliente extends Pessoa {
 	
 	Cliente(String nome, String dataNascimento, String cpf, String dataCadastro) {
 		super(nome, dataNascimento, cpf);
-		this.setDataCadastro = dataCadastro;
+		this.dataCadastro = dataCadastro;
 	}
 
 	public String getDataCadastro() {
