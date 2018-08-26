@@ -1,4 +1,4 @@
 
-public class Cliente {
- private int meudeus;
+public class Cliente extends Pessoa {
+
 }
