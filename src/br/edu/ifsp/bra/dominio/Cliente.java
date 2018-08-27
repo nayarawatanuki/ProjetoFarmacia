@@ -18,9 +18,4 @@ public class Cliente extends Pessoa {
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
-	@Override
-	public String toString() {
-		return this.getNome();
-	}
 }
