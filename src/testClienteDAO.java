@@ -1,5 +1,5 @@
 
-public class testQuery {
+public class testClienteDAO {
 	public static void main(String[] args) {
 		ClienteDAO dao = new ClienteDAO();
 		Cliente cliente = dao.getCliente(1);
