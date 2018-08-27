@@ -1,3 +1,7 @@
+package br.edu.ifsp.bra.farmacia;
+
+import br.edu.ifsp.bra.banco.ClienteDAO;
+import br.edu.ifsp.bra.dominio.Cliente;
 
 public class testClienteDAO {
 	public static void main(String[] args) {

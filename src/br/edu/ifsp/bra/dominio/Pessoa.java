@@ -1,3 +1,5 @@
+package br.edu.ifsp.bra.dominio;
+
 import java.util.Date;
 
 public abstract class Pessoa {

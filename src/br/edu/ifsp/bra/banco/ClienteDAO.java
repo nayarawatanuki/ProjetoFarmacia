@@ -1,7 +1,11 @@
+package br.edu.ifsp.bra.banco;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import br.edu.ifsp.bra.dominio.Cliente;
 
 public class ClienteDAO {
 	public Cliente getCliente(int id) {
