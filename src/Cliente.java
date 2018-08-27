@@ -1,17 +1,18 @@
+import java.util.Date;
 
 public class Cliente extends Pessoa {
-	private String dataCadastro;	// TODO: Date
+	private Date dataCadastro;
 	
-	Cliente(String nome, String dataNascimento, String cpf, String dataCadastro) {
+	Cliente(String nome, Date dataNascimento, String cpf, Date dataCadastro) {
 		super(nome, dataNascimento, cpf);
 		this.dataCadastro = dataCadastro;
 	}
 
-	public String getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(String dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 }

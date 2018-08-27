@@ -1,10 +1,11 @@
+import java.util.Date;
 
 public abstract class Pessoa {
 	private String nome;
-	private String dataNascimento;	// Date
+	private Date dataNascimento;	// Date
 	private String cpf;
 	
-	Pessoa(String nome, String dataNascimento, String cpf) {
+	Pessoa(String nome, Date dataNascimento, String cpf) {
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
@@ -18,11 +19,11 @@ public abstract class Pessoa {
 		this.nome = nome;
 	}
 
-	public String getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

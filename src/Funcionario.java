@@ -7,7 +7,7 @@ public class Funcionario extends Pessoa {
 	private String senha;
 	private TipoFuncionario tipo;
 
-	Funcionario(String nome, String dataNascimento, String cpf,
+	Funcionario(String nome, Date dataNascimento, String cpf,
 			String usuario, String senha, TipoFuncionario tipo) {
 		super(nome, dataNascimento, cpf);
 		this.usuario = usuario;
