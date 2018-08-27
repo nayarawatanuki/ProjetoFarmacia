@@ -2,7 +2,7 @@ import java.util.Date;
 
 public abstract class Pessoa {
 	private String nome;
-	private Date dataNascimento;	// Date
+	private Date dataNascimento;
 	private String cpf;
 	
 	Pessoa(String nome, Date dataNascimento, String cpf) {
