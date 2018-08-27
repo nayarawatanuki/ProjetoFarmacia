@@ -4,9 +4,10 @@ import java.util.Date;
 
 public class Cliente extends Pessoa {
 	private Date dataCadastro;
-	
-	public Cliente(int id, String nome, Date dataNascimento, String cpf, Date dataCadastro) {
-		super(id, nome, dataNascimento, cpf);
+
+	public Cliente() {}
+	public Cliente(int id, String nome, String cpf, Date dataNascimento, Date dataCadastro) {
+		super(id, nome, cpf, dataNascimento);
 		this.dataCadastro = dataCadastro;
 	}
 
@@ -16,5 +17,10 @@ public class Cliente extends Pessoa {
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getNome();
 	}
 }

@@ -3,20 +3,16 @@ package br.edu.ifsp.bra.dominio;
 import java.util.Date;
 
 public class Funcionario extends Pessoa {
-	
-	public static enum TipoFuncionario {
-		VAZIO,
-		ATENDENTE,
-		GERENTE
-	};
+	public static enum Tipo { NENHUM, ATENDENTE, GERENTE; };
 	
 	private String usuario;
 	private String senha;
-	private TipoFuncionario tipo;
+	private Tipo tipo;
 
-	public Funcionario(int id, String nome, Date dataNascimento, String cpf,
-			String usuario, String senha, TipoFuncionario tipo) {
-		super(id, nome, dataNascimento, cpf);
+	public Funcionario() {}
+	public Funcionario(int id, String nome, String cpf, Date dataNascimento,
+			String usuario, String senha, Tipo tipo) {
+		super(id, nome, cpf, dataNascimento);
 		this.usuario = usuario;
 		this.senha = senha;
 		this.tipo = tipo;
@@ -38,11 +34,11 @@ public class Funcionario extends Pessoa {
 		this.senha = senha;
 	}
 
-	public TipoFuncionario getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoFuncionario tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 }

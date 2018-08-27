@@ -5,11 +5,12 @@ import java.util.Date;
 public abstract class Pessoa {
 	private int id;
 	private String nome;
-	private Date dataNascimento;
 	private String cpf;
+	private Date dataNascimento;
 	
-	public Pessoa(int id, String nome, Date dataNascimento, String cpf) {
-		this.setId(id);
+	public Pessoa() {}
+	public Pessoa(int id, String nome, String cpf, Date dataNascimento) {
+		this.id = id;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
