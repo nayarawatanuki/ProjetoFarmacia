@@ -1,14 +1,24 @@
 import java.util.Date;
 
 public abstract class Pessoa {
+	private int id;
 	private String nome;
 	private Date dataNascimento;
 	private String cpf;
 	
-	Pessoa(String nome, Date dataNascimento, String cpf) {
+	public Pessoa(int id, String nome, Date dataNascimento, String cpf) {
+		this.setId(id);
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
