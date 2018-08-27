@@ -4,9 +4,17 @@
 
 ### Login
 - caixa
-- lista clientes
-- lista produtos
+- lista de clientes
+- lista de produtos
 
-### Lista clientes -> abre -> janela add/remover
-### Lista Produtos -> abre -> janela add/remover
-### Abrir caixa -> efetua vendas ->  tb pode abrir lista clientes, lista produtos.
+### Lista clientes
+- abre
+- janela adicionar/remoer
+
+### Lista Produtos
+- abre
+- janela add/remover
+
+### Abrir caixa
+- efetuar vendas
+- também pode abrir lista de clientes e  produtos
