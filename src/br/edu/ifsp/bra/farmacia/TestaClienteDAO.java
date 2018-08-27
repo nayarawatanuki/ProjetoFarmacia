@@ -3,7 +3,7 @@ package br.edu.ifsp.bra.farmacia;
 import br.edu.ifsp.bra.banco.ClienteDAO;
 import br.edu.ifsp.bra.dominio.Cliente;
 
-public class testClienteDAO {
+public class TestaClienteDAO {
 	public static void main(String[] args) {
 		ClienteDAO dao = new ClienteDAO();
 		Cliente cliente = dao.getCliente(1);
