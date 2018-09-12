@@ -4,14 +4,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
-import java.awt.BorderLayout;
-import javax.swing.ListSelectionModel;
-import javax.swing.JButton;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Button;
 
 public class Venda {
 
