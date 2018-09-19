@@ -10,9 +10,8 @@ public class Produto {
 	private int tipo;
 	private double desconto;
 	
-	
 	public Produto() {};
-	public Produto(String codigoBarra, String descricao, double preco, int estoque, int tipo, double desconto) {
+	public Produto(String codigoBarra, String descricao, double preco, int estoque, tipoProduto tipo, double desconto) {
 		super();
 		this.codigoBarra = codigoBarra;
 		this.descricao = descricao;
@@ -45,10 +44,10 @@ public class Produto {
 	public void setEstoque(int estoque) {
 		this.estoque = estoque;
 	}
-	public int getTipo() {
+	public tipoProduto getTipo() {
 		return tipo;
 	}
-	public void setTipo(int tipo) {
+	public void setTipo(tipoProduto tipo) {
 		this.tipo = tipo;
 	}
 	public double getDesconto() {
