@@ -1,6 +1,6 @@
 package br.edu.ifsp.bra.modelo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Cliente extends Pessoa {
 	private Date dataCadastro;
