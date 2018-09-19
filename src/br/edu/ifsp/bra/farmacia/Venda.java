@@ -9,6 +9,12 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 public class Venda {
 
@@ -46,30 +52,47 @@ public class Venda {
 		frame.setBounds(100, 100, 572, 369);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel panel = new JPanel();
-		
 		table = new JTable();
+		
+		JLabel lblVendas = new JLabel("Vendas");
+		lblVendas.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		
+		JLabel lblFConcluir = new JLabel("F2 - CONCLUIR   F3 - APAGAR   F4 - CANCELAR VENDA   F5 - DESCONTO");
+		lblFConcluir.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		
+		JTextPane txtpnFarmciaTel = new JTextPane();
+		txtpnFarmciaTel.setText("                   \n\n            FARMÁCIA   \n\n       Tel.: 3468-2211");
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(68)
+					.addComponent(lblFConcluir)
+					.addContainerGap(155, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addGap(45)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(34))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(table, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblVendas, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+					.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
+					.addGap(25))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(32)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(23)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblVendas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
+							.addGap(41))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(89)
-							.addComponent(table, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(93, Short.MAX_VALUE))
+							.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addComponent(lblFConcluir)
+					.addGap(22))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
