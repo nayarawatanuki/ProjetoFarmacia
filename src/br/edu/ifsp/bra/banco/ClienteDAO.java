@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.edu.ifsp.bra.dominio.Cliente;
+import br.edu.ifsp.bra.modelo.Cliente;
 
 public class ClienteDAO {
 	public Cliente getCliente(int id) {

@@ -1,4 +1,4 @@
-package br.edu.ifsp.bra.dominio;
+package br.edu.ifsp.bra.modelo;
 
 import java.util.Date;
 
