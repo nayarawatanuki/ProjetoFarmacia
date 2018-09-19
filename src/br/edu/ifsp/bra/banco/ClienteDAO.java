@@ -1,6 +1,7 @@
 package br.edu.ifsp.bra.banco;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,6 +45,43 @@ public class ClienteDAO {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean novoCliente(Cliente cliente) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO cliente VALUES (?, ?)");
+			ps.setInt(1, cliente.getId());
+			ps.setDate(2, cliente.getDataCadastro());
+
+			if (ps.executeUpdate() == 1) {
+				return true;
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public boolean modificaCliente(Cliente cliente) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE cliente AS c "
+				+ "JOIN pessoa AS p ON p.pessoa_id=c.cliente_id "
+				+ "SET c.data_cadastro=?, p.nome=? WHERE c.cliente_id=?");
+			ps.setDate(1, cliente.getDataCadastro());
+			ps.setString(2, cliente.getNome());
+			ps.setInt(3, cliente.getId());
+
+			if (ps.executeUpdate() == 1) {
+				return true;
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+
+		return false;
 	}
 
 	private Cliente toCliente(ResultSet rs) throws SQLException {
