@@ -1,6 +1,6 @@
 package br.edu.ifsp.bra.modelo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public abstract class Pessoa {
 	private int id;
