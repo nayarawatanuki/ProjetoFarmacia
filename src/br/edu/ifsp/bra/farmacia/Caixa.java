@@ -53,9 +53,13 @@ public class Caixa {
 		table = new JTable();
 		
 		JTextPane txtpnSubtotal = new JTextPane();
+		txtpnSubtotal.setEnabled(false);
+		txtpnSubtotal.setEditable(false);
 		txtpnSubtotal.setText("SUBTOTAL: ");
 		
 		JTextPane txtpnTotal = new JTextPane();
+		txtpnTotal.setEnabled(false);
+		txtpnTotal.setEditable(false);
 		txtpnTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
 		txtpnTotal.setText("TOTAL:");
 		

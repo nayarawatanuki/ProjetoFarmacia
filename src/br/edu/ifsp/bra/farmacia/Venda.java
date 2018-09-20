@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.JMenuBar;
 
 public class Venda {
 
@@ -95,5 +96,8 @@ public class Venda {
 					.addGap(22))
 		);
 		frame.getContentPane().setLayout(groupLayout);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
 	}
 }
