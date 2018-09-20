@@ -1,14 +1,25 @@
 package br.edu.ifsp.bra.modelo;
 
 public class ItemPedido {
+	
+	private int produtoId;
 	private double preco;
 	private int quantidade;
 	
 	public ItemPedido() {};
-	public ItemPedido(double preco, int quantidade) {
+	public ItemPedido(int produtoId, double preco, int quantidade) {
 		super();
+		this.produtoId = produtoId;
 		this.preco = preco;
 		this.quantidade = quantidade;
+	}
+	
+	
+	public int getProdutoId() {
+		return produtoId;
+	}
+	public void setProdutoId(int produtoId) {
+		this.produtoId = produtoId;
 	}
 	public double getPreco() {
 		return preco;
