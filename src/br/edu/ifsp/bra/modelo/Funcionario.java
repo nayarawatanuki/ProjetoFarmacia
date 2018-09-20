@@ -1,4 +1,4 @@
-package br.edu.ifsp.bra.dominio;
+package br.edu.ifsp.bra.modelo;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ public class Funcionario extends Pessoa {
 	private Tipo tipo;
 
 	public Funcionario() {}
-	public Funcionario(int id, String nome, String cpf, Date dataNascimento,
+	public Funcionario(int id, String nome, String cpf, java.sql.Date dataNascimento,
 			String usuario, String senha, Tipo tipo) {
 		super(id, nome, cpf, dataNascimento);
 		this.usuario = usuario;
