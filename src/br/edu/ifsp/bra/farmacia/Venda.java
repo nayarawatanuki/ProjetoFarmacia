@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 public class Venda {
 
@@ -98,6 +100,13 @@ public class Venda {
 		frame.getContentPane().setLayout(groupLayout);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setToolTipText("");
 		frame.setJMenuBar(menuBar);
+		
+		JMenu mnCadastro = new JMenu("Cadastro");
+		menuBar.add(mnCadastro);
+		
+		JMenu mnConsulta = new JMenu("Consulta");
+		menuBar.add(mnConsulta);
 	}
 }
