@@ -7,8 +7,9 @@ public class Produto {
 	private String descricao;
 	private double preco;
 	private int estoque;
-	private int tipo;
+	private tipoProduto tipo;
 	private double desconto;
+	
 	
 	public Produto() {};
 	public Produto(String codigoBarra, String descricao, double preco, int estoque, tipoProduto tipo, double desconto) {
