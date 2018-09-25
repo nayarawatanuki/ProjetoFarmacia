@@ -3,6 +3,7 @@ package br.edu.ifsp.bra.modelo;
 import java.sql.Date;
 
 public abstract class Pessoa {
+	private int id;
 	private String nome;
 	private String endereco;
 	private String telefone;
@@ -10,12 +11,19 @@ public abstract class Pessoa {
 	private Date dataNascimento;
 	
 	public Pessoa() {}
-	public Pessoa(String nome, String endereco, String telefone, String cpf, Date dataNascimento) {
+	public Pessoa(int id, String nome, String endereco, String telefone, String cpf, Date dataNascimento) {
+		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getNome() {
 		return nome;
