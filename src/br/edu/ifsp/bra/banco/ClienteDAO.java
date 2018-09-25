@@ -70,11 +70,17 @@ public class ClienteDAO {
 		try {
 			PreparedStatement ps = connection.prepareStatement("UPDATE cliente c "
 				+ "JOIN pessoa p ON p.pessoa_id = c.cliente_id "
-				+ "SET c.is_ativo=?, c.data_cadastro=?, p.nome=? WHERE c.cliente_id=?");
+				+ "SET c.is_ativo=?, c.data_cadastro=?, "
+				+ "p.nome=?, p.endereco=?, p.telefone=?, p.cpf=?, p.data_nascimento=? "
+				+ "WHERE c.cliente_id=?");
 			ps.setBoolean(1, cliente.isAtivo());
-			ps.setDate(1, cliente.getDataCadastro());
+			ps.setDate(2, cliente.getDataCadastro());
 			ps.setString(3, cliente.getNome());
-			ps.setInt(4, cliente.getId());
+			ps.setString(4, cliente.getEndereco());
+			ps.setString(5, cliente.getTelefone());
+			ps.setString(6, cliente.getCpf());
+			ps.setDate(7, cliente.getDataNascimento());
+			ps.setInt(8, cliente.getId());
 
 			if (ps.executeUpdate() == 1) {
 				return true;
