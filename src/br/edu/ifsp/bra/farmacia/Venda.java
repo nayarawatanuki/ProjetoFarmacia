@@ -33,11 +33,13 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.event.MenuKeyListener;
 import java.awt.Event;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Venda {
 
 	private JFrame frame;
-	private JTable table;
 	private JTextPane txtpnFAdicionar;
 	
 	private JTable table_1;
@@ -81,7 +83,7 @@ public class Venda {
 		frame = new JFrame();
 		
 		
-		frame.setBounds(100, 100, 797, 421);
+		frame.setBounds(100, 100, 899, 421);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblVendas = new JLabel("Vendas");
@@ -104,46 +106,55 @@ public class Venda {
 		txtpnSubtotal.setEnabled(false);
 		txtpnSubtotal.setEditable(false);
 		
-		DefaultTableModel model = new DefaultTableModel(); 
-		model.addColumn("Produto");
-        model.addColumn("Quantidade");
-        model.addColumn("Valor");
-        model.addColumn("Total");
+		
+		String[] colunas = new String []{"ID","NOME", "CPF", "preco"};
+		
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(colunas);
+		//model.addColumn("Produto");
+        //model.addColumn("Quantidade");
+        //model.addColumn("Valor");
+        //model.addColumn("Total");
 		
 		table_1 = new JTable(model);
-		table_1.setSurrendersFocusOnKeystroke(true);
-		table_1.setEnabled(false);
+		//table_1.setSurrendersFocusOnKeystroke(true);
+		//table_1.setEnabled(true);
 		
 		// Append a row 
 		model.addRow(new Object[]{"Sabão", 3, 2.50, 7.50});
 		table_1.setToolTipText("");
 		
-		JTextPane txtpnFAdicionar = new JTextPane();
-		txtpnFAdicionar.setEditable(false);
-		txtpnFAdicionar.setForeground(Color.WHITE);
-		txtpnFAdicionar.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		txtpnFAdicionar.setText("\n     F2 - ADICIONAR   F3 - QUANTIDADE   F4 - CONSULTA   F5 - PAGAMENTO   F6 - DESCONTO   F7 - OPÇÕES   F8 - CANCELAR");
-		txtpnFAdicionar.setBackground(UIManager.getColor("Focus.color"));
+		JPanel panelMenu = new JPanel();
+		
+		JPanel panelAddQtdDesc = new JPanel();
+		panelAddQtdDesc.setVisible(false);
+		
+		
 		
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addGap(45)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(txtpnFAdicionar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(table_1, GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+							.addComponent(panelAddQtdDesc, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(panelMenu, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(txtpnTotal, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(txtpnSubtotal, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-								.addComponent(lblVendas))
-							.addGap(246)
-							.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
-					.addGap(29))
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(table_1, GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(txtpnTotal, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(txtpnSubtotal, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+										.addComponent(lblVendas))
+									.addGap(246)
+									.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
+							.addGap(73))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -159,10 +170,71 @@ public class Venda {
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
 						.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
-					.addGap(60)
-					.addComponent(txtpnFAdicionar, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(19, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+					.addComponent(panelAddQtdDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(17))
 		);
+		
+		JButton btnSalvar = new JButton("Salvar");
+		
+		JButton btnVoltar = new JButton("Cancelar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAddQtdDesc.setVisible(false);
+			}
+		});
+		GroupLayout gl_panelAddQtdDesc = new GroupLayout(panelAddQtdDesc);
+		gl_panelAddQtdDesc.setHorizontalGroup(
+			gl_panelAddQtdDesc.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelAddQtdDesc.createSequentialGroup()
+					.addGap(14)
+					.addComponent(btnSalvar)
+					.addGap(5)
+					.addComponent(btnVoltar)
+					.addContainerGap(331, Short.MAX_VALUE))
+		);
+		gl_panelAddQtdDesc.setVerticalGroup(
+			gl_panelAddQtdDesc.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panelAddQtdDesc.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panelAddQtdDesc.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnSalvar)
+						.addComponent(btnVoltar)))
+		);
+		panelAddQtdDesc.setLayout(gl_panelAddQtdDesc);
+		
+		JButton btnAdicionar = new JButton("Adicionar");
+		panelMenu.add(btnAdicionar);
+		
+		JButton btnQuantidade = new JButton("Quantidade");
+		panelMenu.add(btnQuantidade);
+		
+		JButton btnConsulta = new JButton("Consulta");
+		panelMenu.add(btnConsulta);
+		
+		JButton btnPagamento = new JButton("Pagamento");
+		panelMenu.add(btnPagamento);
+		
+		JButton btnDesconto = new JButton("Desconto");
+		panelMenu.add(btnDesconto);
+		
+		JButton btnOpcoes = new JButton("Opções");
+		panelMenu.add(btnOpcoes);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		panelMenu.add(btnCancelar);
+		
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(false);
+				panelAddQtdDesc.setVisible(true);
+				
+			}
+		});
+		
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }

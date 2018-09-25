@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Medicamentos {
 
@@ -55,8 +58,14 @@ public class Medicamentos {
 		
 		JComboBox comboBox = new JComboBox();
 		
-		JLabel lblFAdicionar = new JLabel("F2 - EDITAR   F3 - LIBERAÇÃO DO MEDICAMENTO  ");
-		lblFAdicionar.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		JButton btnAtualizar = new JButton("Atualizar");
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -64,8 +73,10 @@ public class Medicamentos {
 					.addGap(33)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblFAdicionar)
-							.addContainerGap())
+							.addComponent(btnAtualizar)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnSair)
+							.addGap(206))
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 							.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(lblMedicamentos)
@@ -90,11 +101,12 @@ public class Medicamentos {
 						.addComponent(lblCdigonome))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(table, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-					.addGap(38)
-					.addComponent(lblFAdicionar)
-					.addGap(19))
+					.addGap(27)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnAtualizar)
+						.addComponent(btnSair))
+					.addGap(14))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
-
 }
