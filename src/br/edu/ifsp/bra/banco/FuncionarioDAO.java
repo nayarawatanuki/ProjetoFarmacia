@@ -103,7 +103,7 @@ public class FuncionarioDAO {
 		funcionario.setTelefone(rs.getString("nome"));
 		funcionario.setCpf(rs.getString("cpf"));
 		funcionario.setDataNascimento(rs.getDate("data_nascimento"));
-		// funcionario.setTipo(rs.getInt("tipo_id");
+		funcionario.setTipo(Funcionario.TipoFuncionario.getTipo(rs.getInt("tipo_id")));
 		funcionario.setUsuario(rs.getString("usuario"));
 		return funcionario;
 	}
