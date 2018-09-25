@@ -33,7 +33,7 @@ public class ClienteDAO {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pessoa p" +
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pessoa p " +
 					"JOIN cliente c on c.cliente_id = p.pessoa_id");
 			Set<Cliente> clientes = new HashSet<Cliente>();
 			while(rs.next()) {
