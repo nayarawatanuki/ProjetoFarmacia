@@ -3,7 +3,8 @@ package br.edu.ifsp.bra.modelo;
 public class Medicamento {
 	
 	public static enum TipoMedicamento { NENHUM, MEDICAMENTO, GERAL; };
-	
+
+	private int id;
 	private String codigo;
 	private String descricao;
 	private double preco;
@@ -17,6 +18,12 @@ public class Medicamento {
 		this.preco = preco;
 		this.estoque = estoque;
 		this.tipo = tipo;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getCodigo() {
 		return codigo;

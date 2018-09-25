@@ -7,6 +7,7 @@ public abstract class Pagamento {
 	private static double TAXA_DESCONTO_APOSENTADO = 0.2;
 	private static double TAXA_DESCONTO_DINHEIRO = 0.05;
 	
+	private int id;
 	private Cliente cliente;
 	private Pedido pedido;
 	private double desconto;
@@ -27,6 +28,12 @@ public abstract class Pagamento {
 	}
 	public static double taxaDescontoDinheiro() {
 		return Pagamento.TAXA_DESCONTO_DINHEIRO;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public Cliente getCliente() {
 		return cliente;
