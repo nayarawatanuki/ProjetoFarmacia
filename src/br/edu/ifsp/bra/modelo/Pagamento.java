@@ -1,46 +1,66 @@
 package br.edu.ifsp.bra.modelo;
 
-import java.util.Date;
+public abstract class Pagamento {
 
-public class Pagamento {
+	public enum TipoPagamento { NENHUM, DINHEIRO, DEBITO, CREDITO }
 	
-	private double valorDesconto;
-	private double valorTotal;
+	private static double TAXA_DESCONTO_APOSENTADO = 0.2;
+	private static double TAXA_DESCONTO_DINHEIRO = 0.05;
+	
+	private Cliente cliente;
+	private Pedido pedido;
+	private double desconto;
+	private double total;
 	private double valorFinal;
-	private double valorPago;
-	private Date data;
+	private TipoPagamento tipo;
 	
-	
-	public double getValorDesconto() {
-		return valorDesconto;
+	public Pagamento(Cliente cliente, Pedido pedido, double desconto, double total, TipoPagamento tipo) {
+		this.cliente = cliente;
+		this.pedido = pedido;
+		this.desconto = desconto;
+		this.total = total;
+		this.valorFinal = this.total - this.getTotalDesconto();
+		this.tipo = tipo;
 	}
-	public void setValorDesconto(double valorDesconto) {
-		this.valorDesconto = valorDesconto;
+	public static double taxaDescontoAposentado() {
+		return Pagamento.TAXA_DESCONTO_APOSENTADO;
 	}
-	public double getValorTotal() {
-		return valorTotal;
+	public static double taxaDescontoDinheiro() {
+		return Pagamento.TAXA_DESCONTO_DINHEIRO;
 	}
-	public void setValorTotal(double valorTotal) {
-		this.valorTotal = valorTotal;
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	public int getVendaId() {
+		return vendaId;
+	}
+	public void setVendaId(int vendaId) {
+		this.vendaId = vendaId;
+	}
+	public double getDesconto() {
+		return desconto;
+	}
+	public void setDesconto(double desconto) {
+		this.desconto = desconto;
+	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
 	}
 	public double getValorFinal() {
-		return this.valorFinal;
+		return valorFinal;
 	}
-	public void setValorFinal(double valorFinal) {
-		this.valorFinal = this.valorTotal - this.valorDesconto;
+	public TipoPagamento getTipo() {
+		return tipo;
 	}
-	public double getValorPago() {
-		return valorPago;
-	}
-	public void setValorPago(double valorPago) {
-		this.valorPago = valorPago;
-	}
-	public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
+	public void setTipo(TipoPagamento tipo) {
+		this.tipo = tipo;
 	}
 	
-	
+	abstract public double getTotalDesconto();
 }

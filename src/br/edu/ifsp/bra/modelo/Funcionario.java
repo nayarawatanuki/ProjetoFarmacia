@@ -1,44 +1,50 @@
 package br.edu.ifsp.bra.modelo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Funcionario extends Pessoa {
-	public static enum Tipo { NENHUM, ATENDENTE, GERENTE; };
+
+	public enum TipoFuncionario { NENHUM, ATENDENTE, GERENTE };
 	
 	private String usuario;
 	private String senha;
-	private Tipo tipo;
-
+	private TipoFuncionario tipo;
+	
 	public Funcionario() {}
-	public Funcionario(int id, String nome, String cpf, java.sql.Date dataNascimento,
-			String usuario, String senha, Tipo tipo) {
-		super(id, nome, cpf, dataNascimento);
+	public Funcionario(String nome, String endereco, String telefone, String cpf, Date dataNascimento, String usuario, String senha, TipoFuncionario tipo) {
+		super(nome, endereco, telefone, cpf, dataNascimento);
 		this.usuario = usuario;
 		this.senha = senha;
 		this.tipo = tipo;
 	}
-	
+	public boolean isAtendente() {
+		return this.getTipo() == TipoFuncionario.GERENTE;
+	}
+	public boolean isGerente() {
+		return this.getTipo() == TipoFuncionario.ATENDENTE;
+	}
 	public String getUsuario() {
 		return usuario;
 	}
-
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
 	public String getSenha() {
 		return senha;
 	}
-
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
-	public Tipo getTipo() {
+	public TipoFuncionario getTipo() {
 		return tipo;
 	}
-
-	public void setTipo(Tipo tipo) {
+	public void setTipo(TipoFuncionario tipo) {
 		this.tipo = tipo;
+	}
+	@Override
+	public String toString() {
+		if (this.isGerente()) return "[Gerente] " + this.getNome();
+		if (this.isAtendente()) return "[Atendente] " + this.getNome();
+		return "[Funcionário] " + this.getNome();
 	}
 }
