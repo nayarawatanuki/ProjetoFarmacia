@@ -34,11 +34,11 @@ public abstract class Pagamento {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public int getVendaId() {
-		return vendaId;
+	public Pedido getPedido() {
+		return pedido;
 	}
-	public void setVendaId(int vendaId) {
-		this.vendaId = vendaId;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 	public double getDesconto() {
 		return desconto;
