@@ -1,4 +1,4 @@
-package br.edu.ifsp.bra.farmacia.view;
+package br.edu.ifsp.bra.farmacia;
 
 import java.awt.EventQueue;
 
