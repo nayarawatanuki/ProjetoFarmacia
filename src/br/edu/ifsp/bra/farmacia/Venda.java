@@ -123,10 +123,13 @@ public class Venda {
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Caixa", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
 		JPanel panelPagamento = new JPanel();
+		panelPagamento.setVisible(false);
 		
 		JPanel panelConsulta = new JPanel();
+		panelConsulta.setVisible(false);
 		
 		JPanel panelOpcoes = new JPanel();
+		panelOpcoes.setVisible(false);
 		
 		
 		
@@ -137,7 +140,7 @@ public class Venda {
 					.addGap(45)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panelOpcoes, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panelOpcoes, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 							.addGroup(groupLayout.createSequentialGroup()
@@ -182,7 +185,7 @@ public class Venda {
 					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelOpcoes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(170))
+					.addGap(38))
 		);
 		
 		JButton btnTrocarUsuario = new JButton("Trocar Usuário");
@@ -191,16 +194,69 @@ public class Venda {
 		JButton btnCancelarItem = new JButton("Cancelar Item");
 		panelOpcoes.add(btnCancelarItem);
 		
+		JButton btnVoltarOpcoes = new JButton("Voltar");
+		btnVoltarOpcoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+			}
+		});
+		panelOpcoes.add(btnVoltarOpcoes);
+		
 		JButton btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+			}
+		});
 		panelConsulta.add(btnFechar);
 		
 		JButton btnDinheiro = new JButton("Dinheiro");
+		btnDinheiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+			}
+		});
 		panelPagamento.add(btnDinheiro);
 		
 		JButton btnDebito = new JButton("Débito");
+		btnDebito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+			}
+		});
 		panelPagamento.add(btnDebito);
 		
 		JButton btnCredito = new JButton("Crédito");
+		btnCredito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+			}
+		});
 		panelPagamento.add(btnCredito);
 		
 		JTextPane txtpnTotal = new JTextPane();
@@ -252,13 +308,26 @@ public class Venda {
 		panelDesconto.add(txtDesconto);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+			}
+		});
 		
 		JButton btnVoltar = new JButton("Cancelar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
 				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
 			}
 		});
 		panelAddQtdDesc.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -300,6 +369,9 @@ public class Venda {
 				panelPagamento.setVisible(true);
 				panelMenu.setVisible(false);
 				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelOpcoes.setVisible(false);
 			}
 		});
 		panelMenu.add(btnPagamento);
@@ -310,20 +382,42 @@ public class Venda {
 				panelDesconto.setVisible(true);
 				panelMenu.setVisible(false);
 				panelAddQtdDesc.setVisible(true);
+				panelConsulta.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
 			}
 		});
 		panelMenu.add(btnDesconto);
 		
 		JButton btnOpcoes = new JButton("Opções");
+		btnOpcoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelOpcoes.setVisible(true);
+				panelMenu.setVisible(false);
+				panelAddQtdDesc.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+			}
+		});
 		panelMenu.add(btnOpcoes);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		panelMenu.add(btnCancelar);
 		
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelMenu.setVisible(false);
 				panelAddQtdDesc.setVisible(true);
+				panelMenu.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
 				
 			}
 		});
