@@ -11,7 +11,7 @@ public class Medicamento {
 	private TipoMedicamento tipo;
 	
 	public Medicamento() {};
-	public Medicamento(String codigo, String descricao, double preco, int estoque, TipoMedicamento tipo, double desconto) {
+	public Medicamento(String codigo, String descricao, double preco, int estoque, TipoMedicamento tipo) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.preco = preco;
