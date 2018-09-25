@@ -38,8 +38,8 @@ public class Venda {
 
 	private JFrame frame;
 	private JTable table;
-
-	private static final long serialVersionUID = 1L;
+	private JTextPane txtpnFAdicionar;
+	
 	private JTable table_1;
 	
 	/**
@@ -81,7 +81,6 @@ public class Venda {
 		frame = new JFrame();
 		
 		
-		
 		frame.setBounds(100, 100, 797, 421);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -94,16 +93,16 @@ public class Venda {
 		txtpnFarmciaTel.setEditable(false);
 		txtpnFarmciaTel.setText("                   \n\n            FARMÁCIA   \n\n       Tel.: 3468-2211");
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setText("TOTAL:");
-		textPane.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
-		textPane.setEnabled(false);
-		textPane.setEditable(false);
+		JTextPane txtpnTotal = new JTextPane();
+		txtpnTotal.setText("TOTAL:");
+		txtpnTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		txtpnTotal.setEnabled(false);
+		txtpnTotal.setEditable(false);
 		
-		JTextPane textPane_1 = new JTextPane();
-		textPane_1.setText("SUBTOTAL: ");
-		textPane_1.setEnabled(false);
-		textPane_1.setEditable(false);
+		JTextPane txtpnSubtotal = new JTextPane();
+		txtpnSubtotal.setText("SUBTOTAL:");
+		txtpnSubtotal.setEnabled(false);
+		txtpnSubtotal.setEditable(false);
 		
 		DefaultTableModel model = new DefaultTableModel(); 
 		model.addColumn("Produto");
@@ -138,9 +137,9 @@ public class Venda {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(table_1, GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+									.addComponent(txtpnTotal, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(textPane_1, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+									.addComponent(txtpnSubtotal, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
 								.addComponent(lblVendas))
 							.addGap(246)
 							.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
@@ -155,8 +154,8 @@ public class Venda {
 							.addComponent(lblVendas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 							.addGap(28)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(textPane_1, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))
+								.addComponent(txtpnSubtotal, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtpnTotal, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
 						.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
