@@ -42,6 +42,7 @@ public abstract class Pagamento {
 	private double valorFinal;
 	private TipoPagamento tipo;
 
+	public Pagamento() {}
 	public Pagamento(Cliente cliente, Pedido pedido, double desconto, double total, TipoPagamento tipo) {
 		this.cliente = cliente;
 		this.pedido = pedido;

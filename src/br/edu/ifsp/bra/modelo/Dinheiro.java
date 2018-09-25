@@ -5,6 +5,7 @@ public class Dinheiro extends Pagamento{
 	private double pago;
 	private double troco;
 
+	public Dinheiro() {}
 	public Dinheiro(Cliente cliente, Pedido pedido, double desconto, double total, TipoPagamento tipo, double pago, double troco) {
 		super(cliente, pedido, desconto, total, tipo);
 		this.pago = pago;
