@@ -2,11 +2,25 @@ package br.edu.ifsp.bra.modelo;
 
 public abstract class Pagamento {
 
-	public enum TipoPagamento { NENHUM, DINHEIRO, DEBITO, CREDITO }
-	
+	public enum TipoPagamento { NENHUM, DINHEIRO, DEBITO, CREDITO;
+
+		public TipoPagamento getTipo(int tipo) {
+			switch (tipo) {
+			case 1:
+				return TipoPagamento.DINHEIRO;
+			case 2:
+				return TipoPagamento.DEBITO;
+			case 3:
+				return TipoPagamento.CREDITO;
+			default:
+				return TipoPagamento.NENHUM;
+			}
+		}
+	}
+
 	private static double TAXA_DESCONTO_APOSENTADO = 0.2;
 	private static double TAXA_DESCONTO_DINHEIRO = 0.05;
-	
+
 	private int id;
 	private Cliente cliente;
 	private Pedido pedido;
@@ -14,7 +28,7 @@ public abstract class Pagamento {
 	private double total;
 	private double valorFinal;
 	private TipoPagamento tipo;
-	
+
 	public Pagamento(Cliente cliente, Pedido pedido, double desconto, double total, TipoPagamento tipo) {
 		this.cliente = cliente;
 		this.pedido = pedido;
@@ -68,6 +82,6 @@ public abstract class Pagamento {
 	public void setTipo(TipoPagamento tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	abstract public double getTotalDesconto();
 }

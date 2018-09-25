@@ -4,12 +4,25 @@ import java.sql.Date;
 
 public class Funcionario extends Pessoa {
 
-	public enum TipoFuncionario { NENHUM, ATENDENTE, GERENTE };
-	
+	public enum TipoFuncionario {
+		NENHUM, ATENDENTE, GERENTE;
+
+		public TipoFuncionario getTipo(int tipo) {
+			switch (tipo) {
+			case 1:
+				return TipoFuncionario.ATENDENTE;
+			case 2:
+				return TipoFuncionario.GERENTE;
+			default:
+				return TipoFuncionario.NENHUM;
+			}
+		}
+	};
+
 	private String usuario;
 	private String senha;
 	private TipoFuncionario tipo;
-	
+
 	public Funcionario() {}
 	public Funcionario(String nome, String endereco, String telefone, String cpf, Date dataNascimento, String usuario, String senha, TipoFuncionario tipo) {
 		super(nome, endereco, telefone, cpf, dataNascimento);
