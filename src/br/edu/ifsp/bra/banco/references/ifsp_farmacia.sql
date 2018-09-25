@@ -55,15 +55,17 @@ create table caixa (
     foreign key (atendente_id) references funcionario(funcionario_id)
 );
 
+insert into caixa values (1, 2, true, '2018-09-10', null);
+
 create table tipo_medicamento (
 	tipo_id int not null auto_increment primary key,
     descricao varchar(50) not null
 );
 
 insert into tipo_medicamento values
-(1, 'P√≠lula'),
-(2, 'C√°psula'),
-(3, 'Dr√°gea');
+(1, 'PÌlula'),
+(2, 'C·psula'),
+(3, 'Dr·gea');
 
 create table medicamento (
 	medicamento_id int not null auto_increment primary key,
@@ -74,6 +76,8 @@ create table medicamento (
     estoque int not null default 0,
     foreign key (tipo_id) references tipo_medicamento(tipo_id)
 );
+
+insert into medicamento values (1, 1, '123', 'PÌlula A', 12.0, 20);
 
 create table pedido_status (
 	status_id int not null auto_increment primary key,
@@ -93,14 +97,23 @@ create table pedido (
     foreign key (caixa_id) references caixa(caixa_id)
 );
 
+insert into pedido values (1, 1, 12, '2018-09-10');
+
 create table itens_pedido (
 	pedido_id int not null,
-    produto_id int not null,
+    medicamento_id int not null,
     quantidade int not null,
     total double not null,
-    primary key (pedido_id, produto_id),
+    primary key (pedido_id, medicamento_id),
     foreign key (pedido_id) references pedido(pedido_id),
-    foreign key (produto_id) references produto(produto_id)
+    foreign key (medicamento_id) references medicamento(medicamento_id)
+);
+
+insert into itens_pedido values (1, 1, 1, 12.0);
+
+create table tipo_pagamento (
+	tipo_id int not null auto_increment primary key,
+    descricao varchar(50) not null
 );
 
 create table pagamento (
@@ -111,11 +124,15 @@ create table pagamento (
     foreign key (pedido_id) references pedido(pedido_id)
 );
 
+insert into pagamento values (1, 1, 0.0, 12.0);
+
 create table pagamento_cartao (
 	pagamento_id int not null primary key references pagamento(pagamento_id),
     conta varchar(50) not null,
     agencia varchar(50) not null
 );
+
+insert into pagamento_cartao values (1, '123', '123');
 
 create table pagamento_dinheiro (
 	pagamento_id int not null primary key references pagamento(pagamento_id),
