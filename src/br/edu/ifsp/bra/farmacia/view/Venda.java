@@ -1,10 +1,21 @@
-package br.edu.ifsp.bra.farmacia;
+package br.edu.ifsp.bra.farmacia.view;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
@@ -19,12 +30,18 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.event.MenuKeyListener;
+import java.awt.Event;
 
 public class Venda {
 
 	private JFrame frame;
 	private JTable table;
 
+	private static final long serialVersionUID = 1L;
+	private JTable table_1;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -34,6 +51,7 @@ public class Venda {
 				try {
 					Venda window = new Venda();
 					window.frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,19 +65,33 @@ public class Venda {
 	public Venda() {
 		initialize();
 	}
+	
+	/*public void keyPressed(KeyEvent e) {
+		//JTextPane txtpnFAdicionar = new JTextPane();
+	    if (e.getKeyCode() == KeyEvent.VK_1) {
+	    	txtpnFAdicionar.setText("\n     F5 - SALVAR   ESC - CANCELAR");
+	    	System.out.println(" F5 - SALVAR   ESC - CANCELAR");
+	    }
+	}*/
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
+		
+		
+		
 		frame.setBounds(100, 100, 797, 421);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblVendas = new JLabel("Vendas");
 		lblVendas.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		
+		
 		JTextPane txtpnFarmciaTel = new JTextPane();
+		txtpnFarmciaTel.setEnabled(false);
+		txtpnFarmciaTel.setEditable(false);
 		txtpnFarmciaTel.setText("                   \n\n            FARMÁCIA   \n\n       Tel.: 3468-2211");
 		
 		JTextPane textPane = new JTextPane();
@@ -73,23 +105,38 @@ public class Venda {
 		textPane_1.setEnabled(false);
 		textPane_1.setEditable(false);
 		
-		table = new JTable();
+		DefaultTableModel model = new DefaultTableModel(); 
+		model.addColumn("Produto");
+        model.addColumn("Quantidade");
+        model.addColumn("Valor");
+        model.addColumn("Total");
+		
+		table_1 = new JTable(model);
+		table_1.setSurrendersFocusOnKeystroke(true);
+		table_1.setEnabled(false);
+		
+		// Append a row 
+		model.addRow(new Object[]{"Sabão", 3, 2.50, 7.50});
+		table_1.setToolTipText("");
 		
 		JTextPane txtpnFAdicionar = new JTextPane();
-		txtpnFAdicionar.setForeground(UIManager.getColor("Button.highlight"));
+		txtpnFAdicionar.setEditable(false);
+		txtpnFAdicionar.setForeground(Color.WHITE);
 		txtpnFAdicionar.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		txtpnFAdicionar.setText("\n     F2 - ADICIONAR   F3 - QUANTIDADE   F4 - CONSULTA   F5 - PAGAMENTO   F6 - DESCONTO   F7 - OPÇÕES   F8 - CANCELAR");
 		txtpnFAdicionar.setBackground(UIManager.getColor("Focus.color"));
+		
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addGap(45)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(txtpnFAdicionar, Alignment.LEADING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(table, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(txtpnFAdicionar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(table_1, GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -97,7 +144,7 @@ public class Venda {
 								.addComponent(lblVendas))
 							.addGap(246)
 							.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(29, Short.MAX_VALUE))
+					.addGap(29))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -111,7 +158,7 @@ public class Venda {
 								.addComponent(textPane_1, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 								.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(table, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+							.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
 						.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
 					.addGap(60)
 					.addComponent(txtpnFAdicionar, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)

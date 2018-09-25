@@ -1,4 +1,4 @@
-package br.edu.ifsp.bra.farmacia;
+package br.edu.ifsp.bra.farmacia.view;
 
 import java.awt.EventQueue;
 
@@ -55,33 +55,33 @@ public class Medicamentos {
 		
 		JComboBox comboBox = new JComboBox();
 		
-		JLabel lblFAdicionar = new JLabel("F2 - ADICIONAR   F3 - LIBERAÇÃO DO MEDICAMENTO  ");
+		JLabel lblFAdicionar = new JLabel("F2 - EDITAR   F3 - LIBERAÇÃO DO MEDICAMENTO  ");
 		lblFAdicionar.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(96, Short.MAX_VALUE)
-					.addComponent(lblFAdicionar)
-					.addGap(90))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addGap(33)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblMedicamentos)
+							.addComponent(lblFAdicionar)
 							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblCdigonome)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE))
-								.addComponent(table, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addContainerGap(50, Short.MAX_VALUE))))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(lblMedicamentos)
+								.addContainerGap())
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblCdigonome)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE))
+									.addComponent(table, GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
+								.addContainerGap(44, Short.MAX_VALUE)))))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(23)
 					.addComponent(lblMedicamentos)
 					.addPreferredGap(ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
