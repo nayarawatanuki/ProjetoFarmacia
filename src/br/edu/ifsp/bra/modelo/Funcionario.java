@@ -4,12 +4,36 @@ import java.sql.Date;
 
 public class Funcionario extends Pessoa {
 
-	public enum TipoFuncionario { NENHUM, ATENDENTE, GERENTE };
-	
+	public enum TipoFuncionario {
+		NENHUM, ATENDENTE, GERENTE;
+
+		public static TipoFuncionario getTipo(int tipo) {
+			switch (tipo) {
+			case 1:
+				return ATENDENTE;
+			case 2:
+				return GERENTE;
+			default:
+				return NENHUM;
+			}
+		}
+		
+		public static int setTipo(TipoFuncionario tipo) {
+			switch (tipo) {
+			case ATENDENTE:
+				return 1;
+			case GERENTE:
+				return 2;
+			default:
+				return 0;
+			}
+		}
+	};
+
 	private String usuario;
 	private String senha;
 	private TipoFuncionario tipo;
-	
+
 	public Funcionario() {}
 	public Funcionario(String nome, String endereco, String telefone, String cpf, Date dataNascimento, String usuario, String senha, TipoFuncionario tipo) {
 		super(nome, endereco, telefone, cpf, dataNascimento);
@@ -18,10 +42,10 @@ public class Funcionario extends Pessoa {
 		this.tipo = tipo;
 	}
 	public boolean isAtendente() {
-		return this.getTipo() == TipoFuncionario.GERENTE;
+		return this.getTipo() == TipoFuncionario.ATENDENTE;
 	}
 	public boolean isGerente() {
-		return this.getTipo() == TipoFuncionario.ATENDENTE;
+		return this.getTipo() == TipoFuncionario.GERENTE;
 	}
 	public String getUsuario() {
 		return usuario;
