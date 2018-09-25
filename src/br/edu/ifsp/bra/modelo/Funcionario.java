@@ -7,14 +7,25 @@ public class Funcionario extends Pessoa {
 	public enum TipoFuncionario {
 		NENHUM, ATENDENTE, GERENTE;
 
-		public TipoFuncionario getTipo(int tipo) {
+		public static TipoFuncionario getTipo(int tipo) {
 			switch (tipo) {
 			case 1:
-				return TipoFuncionario.ATENDENTE;
+				return ATENDENTE;
 			case 2:
-				return TipoFuncionario.GERENTE;
+				return GERENTE;
 			default:
-				return TipoFuncionario.NENHUM;
+				return NENHUM;
+			}
+		}
+		
+		public static int setTipo(TipoFuncionario tipo) {
+			switch (tipo) {
+			case ATENDENTE:
+				return 1;
+			case GERENTE:
+				return 2;
+			default:
+				return 0;
 			}
 		}
 	};
@@ -31,10 +42,10 @@ public class Funcionario extends Pessoa {
 		this.tipo = tipo;
 	}
 	public boolean isAtendente() {
-		return this.getTipo() == TipoFuncionario.GERENTE;
+		return this.getTipo() == TipoFuncionario.ATENDENTE;
 	}
 	public boolean isGerente() {
-		return this.getTipo() == TipoFuncionario.ATENDENTE;
+		return this.getTipo() == TipoFuncionario.GERENTE;
 	}
 	public String getUsuario() {
 		return usuario;

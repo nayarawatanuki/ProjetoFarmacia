@@ -7,13 +7,26 @@ public abstract class Pagamento {
 		public TipoPagamento getTipo(int tipo) {
 			switch (tipo) {
 			case 1:
-				return TipoPagamento.DINHEIRO;
+				return DINHEIRO;
 			case 2:
-				return TipoPagamento.DEBITO;
+				return DEBITO;
 			case 3:
-				return TipoPagamento.CREDITO;
+				return CREDITO;
 			default:
-				return TipoPagamento.NENHUM;
+				return NENHUM;
+			}
+		}
+
+		public static int setTipo(TipoPagamento tipo) {
+			switch (tipo) {
+			case DINHEIRO:
+				return 1;
+			case DEBITO:
+				return 2;
+			case CREDITO:
+				return 3;
+			default:
+				return 0;
 			}
 		}
 	}
