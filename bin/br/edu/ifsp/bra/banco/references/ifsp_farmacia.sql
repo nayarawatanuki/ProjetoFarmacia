@@ -92,12 +92,14 @@ insert into pedido_status values
 create table pedido (
 	pedido_id int not null auto_increment primary key,
     caixa_id int not null,
+    status_id int not null;
     total double not null,
     data datetime not null default now(),
-    foreign key (caixa_id) references caixa(caixa_id)
+    foreign key (caixa_id) references caixa(caixa_id),
+    foreign key (status_id) references pedido_status(status_id)
 );
 
-insert into pedido values (1, 1, 12, '2018-09-10');
+insert into pedido values (1, 1, 2, 12, '2018-09-10');
 
 create table itens_pedido (
 	pedido_id int not null,

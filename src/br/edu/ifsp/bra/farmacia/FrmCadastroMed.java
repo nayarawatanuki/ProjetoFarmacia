@@ -14,6 +14,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import br.edu.ifsp.bra.dominio.MedicamentoBLL;
+import br.edu.ifsp.bra.modelo.Medicamento;
+import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
+
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
@@ -22,12 +26,13 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class MedicamentosCadastro {
+public class FrmCadastroMed {
 
 	private JFrame frame;
 	private JTextField txtCodigo;
 	private JTextField txtNome;
 	private JTextField txtPreco;
+	private MedicamentoBLL medBLL;
 
 	/**
 	 * Launch the application.
@@ -36,7 +41,7 @@ public class MedicamentosCadastro {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MedicamentosCadastro window = new MedicamentosCadastro();
+					FrmCadastroMed window = new FrmCadastroMed();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,8 +53,9 @@ public class MedicamentosCadastro {
 	/**
 	 * Create the application.
 	 */
-	public MedicamentosCadastro() {
+	public FrmCadastroMed() {
 		initialize();
+		frame.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -65,19 +71,14 @@ public class MedicamentosCadastro {
 		
 		JPanel panel = new JPanel();
 		
-		JLabel lblCodigo = new JLabel("Código:");
+		JLabel lblCodigo = new JLabel("C\u00F3digo:");
 		
 		
 		txtCodigo = new JTextField();
 		txtCodigo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				JTextField jtf = (JTextField) e.getSource();
-				char key = e.getKeyChar();
-				boolean press = (key == KeyEvent.VK_DELETE || Character.isDigit(key));
-				if (!press || jtf.getText().length() == 6) {
-					e.consume();
-				}
+
 			}
 		});
 		txtCodigo.setColumns(10);
@@ -118,7 +119,7 @@ public class MedicamentosCadastro {
 		});
 		txtNome.setColumns(10);
 		
-		JLabel lblPreco = new JLabel("Preço:");
+		JLabel lblPreco = new JLabel("Pre\u00E7o:");
 		
 		txtPreco = new JTextField();
 		txtPreco.addKeyListener(new KeyAdapter() {
@@ -134,22 +135,31 @@ public class MedicamentosCadastro {
 		});
 		txtPreco.setColumns(10);
 		
-		JLabel lblQuantidade = new JLabel("Quantidade:");
+		JLabel lblEstoque = new JLabel("Estoque:");
 		
 		JLabel lblTipo = new JLabel("Tipo:");
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Medicamento", "Produto"}));
+		JComboBox<TipoMedicamento> comboBox = new JComboBox<>();
+		comboBox.setModel(new DefaultComboBoxModel<>(TipoMedicamento.values()));
 		
-		JSpinner spinner = new JSpinner();
+		JSpinner txtEstoque = new JSpinner();
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(txtCodigo.getText() == "" || txtNome.getText() == "" || txtPreco.getText() == "" || spinner.getValue().toString() == "0" || comboBox.getSelectedItem() == "") {
+				if(txtCodigo.getText() == "" || txtNome.getText() == "" || txtPreco.getText() == "" || txtEstoque.getValue().toString() == "0" || comboBox.getSelectedItem() == "") {
 					JOptionPane.showMessageDialog(null, "Favor preencher todos os campos corretamente.");
 				}else {
+
+					Medicamento med = new Medicamento(
+							txtCodigo.getText(),
+							txtNome.getText(),
+							Double.parseDouble(txtPreco.getText()),
+							(Integer)txtEstoque.getValue(),
+							TipoMedicamento.C�psula
+							);
 					
+					medBLL.adicionar(med);
 				}
 			}
 		});
@@ -160,7 +170,7 @@ public class MedicamentosCadastro {
 				txtCodigo.setText("");
 				txtNome.setText("");
 				txtPreco.setText("");
-				spinner.setValue(0);
+				txtEstoque.setValue(0);
 				comboBox.setSelectedItem(null);
 			}
 		});
@@ -197,9 +207,9 @@ public class MedicamentosCadastro {
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
 										.addGroup(gl_panel.createSequentialGroup()
-											.addComponent(lblQuantidade)
+											.addComponent(lblEstoque)
 											.addGap(6)
-											.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
+											.addComponent(txtEstoque, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
 									.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE))
 								.addGroup(gl_panel.createSequentialGroup()
 									.addComponent(lblPreco, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
@@ -233,8 +243,8 @@ public class MedicamentosCadastro {
 						.addComponent(txtCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(5)
-							.addComponent(lblQuantidade))
-						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblEstoque))
+						.addComponent(txtEstoque, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
@@ -261,5 +271,10 @@ public class MedicamentosCadastro {
 		);
 		panel.setLayout(gl_panel);
 		frame.getContentPane().setLayout(groupLayout);
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		frame.setVisible(b);
 	}
 }

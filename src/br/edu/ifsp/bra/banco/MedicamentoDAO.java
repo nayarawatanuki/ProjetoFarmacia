@@ -66,7 +66,7 @@ public class MedicamentoDAO {
 	public boolean adicionar(Medicamento med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO medicamento VALUES (?, ?, ?, ?, ?, ?);");
 				ps.setInt(6, med.getId());
 				ps.setInt(1, TipoMedicamento.setTipo(med.getTipo()));
 				ps.setString(2, med.getCodigo());
@@ -110,7 +110,7 @@ public class MedicamentoDAO {
 	public boolean remover(int med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE from medicamento m WHERE m.medicamento_id = ?");
+			PreparedStatement ps = connection.prepareStatement("delete from medicamento where medicamento_id = ?" );
 			ps.setInt(1, med);
 
 			if (ps.executeUpdate() == 1) {
