@@ -1,4 +1,4 @@
-package br.edu.ifsp.bra.farmacia;
+package br.edu.ifsp.bra.teste;
 
 import br.edu.ifsp.bra.banco.ClienteDAO;
 import br.edu.ifsp.bra.modelo.Cliente;
