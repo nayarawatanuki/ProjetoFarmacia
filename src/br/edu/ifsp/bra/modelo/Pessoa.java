@@ -13,7 +13,6 @@ public abstract class Pessoa {
 	
 	public Pessoa() {}
 	public Pessoa(String nome, String endereco, String telefone, String cpf, Date dataNascimento) {
-		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.telefone = telefone;
