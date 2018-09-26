@@ -2,8 +2,36 @@ package br.edu.ifsp.bra.modelo;
 
 public class Medicamento {
 	
-	public static enum TipoMedicamento { NENHUM, MEDICAMENTO, GERAL; };
+	public enum TipoMedicamento {
+		NENHUM, PILULA, COMPRIMIDO, DRAGEA;
 
+		public TipoMedicamento getTipo(int tipo) {
+			switch (tipo) {
+			case 1:
+				return PILULA;
+			case 2:
+				return COMPRIMIDO;
+			case 3:
+				return DRAGEA;
+			default:
+				return NENHUM;
+			}
+		}
+
+		public static int setTipo(TipoMedicamento tipo) {
+			switch (tipo) {
+			case PILULA:
+				return 1;
+			case COMPRIMIDO:
+				return 2;
+			case DRAGEA:
+				return 3;
+			default:
+				return 0;
+			}
+		}
+	}
+	
 	private int id;
 	private String codigo;
 	private String descricao;
