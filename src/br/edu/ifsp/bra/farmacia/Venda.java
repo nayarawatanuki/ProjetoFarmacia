@@ -197,7 +197,6 @@ public class Venda {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(45)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelOpcoes, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 788, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(panelAdd, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
@@ -218,8 +217,9 @@ public class Venda {
 							.addGap(57)
 							.addComponent(panelProdutos, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
 							.addGap(81)
-							.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(43, Short.MAX_VALUE))
+							.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panelOpcoes, GroupLayout.PREFERRED_SIZE, 506, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -255,7 +255,7 @@ public class Venda {
 					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelOpcoes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(54))
+					.addGap(42))
 		);
 		
 		JButton btnSalvardesc = new JButton("Salvar");
@@ -392,8 +392,13 @@ public class Venda {
 		});
 		panelOpcoes.add(btnTrocarUsuario);
 		
-		JButton btnCancelarItem = new JButton("Cancelar Item");
-		panelOpcoes.add(btnCancelarItem);
+		JButton btnClientes = new JButton("Clientes");
+		btnClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		panelOpcoes.add(btnClientes);
 		
 		JButton btnVoltarOpcoes = new JButton("Voltar");
 		btnVoltarOpcoes.addActionListener(new ActionListener() {
