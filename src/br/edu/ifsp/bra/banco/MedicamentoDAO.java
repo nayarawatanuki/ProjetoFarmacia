@@ -12,6 +12,23 @@ import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
 
 public class MedicamentoDAO {
 	
+	public Medicamento getMedicamento(String codigo) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * from medicamento c" +
+							"WHERE c.medicamento_id=" + codigo);
+
+			if(rs.next()) {
+				return toMedicamento(rs);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	public Medicamento getMedicamento(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {

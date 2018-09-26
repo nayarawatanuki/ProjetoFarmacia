@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 
 public class Clientes {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTable table;
 
 	/**

@@ -43,15 +43,15 @@ public class Pedido {
 	private Date data;
 
 	public Pedido() {}
-	public Pedido(int caixaId,  Date data, double total, StatusPedido status) {
+	public Pedido(int caixaId, StatusPedido status, double total, Date data) {
 		this.caixaId = caixaId;
-		this.data = data;
-		this.total = total;
 		this.status = status;
+		this.total = total;
+		this.data = data;
 	}
 	
-	public Pedido(int caixaId, Date data, double total, StatusPedido status, List<ItemPedido> itens) {
-		this(caixaId, data, total, status);
+	public Pedido(int caixaId, StatusPedido status, List<ItemPedido> itens, double total, Date data) {
+		this(caixaId, status, total, data);
 		this.itens = itens;
 	}
 	
@@ -63,6 +63,7 @@ public class Pedido {
 		this.id = id;
 	}
 	
+	
 	public int getCaixaId() {
 		return caixaId;
 	}
@@ -71,39 +72,52 @@ public class Pedido {
 		this.caixaId = caixaId;
 	}
 	
+	
+	public StatusPedido getStatus() {
+		return status;
+	}
+	
+	public void setStatus(StatusPedido status) {
+		this.status = status;
+	}
+	
+	
 	public List<ItemPedido> getItens() {
 		return itens;
 	}
+	
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
+		
+	}
+	
 	public void adicionaItem(ItemPedido item) {
 		this.itens.add(item);;
 	}
+	
 	public void removeItem(ItemPedido item) {
 		if (!this.itens.contains(item))
 			return;
 
 		this.itens.remove(item);
 	}
-	public StatusPedido getStatus() {
-		return status;
-	}
-	public void setStatus(StatusPedido status) {
-		this.status = status;
-	}
+	
+	
 	public double getTotal() {
 		return total;
 	}
+	
 	public void setTotal(double total) {
 		this.total = total;
 	}
+	
+	
 	public Date getData() {
 		return data;
 	}
+	
 	public void setData(Date data) {
 		this.data = data;
-	}
-	public void setItens(List<ItemPedido> itens) {
-		this.itens = itens;
-		
 	}
 
 }

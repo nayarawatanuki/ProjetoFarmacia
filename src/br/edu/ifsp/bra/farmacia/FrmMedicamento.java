@@ -9,7 +9,6 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifsp.bra.dominio.MedicamentoBLL;
@@ -25,7 +24,7 @@ import java.awt.event.MouseEvent;
 
 public class FrmMedicamento {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTable tableMed;
 	public MedicamentoBLL medbll = new MedicamentoBLL();
 	DefaultTableModel modelo = new DefaultTableModel(); 
@@ -66,8 +65,8 @@ public class FrmMedicamento {
 		modelo = new DefaultTableModel();
 		modelo.addColumn("Id");
 		modelo.addColumn("Codigo");
-		modelo.addColumn("Descrição");
-		modelo.addColumn("Preço");
+		modelo.addColumn("Descriï¿½ï¿½o");
+		modelo.addColumn("Preï¿½o");
 		modelo.addColumn("Estoque");
 		modelo.addColumn("Tipo");
 		popularTabela(modelo);

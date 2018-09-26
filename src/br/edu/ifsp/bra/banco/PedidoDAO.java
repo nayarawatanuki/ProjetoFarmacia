@@ -62,7 +62,7 @@ public class PedidoDAO {
 	private Pedido toPedido(ResultSet rs) throws SQLException {
 
 		Pedido pedido = new Pedido();
-		pedido.setId(rs.getInt("pedido_id"));
+		pedido.setId(rs.getInt("caixa_id"));
 		pedido.setItens(ItensDAO.getItens(pedido.getId()));
 		pedido.setStatus(pedido.getStatus());
 		pedido.setData(rs.getDate("data_pedido"));

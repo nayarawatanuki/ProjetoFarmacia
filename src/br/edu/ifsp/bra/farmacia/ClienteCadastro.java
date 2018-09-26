@@ -22,7 +22,7 @@ import java.awt.event.KeyEvent;
 
 public class ClienteCadastro {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField txtNome;
 	private JFormattedTextField frmtdtxtfldCpf;
 	private JFormattedTextField frmtdtxtfldDatanascimento;

@@ -1,6 +1,6 @@
 package br.edu.ifsp.bra.dominio;
 
-import java.util.List;
+import java.util.Set;
 
 import br.edu.ifsp.bra.banco.ItemPedidoDAO;
 import br.edu.ifsp.bra.modelo.ItemPedido;
@@ -9,13 +9,18 @@ public class ItemPedidoBLL {
 	
 	ItemPedidoDAO dao = new ItemPedidoDAO();
 	
-	public List<ItemPedido> getItens(int idPedido) {
+	public Set<ItemPedido> getItens() {
 
-		return dao.getItens(idPedido);
+		return dao.getItens();
 	}
-
-	public boolean adicionaItens(List<ItemPedido> list, int idPedido) {
+	
+	public boolean adicionaItens(ItemPedido itempedido) {
 		
-		return dao.adicionaItens(list, idPedido);
+		return dao.adicionaItens(itempedido);
+	}
+	
+	public boolean modificar(ItemPedido itempedido) {
+		
+		return dao.modificar(itempedido);
 	}
 }

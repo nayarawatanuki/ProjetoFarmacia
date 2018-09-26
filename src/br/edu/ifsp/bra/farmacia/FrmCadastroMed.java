@@ -28,7 +28,7 @@ import java.awt.event.KeyEvent;
 
 public class FrmCadastroMed {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField txtCodigo;
 	private JTextField txtNome;
 	private JTextField txtPreco;

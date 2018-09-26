@@ -22,17 +22,32 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.FlowLayout;
 
+import br.edu.ifsp.bra.dominio.ItemPedidoBLL;
+import br.edu.ifsp.bra.dominio.MedicamentoBLL;
+import br.edu.ifsp.bra.dominio.PedidoBLL;
 import br.edu.ifsp.bra.farmacia.Login;
+import br.edu.ifsp.bra.modelo.ItemPedido;
+import br.edu.ifsp.bra.modelo.Medicamento;
+import br.edu.ifsp.bra.modelo.Pedido;
+import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Set;
+import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Venda {
 
-	private JFrame frame;
-	
+	JFrame frame;
 	private JTable tableItemPedidos;
 	private JTextField txtDesconto;
 	private JTable tableCodigosProdutos;
+	public PedidoBLL PedBLL = new PedidoBLL();
+	public ItemPedidoBLL ItemPedBLL = new ItemPedidoBLL();
+	DefaultTableModel model = new DefaultTableModel();
+	private JTextField txtTotal;
 	
 	
 	
@@ -53,12 +68,54 @@ public class Venda {
 			}
 		});
 	}
+	
+	private void popularTabela(DefaultTableModel model)
+	{
+		ItemPedidoBLL ItemPedBLL = new ItemPedidoBLL();
+		
+		Set<ItemPedido> list = ItemPedBLL.getItens();
+		
+		for(ItemPedido ped : list)
+		{
+			MedicamentoBLL medBLL = new MedicamentoBLL();
+			
+			Set<Medicamento> listmed = medBLL.getTodosMedicamento();
+			
+			for(Medicamento med : listmed) {
+				model.addRow(new Object[] {ped.getPedidoId(), ped.getProdutoId(), med.getDescricao(),
+						ped.getQuantidade(), ped.getPreco()});
+			}
+			
+		}
+	}
+	
+	private void criarTabela()
+	{
+		
+		model = new DefaultTableModel();
+		model.addColumn("Id");
+		model.addColumn("ProdutoId");
+		model.addColumn("Descricao");
+		model.addColumn("Quantidade");
+		model.addColumn("Total");
+		popularTabela(model);
+
+	}
+	
+	private String calcularVenda() {
+		Double total = 0.00;
+        for (int i = 0; i < tableItemPedidos.getRowCount(); i++){
+            total += Double.parseDouble(tableItemPedidos.getValueAt(i, 4).toString());
+        }
+        return total.toString();
+	}
 
 	/**
 	 * Create the application.
 	 */
 	public Venda() {
 		initialize();
+		frame.setLocationRelativeTo(null);
 	}
 	
 	/*public void keyPressed(KeyEvent e) {
@@ -74,19 +131,11 @@ public class Venda {
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		/*frame.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_1) {
-					btnAdicionar.setVisible(false);
-					
-				}
-			}
-		});*/
-	
-		
-		frame.setBounds(100, 100, 972, 601);
+		frame.setBounds(100, 100, 1239, 601);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		criarTabela();
+		
 		
 		JLabel lblVendas = new JLabel("Vendas");
 		lblVendas.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -98,25 +147,15 @@ public class Venda {
 		txtpnFarmciaTel.setText("                   \n\n            FARMÁCIA   \n\n       Tel.: 3468-2211");
 		
 		
-		String[] colunas = new String []{"ID","NOME", "CPF", "preco"};
-		
-		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(colunas);
-		
-		// Append a row 
-		model.addRow(new Object[]{"Sabão", 3, 2.50, 7.50});
 		
 		JPanel panelMenu = new JPanel();
 		
-		JPanel panelAddQtdDesc = new JPanel();
-		panelAddQtdDesc.setVisible(false);
+		JPanel panelAdd = new JPanel();
+		panelAdd.setVisible(false);
 		
 		JPanel panelDesconto = new JPanel();
 		panelDesconto.setBorder(new TitledBorder(null, "Desconto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDesconto.setVisible(false);
-		
-		JPanel panelCaixa = new JPanel();
-		panelCaixa.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Caixa", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
 		JPanel panelPagamento = new JPanel();
 		panelPagamento.setVisible(false);
@@ -131,6 +170,15 @@ public class Venda {
 		panelProdutos.setBorder(new TitledBorder(null, "C\u00F3digos dos Produtos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelProdutos.setVisible(false);
 		
+		JPanel panelCaixa = new JPanel();
+		panelCaixa.setBorder(new TitledBorder(null, "Caixa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		JPanel panelQtd = new JPanel();
+		panelQtd.setVisible(false);
+		
+		JPanel panelDesc = new JPanel();
+		panelDesc.setVisible(false);
+		
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -138,70 +186,168 @@ public class Venda {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(45)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelOpcoes, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 788, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panelOpcoes, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 788, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap())
+							.addComponent(panelAdd, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(panelPagamento, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(panelQtd, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(panelDesc, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(panelAddQtdDesc, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(panelPagamento, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-									.addGap(550))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblVendas)
-										.addComponent(panelCaixa, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(60)
-											.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
-											.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-											.addGap(51))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(75)
-											.addComponent(panelProdutos, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
-											.addContainerGap())))))))
+								.addComponent(lblVendas)
+								.addComponent(panelCaixa, GroupLayout.PREFERRED_SIZE, 382, GroupLayout.PREFERRED_SIZE))
+							.addGap(55)
+							.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
+							.addGap(57)
+							.addComponent(panelProdutos, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
+							.addGap(81)
+							.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(43, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(22)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblVendas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGap(22)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(panelProdutos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addGap(36))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(30)
-									.addComponent(panelCaixa, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED))))
-						.addComponent(txtpnFarmciaTel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
+									.addComponent(lblVendas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+											.addComponent(panelProdutos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addGap(36))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(21)
+											.addComponent(panelCaixa, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(txtpnFarmciaTel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(84)
+							.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(45)
-							.addComponent(panelAddQtdDesc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(panelAdd, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						.addComponent(panelPagamento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelQtd, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelOpcoes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(54))
 		);
+		
+		JButton btnSalvardesc = new JButton("Salvar");
+		btnSalvardesc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ItemPedido itempedido = new ItemPedido();
+				ItemPedidoBLL itempedidoBLL = new ItemPedidoBLL();
+				
+				double desconto = Double.parseDouble(txtDesconto.getText()) / 100;
+				double preco = Double.parseDouble(txtTotal.getText()) * desconto;
+				
+				itempedidoBLL.modificar(itempedido);
+			}
+		});
+		panelDesc.add(btnSalvardesc);
+		
+		JButton btnCancelardesc = new JButton("Cancelar");
+		panelDesc.add(btnCancelardesc);
+		
+		JButton btnSalvarqtd = new JButton("Salvar");
+		btnSalvarqtd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAdd.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
+				
+				ItemPedido itempedido = new ItemPedido();
+				itempedido.setPedidoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 0));
+				itempedido.setProdutoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1));
+				itempedido.setQuantidade((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 3));
+				itempedido.setPreco((Double)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 4));				
+				ItemPedBLL.modificar(itempedido);
+			}
+		});
+		panelQtd.add(btnSalvarqtd);
+		
+		JButton btnCancelarqtd = new JButton("Cancelar");
+		btnCancelarqtd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAdd.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
+			}
+		});
+		panelQtd.add(btnCancelarqtd);
+		
+		tableItemPedidos = new JTable(model);	
+		tableItemPedidos.setColumnSelectionAllowed(true);
+		tableItemPedidos.setCellSelectionEnabled(true);
+		
+		JScrollPane scrlPaneItemPedidos = new JScrollPane(tableItemPedidos);
+		
+		JTextPane txtPaneSubtotal = new JTextPane();
+		txtPaneSubtotal.setText("SUBTOTAL:");
+		txtPaneSubtotal.setEnabled(false);
+		txtPaneSubtotal.setEditable(false);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
+		scrollPane.setViewportBorder(new TitledBorder(null, "TOTAL:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GroupLayout gl_panelCaixa = new GroupLayout(panelCaixa);
+		gl_panelCaixa.setHorizontalGroup(
+			gl_panelCaixa.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panelCaixa.createSequentialGroup()
+					.addContainerGap(20, Short.MAX_VALUE)
+					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(scrlPaneItemPedidos, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
+						.addGroup(gl_panelCaixa.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtPaneSubtotal, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18))
+		);
+		gl_panelCaixa.setVerticalGroup(
+			gl_panelCaixa.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCaixa.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtPaneSubtotal, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrlPaneItemPedidos, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(19, Short.MAX_VALUE))
+		);
+		
+		txtTotal = new JTextField();
+		txtTotal.setText(calcularVenda().toString());
+		txtTotal.setEditable(false);
+		scrollPane.setViewportView(txtTotal);
+		txtTotal.setColumns(10);
+		panelCaixa.setLayout(gl_panelCaixa);
 		
 		tableCodigosProdutos = new JTable();
 		GroupLayout gl_panelProdutos = new GroupLayout(panelProdutos);
@@ -245,12 +391,14 @@ public class Venda {
 		btnVoltarOpcoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelOpcoes.add(btnVoltarOpcoes);
@@ -259,12 +407,14 @@ public class Venda {
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelConsulta.add(btnFechar);
@@ -273,12 +423,14 @@ public class Venda {
 		btnDinheiro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnDinheiro);
@@ -287,12 +439,14 @@ public class Venda {
 		btnDebito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnDebito);
@@ -301,74 +455,46 @@ public class Venda {
 		btnCredito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnCredito);
-		
-		JTextPane txtpnTotal = new JTextPane();
-		txtpnTotal.setText("TOTAL:");
-		txtpnTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
-		txtpnTotal.setEnabled(false);
-		txtpnTotal.setEditable(false);
-		//model.addColumn("Produto");
-        //model.addColumn("Quantidade");
-        //model.addColumn("Valor");
-        //model.addColumn("Total");
-		
-		tableItemPedidos = new JTable(model);
-		tableItemPedidos.setToolTipText("");
-		
-		JTextPane txtpnSubtotal = new JTextPane();
-		txtpnSubtotal.setText("SUBTOTAL:");
-		txtpnSubtotal.setEnabled(false);
-		txtpnSubtotal.setEditable(false);
-		GroupLayout gl_panelCaixa = new GroupLayout(panelCaixa);
-		gl_panelCaixa.setHorizontalGroup(
-			gl_panelCaixa.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelCaixa.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(tableItemPedidos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_panelCaixa.createSequentialGroup()
-							.addComponent(txtpnTotal, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtpnSubtotal, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
-					.addGap(14))
-		);
-		gl_panelCaixa.setVerticalGroup(
-			gl_panelCaixa.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelCaixa.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtpnSubtotal, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-						.addComponent(txtpnTotal, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(tableItemPedidos, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-					.addGap(10))
-		);
-		panelCaixa.setLayout(gl_panelCaixa);
 		panelDesconto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		txtDesconto = new JTextField();
 		txtDesconto.setColumns(10);
 		panelDesconto.add(txtDesconto);
 		
+		
+		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
+				
+				ItemPedido itempedido = new ItemPedido(
+				(int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 0),
+				(int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1),
+				(int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 3),
+				(Double)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 4));				
+				ItemPedBLL.adicionaItens(itempedido);
+				
+				
 			}
 		});
 		
@@ -376,31 +502,54 @@ public class Venda {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
-		panelAddQtdDesc.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		panelAddQtdDesc.add(btnSalvar);
-		panelAddQtdDesc.add(btnVoltar);
+		panelAdd.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelAdd.add(btnSalvar);
+		panelAdd.add(btnVoltar);
 		
 		JButton btnAdicionar = new JButton("Adicionar");
-		panelMenu.add(btnAdicionar);
 		
-		JButton btnQuantidade = new JButton("Quantidade");
-		btnQuantidade.addActionListener(new ActionListener() {
+		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelAddQtdDesc.setVisible(true);
+				panelAdd.setVisible(true);
 				panelMenu.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
+				
+				DefaultTableModel model = (DefaultTableModel) tableItemPedidos.getModel();
+				model.addRow(new Object[]{null,null});
+				
+		        }
+		});
+		
+		panelMenu.add(btnAdicionar);
+		
+		JButton btnQuantidade = new JButton("Quantidade");
+		btnQuantidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelQtd.setVisible(true);
+				panelAdd.setVisible(false);
+				panelMenu.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelMenu.add(btnQuantidade);
@@ -412,9 +561,11 @@ public class Venda {
 				panelProdutos.setVisible(true);
 				panelMenu.setVisible(false);
 				panelDesconto.setVisible(false);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelMenu.add(btnConsulta);
@@ -424,11 +575,13 @@ public class Venda {
 			public void actionPerformed(ActionEvent e) {
 				panelPagamento.setVisible(true);
 				panelMenu.setVisible(false);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelMenu.add(btnPagamento);
@@ -436,13 +589,15 @@ public class Venda {
 		JButton btnDesconto = new JButton("Desconto");
 		btnDesconto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panelDesc.setVisible(true);
 				panelDesconto.setVisible(true);
 				panelMenu.setVisible(false);
-				panelAddQtdDesc.setVisible(true);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
 			}
 		});
 		panelMenu.add(btnDesconto);
@@ -452,11 +607,13 @@ public class Venda {
 			public void actionPerformed(ActionEvent e) {
 				panelOpcoes.setVisible(true);
 				panelMenu.setVisible(false);
-				panelAddQtdDesc.setVisible(false);
+				panelAdd.setVisible(false);
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
 			}
 		});
 		panelMenu.add(btnOpcoes);
@@ -468,19 +625,6 @@ public class Venda {
 			}
 		});
 		panelMenu.add(btnCancelar);
-		
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelAddQtdDesc.setVisible(true);
-				panelMenu.setVisible(false);
-				panelConsulta.setVisible(false);
-				panelDesconto.setVisible(false);
-				panelPagamento.setVisible(false);
-				panelOpcoes.setVisible(false);
-				panelProdutos.setVisible(false);
-				
-			}
-		});
 		
 		frame.getContentPane().setLayout(groupLayout);
 	}
