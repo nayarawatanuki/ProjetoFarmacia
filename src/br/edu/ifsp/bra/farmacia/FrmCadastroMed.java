@@ -64,7 +64,7 @@ public class FrmCadastroMed {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 549, 359);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JLabel lblMedicamentos = new JLabel("MEDICAMENTOS");
 		lblMedicamentos.setFont(new Font("Lucida Grande", Font.PLAIN, 16));

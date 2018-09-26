@@ -88,7 +88,7 @@ public class MedicamentoDAO {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("UPDATE medicamento m "
-				+ "SET m.tipo_id?, m.codigo=?, "
+				+ "SET m.tipo_id=?, m.codigo=?, "
 				+ "m.descricao=?, m.preco=?, m.estoque=? WHERE m.medicamento_id=?");
 			ps.setInt(1, TipoMedicamento.setTipo(med.getTipo()));
 			ps.setString(2, med.getCodigo());
