@@ -16,24 +16,24 @@ public class CaixaBLL {
 
 	private static Pedido pedidoAtual;
 	private static Funcionario funcionarioAtual;
-	private static boolean status;
+	private static boolean isAberto;
 
 	public void abrirCaixa(Funcionario f) {
-		if (CaixaBLL.Status() && CaixaBLL.getFuncionarioAtual() != null) {
-			throw new RuntimeException("O caixa nï¿½o pode ser aberto pois jï¿½ estï¿½ aberto"); // CaixaAbertoException
+		if (CaixaBLL.isAberto() && CaixaBLL.getFuncionarioAtual() != null) {
+			throw new RuntimeException("O caixa não pode ser aberto pois já está aberto"); // CaixaAbertoException
 		}
 
 		CaixaBLL.funcionarioAtual = f;
-		CaixaBLL.status = true;
+		CaixaBLL.isAberto = true;
 	}
 
 	public void fecharCaixa(Funcionario f) {
 		if (CaixaBLL.getPedidoAtual() != null) {
-			throw new RuntimeException("O caixa nï¿½o pode ser fechado pois um pedido estï¿½ aberto"); // PedidoAbertoException
+			throw new RuntimeException("O caixa não pode ser fechado pois um pedido está aberto"); // PedidoAbertoException
 		}
 
 		CaixaBLL.funcionarioAtual = null;
-		CaixaBLL.status = false;
+		CaixaBLL.isAberto = false;
 	}
 
 	public void adicionaMedicamento(Medicamento m, int quantidade) {
@@ -42,7 +42,7 @@ public class CaixaBLL {
 
 	public void novoPedido() {
 		if (CaixaBLL.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda estï¿½ em aberto"); // PedidoAbertoException
+			throw new RuntimeException("Um pedido ainda está em aberto"); // PedidoAbertoException
 		}
 
 		CaixaBLL.pedidoAtual = new Pedido();
@@ -50,7 +50,7 @@ public class CaixaBLL {
 		CaixaBLL.getPedidoAtual().setData(new Date(Calendar.getInstance().getTime().getTime()));
 		CaixaBLL.getPedidoAtual().setStatus(StatusPedido.ABERTO);
 		
-		// Retornando o ï¿½ltimo id
+		// Retornando o último id
 		// CaixaBLL.getPedidoAtual().setId(pedidoDAO.adicionar(CaixaBLL.getPedidoAtual()));
 	}
 
@@ -60,7 +60,7 @@ public class CaixaBLL {
 
 	public void cancelaVenda() {
 		if (CaixaBLL.getPedidoAtual() == null) {
-			throw new RuntimeException("Nï¿½o existe nenhuma pedido em aberto para cancelar"); // PedidoInvalidoException
+			throw new RuntimeException("Não existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
 		}
 
 		this.alteraStatus(StatusPedido.CANCELADO);
@@ -73,7 +73,7 @@ public class CaixaBLL {
 	
 	private void alteraStatus(StatusPedido status) {
 		if (CaixaBLL.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda estï¿½ em aberto"); // PedidoAbertoException
+			throw new RuntimeException("Um pedido ainda está em aberto"); // PedidoAbertoException
 		}
 		if (CaixaBLL.getPedidoAtual().getStatus() == status) {
 			throw new RuntimeException("O status continua sendo o mesmo"); // PedidoStatusException
@@ -92,7 +92,7 @@ public class CaixaBLL {
 		return funcionarioAtual;
 	}
 
-	public static boolean Status() {
-		return status;
+	public static boolean isAberto() {
+		return isAberto;
 	}
 }
