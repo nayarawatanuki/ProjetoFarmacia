@@ -66,8 +66,7 @@ public class MedicamentoDAO {
 	public boolean adicionar(Medicamento med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO medicamento VALUES (?, ?, ?, ?, ?, ?);");
-				ps.setInt(6, med.getId());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO medicamento VALUES (DEFAULT, ?, ?, ?, ?, ?)");
 				ps.setInt(1, TipoMedicamento.setTipo(med.getTipo()));
 				ps.setString(2, med.getCodigo());
 				ps.setString(3, med.getDescricao());
