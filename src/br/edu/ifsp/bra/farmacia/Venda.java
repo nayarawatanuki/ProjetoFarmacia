@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 
 import java.awt.Color;
+
+import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
@@ -15,7 +17,10 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
@@ -30,13 +35,19 @@ import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Pedido;
 import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
+import br.edu.ifsp.bra.modelo.Pagamento;
+import br.edu.ifsp.bra.modelo.Pagamento.TipoPagamento;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Set;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import javax.swing.SwingConstants;
 
 public class Venda {
 
@@ -131,7 +142,7 @@ public class Venda {
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1239, 601);
+		frame.setBounds(100, 100, 1220, 601);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		criarTabela();
@@ -277,6 +288,12 @@ public class Venda {
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
 				
+				Double total = 0.00;
+		        for (int i = 0; i < tableItemPedidos.getRowCount(); i++){
+		            total += Double.parseDouble(tableItemPedidos.getValueAt(i, 4).toString());
+		            txtTotal.setText(total.toString());
+		        }
+				
 				ItemPedido itempedido = new ItemPedido();
 				itempedido.setPedidoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 0));
 				itempedido.setProdutoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1));
@@ -309,11 +326,6 @@ public class Venda {
 		
 		JScrollPane scrlPaneItemPedidos = new JScrollPane(tableItemPedidos);
 		
-		JTextPane txtPaneSubtotal = new JTextPane();
-		txtPaneSubtotal.setText("SUBTOTAL:");
-		txtPaneSubtotal.setEnabled(false);
-		txtPaneSubtotal.setEditable(false);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setEnabled(false);
 		scrollPane.setViewportBorder(new TitledBorder(null, "TOTAL:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -321,28 +333,24 @@ public class Venda {
 		gl_panelCaixa.setHorizontalGroup(
 			gl_panelCaixa.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelCaixa.createSequentialGroup()
-					.addContainerGap(20, Short.MAX_VALUE)
+					.addContainerGap(18, Short.MAX_VALUE)
 					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(scrlPaneItemPedidos, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
-						.addGroup(gl_panelCaixa.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtPaneSubtotal, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(scrollPane, Alignment.TRAILING)
+						.addComponent(scrlPaneItemPedidos, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE))
 					.addGap(18))
 		);
 		gl_panelCaixa.setVerticalGroup(
 			gl_panelCaixa.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCaixa.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtPaneSubtotal, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrlPaneItemPedidos, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(19, Short.MAX_VALUE))
 		);
 		
 		txtTotal = new JTextField();
+		txtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtTotal.setText(calcularVenda().toString());
 		txtTotal.setEditable(false);
 		scrollPane.setViewportView(txtTotal);
@@ -431,6 +439,9 @@ public class Venda {
 				panelProdutos.setVisible(false);
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
+				
+				Pagamento pg = new Pagamento();
+				pg.setTipo(TipoPagamento.DINHEIRO);
 			}
 		});
 		panelPagamento.add(btnDinheiro);
@@ -447,6 +458,9 @@ public class Venda {
 				panelProdutos.setVisible(false);
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
+				
+				Pagamento pg = new Pagamento();
+				pg.setTipo(TipoPagamento.DEBITO);
 			}
 		});
 		panelPagamento.add(btnDebito);
@@ -463,6 +477,9 @@ public class Venda {
 				panelProdutos.setVisible(false);
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
+				
+				Pagamento pg = new Pagamento();
+				pg.setTipo(TipoPagamento.CREDITO);
 			}
 		});
 		panelPagamento.add(btnCredito);
@@ -487,12 +504,17 @@ public class Venda {
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
 				
-				ItemPedido itempedido = new ItemPedido(
-				(int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 0),
-				(int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1),
-				(int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 3),
-				(Double)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 4));				
-				ItemPedBLL.adicionaItens(itempedido);
+				try {
+					ItemPedido itempedido = new ItemPedido();
+					
+					itempedido.setProdutoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1));
+					itempedido.setQuantidade((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 3));		
+					itempedido.setPreco((Double)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 4));			
+					ItemPedBLL.adicionaItens(itempedido);
+				}catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
 				
 				
 			}
@@ -531,8 +553,20 @@ public class Venda {
 				panelDesc.setVisible(false);
 				
 				DefaultTableModel model = (DefaultTableModel) tableItemPedidos.getModel();
-				model.addRow(new Object[]{null,null});
+				Medicamento ped = new Medicamento();
 				
+				model.addRow(new Object[] {});
+				
+				TableColumn ProdutoId = tableItemPedidos.getColumnModel().getColumn(2);
+				TableColumn Quantidade = tableItemPedidos.getColumnModel().getColumn(3);
+				
+				JComboBox produto = new JComboBox();
+				produto.addItem("Pílula A");
+				ProdutoId.setCellEditor(new DefaultCellEditor(produto));
+				
+				/*JSpinner quantidade = new JSpinner();
+				//quantidade.setEnabled(true);
+				Quantidade.setHeaderValue(quantidade);*/
 		        }
 		});
 		
