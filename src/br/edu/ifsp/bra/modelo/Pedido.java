@@ -43,12 +43,15 @@ public class Pedido {
 	private Date data;
 
 	public Pedido() {}
-	public Pedido(int caixaId, List<ItemPedido> itens, Date data, double total, StatusPedido status) {
+	public Pedido(int caixaId,  Date data, double total, StatusPedido status) {
 		this.caixaId = caixaId;
-		this.itens = itens;
 		this.data = data;
 		this.total = total;
 		this.status = status;
+	}
+	public Pedido(int caixaId, Date data, double total, StatusPedido status, List<ItemPedido> itens) {
+		this(caixaId, data, total, status);
+		this.itens = itens;
 	}
 	public int getId() {
 		return id;
