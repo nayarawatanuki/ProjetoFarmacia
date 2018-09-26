@@ -6,6 +6,7 @@ import br.edu.ifsp.bra.banco.FuncionarioDAO;
 import br.edu.ifsp.bra.modelo.Funcionario;
 
 public class FuncionarioBLL {
+	
 	FuncionarioDAO dao = new FuncionarioDAO();
 	
 	public Funcionario getFuncionario(int id) {
