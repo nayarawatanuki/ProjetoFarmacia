@@ -49,22 +49,28 @@ public class Pedido {
 		this.total = total;
 		this.status = status;
 	}
+	
 	public Pedido(int caixaId, Date data, double total, StatusPedido status, List<ItemPedido> itens) {
 		this(caixaId, data, total, status);
 		this.itens = itens;
 	}
+	
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public int getCaixaId() {
 		return caixaId;
 	}
+	
 	public void setCaixaId(int caixaId) {
 		this.caixaId = caixaId;
 	}
+	
 	public List<ItemPedido> getItens() {
 		return itens;
 	}
@@ -95,4 +101,9 @@ public class Pedido {
 	public void setData(Date data) {
 		this.data = data;
 	}
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
+		
+	}
+
 }
