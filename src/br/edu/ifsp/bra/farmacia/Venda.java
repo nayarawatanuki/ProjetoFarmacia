@@ -22,12 +22,27 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.FlowLayout;
 
+import br.edu.ifsp.bra.farmacia.Login;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 public class Venda {
 
 	private JFrame frame;
 	
 	private JTable table_1;
 	private JTextField txtDesconto;
+	private JPanel panelAddQtdDesc;
+	private JPanel panelMenu;
+	private JPanel panelConsulta;
+	private JPanel panelDesconto;
+	private JPanel panelPagamento;
+	private JPanel panelOpcoes;
+	private JButton btnAdicionar;
+	private JTable table;
+	
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -66,7 +81,16 @@ public class Venda {
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		
+		frame.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_1) {
+					btnAdicionar.setVisible(false);
+					
+				}
+			}
+		});
+	
 		
 		frame.setBounds(100, 100, 972, 601);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,8 +109,6 @@ public class Venda {
 		
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(colunas);
-		//table_1.setSurrendersFocusOnKeystroke(true);
-		//table_1.setEnabled(true);
 		
 		// Append a row 
 		model.addRow(new Object[]{"Sabão", 3, 2.50, 7.50});
@@ -100,8 +122,8 @@ public class Venda {
 		panelDesconto.setBorder(new TitledBorder(null, "Desconto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDesconto.setVisible(false);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Caixa", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		JPanel panelCaixa = new JPanel();
+		panelCaixa.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Caixa", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
 		JPanel panelPagamento = new JPanel();
 		panelPagamento.setVisible(false);
@@ -112,6 +134,9 @@ public class Venda {
 		JPanel panelOpcoes = new JPanel();
 		panelOpcoes.setVisible(false);
 		
+		JPanel panelProdutos = new JPanel();
+		panelProdutos.setBorder(new TitledBorder(null, "C\u00F3digos dos Produtos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelProdutos.setVisible(false);
 		
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -127,49 +152,97 @@ public class Venda {
 							.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 788, GroupLayout.PREFERRED_SIZE)
 								.addContainerGap())
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(panelAddQtdDesc, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-								.addGap(18)
-								.addComponent(panelPagamento, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-								.addGap(301))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE)
-									.addComponent(lblVendas))
-								.addGap(60)
-								.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
-								.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-								.addGap(51)))))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(panelAddQtdDesc, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(panelPagamento, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+									.addGap(550))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblVendas)
+										.addComponent(panelCaixa, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(60)
+											.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+											.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+											.addGap(51))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(75)
+											.addComponent(panelProdutos, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
+											.addContainerGap())))))))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(22)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblVendas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-							.addGap(28)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
-								.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(81)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(panelPagamento, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(panelAddQtdDesc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-						.addComponent(txtpnFarmciaTel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
-					.addGap(28)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(panelDesconto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(panelProdutos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(36))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(30)
+									.addComponent(panelCaixa, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED))))
+						.addComponent(txtpnFarmciaTel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(45)
+							.addComponent(panelAddQtdDesc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(panelPagamento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelConsulta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelOpcoes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(38))
+					.addGap(54))
 		);
 		
+		table = new JTable();
+		GroupLayout gl_panelProdutos = new GroupLayout(panelProdutos);
+		gl_panelProdutos.setHorizontalGroup(
+			gl_panelProdutos.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panelProdutos.createSequentialGroup()
+					.addContainerGap(19, Short.MAX_VALUE)
+					.addComponent(table, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+					.addGap(14))
+		);
+		gl_panelProdutos.setVerticalGroup(
+			gl_panelProdutos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProdutos.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(table, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(13, Short.MAX_VALUE))
+		);
+		panelProdutos.setLayout(gl_panelProdutos);
+		
 		JButton btnTrocarUsuario = new JButton("Trocar Usuário");
+		btnTrocarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+				try {
+					Login window = new Login();
+					window.frame.setVisible(true);
+					
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
+				
+			}
+		});
 		panelOpcoes.add(btnTrocarUsuario);
 		
 		JButton btnCancelarItem = new JButton("Cancelar Item");
@@ -184,6 +257,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelOpcoes.add(btnVoltarOpcoes);
@@ -197,6 +271,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelConsulta.add(btnFechar);
@@ -210,6 +285,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnDinheiro);
@@ -223,6 +299,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnDebito);
@@ -236,6 +313,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnCredito);
@@ -257,31 +335,31 @@ public class Venda {
 		txtpnSubtotal.setText("SUBTOTAL:");
 		txtpnSubtotal.setEnabled(false);
 		txtpnSubtotal.setEditable(false);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
+		GroupLayout gl_panelCaixa = new GroupLayout(panelCaixa);
+		gl_panelCaixa.setHorizontalGroup(
+			gl_panelCaixa.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panelCaixa.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(table_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_panelCaixa.createSequentialGroup()
 							.addComponent(txtpnTotal, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(txtpnSubtotal, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
 					.addGap(14))
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
+		gl_panelCaixa.setVerticalGroup(
+			gl_panelCaixa.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCaixa.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.LEADING)
 						.addComponent(txtpnSubtotal, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
 						.addComponent(txtpnTotal, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 					.addGap(10))
 		);
-		panel.setLayout(gl_panel);
+		panelCaixa.setLayout(gl_panelCaixa);
 		panelDesconto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		txtDesconto = new JTextField();
@@ -297,6 +375,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		
@@ -309,6 +388,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelAddQtdDesc.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -327,6 +407,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelMenu.add(btnQuantidade);
@@ -335,6 +416,7 @@ public class Venda {
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelConsulta.setVisible(true);
+				panelProdutos.setVisible(true);
 				panelMenu.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelAddQtdDesc.setVisible(false);
@@ -353,6 +435,7 @@ public class Venda {
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelMenu.add(btnPagamento);
@@ -366,6 +449,7 @@ public class Venda {
 				panelConsulta.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelMenu.add(btnDesconto);
@@ -379,6 +463,7 @@ public class Venda {
 				panelConsulta.setVisible(false);
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
+				panelProdutos.setVisible(false);
 			}
 		});
 		panelMenu.add(btnOpcoes);
@@ -399,6 +484,7 @@ public class Venda {
 				panelDesconto.setVisible(false);
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
 				
 			}
 		});
