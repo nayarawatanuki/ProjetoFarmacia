@@ -2,7 +2,8 @@ package br.edu.ifsp.bra.modelo;
 
 public abstract class Pagamento {
 
-	public enum TipoPagamento { NENHUM, DINHEIRO, DEBITO, CREDITO;
+	public enum TipoPagamento {
+		NENHUM, DINHEIRO, DEBITO, CREDITO;
 
 		public TipoPagamento getTipo(int tipo) {
 			switch (tipo) {
