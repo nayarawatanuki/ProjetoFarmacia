@@ -6,16 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
@@ -23,16 +13,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.event.MenuKeyListener;
-import java.awt.Event;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -43,7 +25,6 @@ import java.awt.FlowLayout;
 public class Venda {
 
 	private JFrame frame;
-	private JTextPane txtpnFAdicionar;
 	
 	private JTable table_1;
 	private JTextField txtDesconto;
