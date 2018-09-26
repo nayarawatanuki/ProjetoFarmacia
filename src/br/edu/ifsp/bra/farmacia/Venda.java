@@ -30,16 +30,9 @@ public class Venda {
 
 	private JFrame frame;
 	
-	private JTable table_1;
+	private JTable tableItemPedidos;
 	private JTextField txtDesconto;
-	private JPanel panelAddQtdDesc;
-	private JPanel panelMenu;
-	private JPanel panelConsulta;
-	private JPanel panelDesconto;
-	private JPanel panelPagamento;
-	private JPanel panelOpcoes;
-	private JButton btnAdicionar;
-	private JTable table;
+	private JTable tableCodigosProdutos;
 	
 	
 	
@@ -81,7 +74,7 @@ public class Venda {
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		frame.addKeyListener(new KeyAdapter() {
+		/*frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_1) {
@@ -89,7 +82,7 @@ public class Venda {
 					
 				}
 			}
-		});
+		});*/
 	
 		
 		frame.setBounds(100, 100, 972, 601);
@@ -210,20 +203,20 @@ public class Venda {
 					.addGap(54))
 		);
 		
-		table = new JTable();
+		tableCodigosProdutos = new JTable();
 		GroupLayout gl_panelProdutos = new GroupLayout(panelProdutos);
 		gl_panelProdutos.setHorizontalGroup(
 			gl_panelProdutos.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, gl_panelProdutos.createSequentialGroup()
 					.addContainerGap(19, Short.MAX_VALUE)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+					.addComponent(tableCodigosProdutos, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
 					.addGap(14))
 		);
 		gl_panelProdutos.setVerticalGroup(
 			gl_panelProdutos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelProdutos.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+					.addComponent(tableCodigosProdutos, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(13, Short.MAX_VALUE))
 		);
 		panelProdutos.setLayout(gl_panelProdutos);
@@ -328,8 +321,8 @@ public class Venda {
         //model.addColumn("Valor");
         //model.addColumn("Total");
 		
-		table_1 = new JTable(model);
-		table_1.setToolTipText("");
+		tableItemPedidos = new JTable(model);
+		tableItemPedidos.setToolTipText("");
 		
 		JTextPane txtpnSubtotal = new JTextPane();
 		txtpnSubtotal.setText("SUBTOTAL:");
@@ -341,7 +334,7 @@ public class Venda {
 				.addGroup(gl_panelCaixa.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(table_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(tableItemPedidos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(gl_panelCaixa.createSequentialGroup()
 							.addComponent(txtpnTotal, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -356,7 +349,7 @@ public class Venda {
 						.addComponent(txtpnSubtotal, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
 						.addComponent(txtpnTotal, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+					.addComponent(tableItemPedidos, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 					.addGap(10))
 		);
 		panelCaixa.setLayout(gl_panelCaixa);
