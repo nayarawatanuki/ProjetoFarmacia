@@ -92,7 +92,7 @@ insert into pedido_status values
 create table pedido (
 	pedido_id int not null auto_increment primary key,
     caixa_id int not null,
-    status_id int not null;
+    status_id int not null,
     total double not null,
     data datetime not null default now(),
     foreign key (caixa_id) references caixa(caixa_id),
