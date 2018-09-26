@@ -18,18 +18,6 @@ public class CaixaBLL {
 	private static Funcionario funcionarioAtual;
 	private static boolean isAberto;
 
-	public static Pedido getPedidoAtual() {
-		return pedidoAtual;
-	}
-
-	public static Funcionario getFuncionarioAtual() {
-		return funcionarioAtual;
-	}
-
-	public static boolean isAberto() {
-		return isAberto;
-	}
-
 	public void abrirCaixa(Funcionario f) {
 		if (CaixaBLL.isAberto() && CaixaBLL.getFuncionarioAtual() != null) {
 			throw new RuntimeException("O caixa não pode ser aberto pois já está aberto"); // CaixaAbertoException
@@ -80,7 +68,7 @@ public class CaixaBLL {
 	}
 	
 	public void geraNotaFiscal() {
-
+		// Gerando nota fiscal
 	}
 	
 	private void alteraStatus(StatusPedido status) {
@@ -94,5 +82,17 @@ public class CaixaBLL {
 		CaixaBLL.getPedidoAtual().setStatus(status);
 		// Modificando o status do pedido
 		// CaixaBLL.pedidoDAO.modificar(CaixaBLL.getPedidoAtual());
+	}
+	
+	public static Pedido getPedidoAtual() {
+		return pedidoAtual;
+	}
+
+	public static Funcionario getFuncionarioAtual() {
+		return funcionarioAtual;
+	}
+
+	public static boolean isAberto() {
+		return isAberto;
 	}
 }
