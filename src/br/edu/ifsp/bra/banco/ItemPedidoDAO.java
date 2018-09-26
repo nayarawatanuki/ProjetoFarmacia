@@ -18,7 +18,7 @@ public class ItemPedidoDAO {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM ifsp_farmacia.itenspedidos;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM itens_pedido;");
 			Set<ItemPedido> list = new HashSet<ItemPedido>();
 			while(rs.next()) {
 				ItemPedido itempedido = toItemPedido(rs);
@@ -35,7 +35,7 @@ public class ItemPedidoDAO {
 		
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO itemPedido VALUES (pedido.pedido_id, ?, ?,?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO itens_pedido VALUES (?, ?, ?, ?)");
 			ps.setInt(1, itempedido.getPedidoId());
 			ps.setInt(2, itempedido.getProdutoId());
 			ps.setInt(3, itempedido.getQuantidade());
