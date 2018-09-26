@@ -34,13 +34,15 @@ public class PedidoDAO {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO pedido VALUES (?, ?, ?)");
-			ps.setInt(1, pedido.getNumero());
-			ps.setString(2, pedido.getStatus().toString()); 
-			ps.setDate(3, (Date) pedido.getData());
+			ps.setInt(1, pedido.getPedidoId());
+			ps.setInt(2, pedido.getCaixaId());
+			ps.setString(3, pedido.getStatus().toString());
+			ps.setDouble(4, pedido.getTotal());
+			ps.setDate(5, (Date) pedido.getData());
 			
 			if (ps.executeUpdate() == 1) {
 				// se o pedido for adicionado, adiciona os items ligando o id do mesmo em cada item.
-				ItensDAO.adicionaItens(pedido.getItens(), pedido.getNumero());
+				ItensDAO.adicionaItens(pedido.getItens(), pedido.getPedidoId());
 				return true;
 			}
 		} catch (SQLException ex) {
@@ -60,10 +62,13 @@ public class PedidoDAO {
 	private Pedido toPedido(ResultSet rs) throws SQLException {
 
 		Pedido pedido = new Pedido();
-		pedido.setNumero(rs.getInt("pedido_id"));
-		pedido.setItens(ItensDAO.getItens(pedido.getNumero()));
+		pedido.setPedidoId(rs.getInt("pedido_id"));
+		pedido.setCaixaId(rs.getInt("caixa_id"));
+		pedido.setStatus(rs.getDouble("status_id"));
+		pedido.setItens(ItensDAO.getItens(pedido.getPedidoId()));
+		pedido.setTotal(rs.getDouble("total"));
 		pedido.setData(rs.getDate("data_pedido"));
-		pedido.setStatus("pedido_status");
+		
 		return pedido;
 	}
 }
