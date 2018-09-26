@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import br.edu.ifsp.bra.modelo.Cartao;
-import br.edu.ifsp.bra.modelo.Cliente;
-import br.edu.ifsp.bra.modelo.Pagamento;
 
 public class CartaoDAO {
 	public Cartao getPagamento(int id) {
@@ -18,9 +16,9 @@ public class CartaoDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT p.pagamento_id, pedido_id, desconto, total, conta, agencia "
-					+ "FROM pagamento_cartao pc JOIN pagamento p ON p.pagamento_id=pc.pagamento_id "
-					+ "WHERE pc.pagamento_id=" + id);
+					"SELECT pagamento_id, pedido_id, desconto, total, conta, agencia "
+							+ "FROM pagamento_cartao "
+							+ "WHERE pagamento_id=" + id);
 
 			if(rs.next()) {
 				return toCartao(rs);
@@ -35,8 +33,7 @@ public class CartaoDAO {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pagamento_cartao pc " +
-					"JOIN pagamento p ON p.pagamento_id = pc.pagamento_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pagamento_cartao");
 			Set<Cartao> pagamentos = new HashSet<Cartao>();
 			while(rs.next()) {
 				Cartao cartao = toCartao(rs);
@@ -52,10 +49,12 @@ public class CartaoDAO {
 	public boolean novoPagamento(Cartao cartao) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO cartao VALUES (?, ?, ?)");
-			ps.setInt(1, cartao.getId());
-			ps.setString(2, cartao.getConta());
-			ps.setString(3, cartao.getAgencia());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO cartao VALUES (DEFAULT, ?, ?, ?, ?, ?)");
+			ps.setInt(1, cartao.getPedido().getId());
+			ps.setDouble(2, cartao.getDesconto());
+			ps.setDouble(3, cartao.getTotal());
+			ps.setString(4, cartao.getConta());
+			ps.setString(5, cartao.getAgencia());
 
 			if (ps.executeUpdate() == 1) {
 				return true;
@@ -70,6 +69,8 @@ public class CartaoDAO {
 	private Cartao toCartao(ResultSet rs) throws SQLException {
 		Cartao cartao = new Cartao();
 		cartao.setId(rs.getInt("pagamento_id"));
+		cartao.setDesconto(rs.getDouble("desconto"));
+		cartao.setTotal(rs.getDouble("total"));
 		cartao.setConta(rs.getString("conta"));
 		cartao.setAgencia(rs.getString("agencia"));
 		return cartao;

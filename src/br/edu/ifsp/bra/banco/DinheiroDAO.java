@@ -16,9 +16,9 @@ public class DinheiroDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT p.pagamento_id, pedido_id, desconto, total, pago, troco "
-					+ "FROM pagamento_dinheiro pd JOIN pagamento p ON p.pagamento_id=pd.pagamento_id "
-					+ "WHERE pc.pagamento_id=" + id);
+					"SELECT pagamento_id, pedido_id, desconto, total, pago, troco "
+							+ "FROM pagamento_dinheiro "
+							+ "WHERE pagamento_id=" + id);
 
 			if(rs.next()) {
 				return toDinheiro(rs);
@@ -33,8 +33,7 @@ public class DinheiroDAO {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pagamento_dinheiro pd " +
-					"JOIN pagamento p ON p.pagamento_id = pd.pagamento_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pagamento_dinheiro");
 			Set<Dinheiro> pagamentos = new HashSet<Dinheiro>();
 			while(rs.next()) {
 				Dinheiro dinheiro = toDinheiro(rs);
@@ -50,8 +49,10 @@ public class DinheiroDAO {
 	public boolean novoPagamento(Dinheiro dinheiro) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO dinheiro VALUES (?, ?, ?)");
-			ps.setInt(1, dinheiro.getId());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO dinheiro VALUES (DEFAULT, ?, ?, ?, ?)");
+			ps.setInt(1, dinheiro.getPedido().getId());
+			ps.setDouble(2, dinheiro.getDesconto());
+			ps.setDouble(3, dinheiro.getTotal());
 			ps.setDouble(2, dinheiro.getPago());
 			ps.setDouble(3, dinheiro.getTroco());
 
@@ -68,6 +69,8 @@ public class DinheiroDAO {
 	private Dinheiro toDinheiro(ResultSet rs) throws SQLException {
 		Dinheiro dinheiro = new Dinheiro();
 		dinheiro.setId(rs.getInt("pagamento_id"));
+		dinheiro.setDesconto(rs.getDouble("desconto"));
+		dinheiro.setTotal(rs.getDouble("total"));
 		dinheiro.setPago(rs.getDouble("pago"));
 		dinheiro.setTroco(rs.getDouble("troco"));
 		return dinheiro;
