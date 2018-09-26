@@ -8,8 +8,8 @@ public class ItemPedido {
 	private int quantidade;
 	
 	public ItemPedido() {};
-	public ItemPedido(/*int pedidoId,*/ int produtoId, int quantidade, double preco) {
-		//this.pedidoId = pedidoId;
+	public ItemPedido(int pedidoId, int produtoId, int quantidade, double preco) {
+		this.pedidoId = pedidoId;
 		this.produtoId = produtoId;
 		this.quantidade = quantidade;
 		this.preco = preco;
