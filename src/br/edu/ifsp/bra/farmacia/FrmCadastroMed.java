@@ -32,8 +32,7 @@ public class FrmCadastroMed {
 	private JTextField txtCodigo;
 	private JTextField txtNome;
 	private JTextField txtPreco;
-	private MedicamentoBLL medBLL;
-
+	private MedicamentoBLL medBLL = new MedicamentoBLL();
 	/**
 	 * Launch the application.
 	 */
@@ -156,7 +155,7 @@ public class FrmCadastroMed {
 							txtNome.getText(),
 							Double.parseDouble(txtPreco.getText()),
 							(Integer)txtEstoque.getValue(),
-							TipoMedicamento.Cápsula
+							TipoMedicamento.getTipo(comboBox.getSelectedIndex())
 							);
 					
 					medBLL.adicionar(med);
@@ -171,7 +170,7 @@ public class FrmCadastroMed {
 				txtNome.setText("");
 				txtPreco.setText("");
 				txtEstoque.setValue(0);
-				comboBox.setSelectedItem(null);
+				comboBox.setSelectedItem(0);
 			}
 		});
 		
