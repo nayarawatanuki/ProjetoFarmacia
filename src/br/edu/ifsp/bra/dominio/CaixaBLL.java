@@ -7,6 +7,7 @@ import br.edu.ifsp.bra.banco.PedidoDAO;
 import br.edu.ifsp.bra.modelo.Funcionario;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
+import br.edu.ifsp.bra.modelo.Pagamento;
 import br.edu.ifsp.bra.modelo.Pedido;
 import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
@@ -28,6 +29,9 @@ public class CaixaBLL {
 	}
 
 	public void fecharCaixa(Funcionario f) {
+		if (!f.isGerente()) {
+			throw new RuntimeException("O caixa pode ser fechado apenas por um gerente");	// TipoFuncionarioException
+		}
 		if (CaixaBLL.getPedidoAtual() != null) {
 			throw new RuntimeException("O caixa não pode ser fechado pois um pedido está aberto"); // PedidoAbertoException
 		}
@@ -65,6 +69,18 @@ public class CaixaBLL {
 
 		this.alteraStatus(StatusPedido.CANCELADO);
 		CaixaBLL.pedidoAtual = null;
+	}
+	
+	public void concedeDesconto(Pagamento p, double desconto, Funcionario f) {
+		if (!f.isGerente()) {
+			throw new RuntimeException("O desconto pode ser concedidos apenas por um gerente");	// TipoFuncionarioException
+		}
+		if (CaixaBLL.getPedidoAtual() == null) {
+			throw new RuntimeException("Não existe nenhum pedido em aberto para conceder desconto"); // PedidoInvalidoException
+		}
+		
+		// Concedendo desconto
+		p.setDesconto(desconto);
 	}
 	
 	public void geraNotaFiscal() {
