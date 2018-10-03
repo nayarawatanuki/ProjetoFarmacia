@@ -79,8 +79,8 @@ public class Menu {
 		JMenu mnMedicamentos = new JMenu("Medicamentos");
 		menuBar.add(mnMedicamentos);
 		
-		JMenuItem mntmCadastro = new JMenuItem("Cadastro");
-		mntmCadastro.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastroM = new JMenuItem("Cadastro");
+		mntmCadastroM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					FrmCadastroMed med = new FrmCadastroMed();
@@ -90,10 +90,10 @@ public class Menu {
 				}
 			}
 		});
-		mnMedicamentos.add(mntmCadastro);
+		mnMedicamentos.add(mntmCadastroM);
 		
-		JMenuItem mntmConsulta = new JMenuItem("Consulta");
-		mntmConsulta.addActionListener(new ActionListener() {
+		JMenuItem mntmConsultaM = new JMenuItem("Consulta");
+		mntmConsultaM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					FrmMedicamento med = new FrmMedicamento();
@@ -103,13 +103,13 @@ public class Menu {
 				}
 			}
 		});
-		mnMedicamentos.add(mntmConsulta);
+		mnMedicamentos.add(mntmConsultaM);
 		
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
 		
-		JMenuItem mntmCadastro_1 = new JMenuItem("Cadastro");
-		mntmCadastro_1.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastroC = new JMenuItem("Cadastro");
+		mntmCadastroC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					ClienteCadastro cliente = new ClienteCadastro();
@@ -119,10 +119,10 @@ public class Menu {
 				}
 			}
 		});
-		mnClientes.add(mntmCadastro_1);
+		mnClientes.add(mntmCadastroC);
 		
-		JMenuItem mntmConsulta_1 = new JMenuItem("Consulta");
-		mntmConsulta_1.addActionListener(new ActionListener() {
+		JMenuItem mntmConsultaC = new JMenuItem("Consulta");
+		mntmConsultaC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Clientes cliente = new Clientes();
@@ -132,6 +132,6 @@ public class Menu {
 				}
 			}
 		});
-		mnClientes.add(mntmConsulta_1);
+		mnClientes.add(mntmConsultaC);
 	}
 }

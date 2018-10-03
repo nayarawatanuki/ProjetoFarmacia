@@ -7,24 +7,29 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-
-import br.edu.ifsp.bra.dominio.ItemPedidoBLL;
-import br.edu.ifsp.bra.dominio.MedicamentoBLL;
+import br.edu.ifsp.bra.banco.ConnectionFactory;
 import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class AdicionarItemPedido {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField textField;
 	private JTextField textField_2;
+	
+	JComboBox<String> cbMedicamento = new JComboBox<String>();
 
 	/**
 	 * Launch the application.
@@ -47,6 +52,28 @@ public class AdicionarItemPedido {
 	 */
 	public AdicionarItemPedido() {
 		initialize();
+		this.populaJComboBox();
+	}
+	
+	public void populaJComboBox() {
+		
+		Connection connection = ConnectionFactory.getConnection();
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM medicamento;");
+			ResultSet rs = ps.executeQuery();
+
+			while(rs.next()) {
+				cbMedicamento.addItem(rs.getString("descricao").toString());
+			}
+			
+			//JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nProduto incluido com sucesso.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+			
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+			ex.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -80,16 +107,24 @@ public class AdicionarItemPedido {
 		textField_2.setColumns(10);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		
 		JButton btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ItemPedidoBLL itempedido = new ItemPedidoBLL();
+				
+				//JComboBox cbMedicamento = new JComboBox();
+				Medicamento item = (Medicamento) cbMedicamento.getSelectedItem();
+				//textField.setText((String.valueOf(item.getId())));
+				
+				
+				JOptionPane.showMessageDialog(new JFrame(), "Id: " + String.valueOf(item.getId()) + "Desc: " + String.valueOf(item.getDescricao()));
 			}
 		});
-		
-		JComboBox comboBox_1 = new JComboBox();
-		Medicamento med = new Medicamento();
 		
 		
 		
@@ -113,7 +148,7 @@ public class AdicionarItemPedido {
 									.addGroup(gl_panel.createSequentialGroup()
 										.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(comboBox_1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+										.addComponent(cbMedicamento, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 							.addGap(36)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel.createSequentialGroup()
@@ -150,7 +185,7 @@ public class AdicionarItemPedido {
 							.addGap(5)
 							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(label_1)
-								.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(cbMedicamento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(label_2)
 							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))

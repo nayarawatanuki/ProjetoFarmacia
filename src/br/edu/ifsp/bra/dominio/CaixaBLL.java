@@ -3,7 +3,6 @@ package br.edu.ifsp.bra.dominio;
 import java.sql.Date;
 import java.util.Calendar;
 
-import br.edu.ifsp.bra.banco.PedidoDAO;
 import br.edu.ifsp.bra.modelo.Funcionario;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
@@ -13,7 +12,7 @@ import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
 public class CaixaBLL {
 
-	private static PedidoDAO pedidoDAO = new PedidoDAO();
+	//private static PedidoDAO pedidoDAO = new PedidoDAO();
 
 	private static Pedido pedidoAtual;
 	private static Funcionario funcionarioAtual;
@@ -21,7 +20,7 @@ public class CaixaBLL {
 
 	public void abrirCaixa(Funcionario f) {
 		if (CaixaBLL.isAberto() && CaixaBLL.getFuncionarioAtual() != null) {
-			throw new RuntimeException("O caixa não pode ser aberto pois já está aberto"); // CaixaAbertoException
+			throw new RuntimeException("O caixa nï¿½o pode ser aberto pois jï¿½ estï¿½ aberto"); // CaixaAbertoException
 		}
 
 		CaixaBLL.funcionarioAtual = f;
@@ -33,7 +32,7 @@ public class CaixaBLL {
 			throw new RuntimeException("O caixa pode ser fechado apenas por um gerente");	// TipoFuncionarioException
 		}
 		if (CaixaBLL.getPedidoAtual() != null) {
-			throw new RuntimeException("O caixa não pode ser fechado pois um pedido está aberto"); // PedidoAbertoException
+			throw new RuntimeException("O caixa nï¿½o pode ser fechado pois um pedido estï¿½ aberto"); // PedidoAbertoException
 		}
 
 		CaixaBLL.funcionarioAtual = null;
@@ -46,7 +45,7 @@ public class CaixaBLL {
 
 	public void novoPedido() {
 		if (CaixaBLL.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda está em aberto"); // PedidoAbertoException
+			throw new RuntimeException("Um pedido ainda estï¿½ em aberto"); // PedidoAbertoException
 		}
 
 		CaixaBLL.pedidoAtual = new Pedido();
@@ -54,7 +53,7 @@ public class CaixaBLL {
 		CaixaBLL.getPedidoAtual().setData(new Date(Calendar.getInstance().getTime().getTime()));
 		CaixaBLL.getPedidoAtual().setStatus(StatusPedido.ABERTO);
 		
-		// Retornando o último id
+		// Retornando o ï¿½ltimo id
 		// CaixaBLL.getPedidoAtual().setId(pedidoDAO.adicionar(CaixaBLL.getPedidoAtual()));
 	}
 
@@ -64,7 +63,7 @@ public class CaixaBLL {
 
 	public void cancelaVenda() {
 		if (CaixaBLL.getPedidoAtual() == null) {
-			throw new RuntimeException("Não existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
+			throw new RuntimeException("Nï¿½o existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
 		}
 
 		this.alteraStatus(StatusPedido.CANCELADO);
@@ -76,7 +75,7 @@ public class CaixaBLL {
 			throw new RuntimeException("O desconto pode ser concedidos apenas por um gerente");	// TipoFuncionarioException
 		}
 		if (CaixaBLL.getPedidoAtual() == null) {
-			throw new RuntimeException("Não existe nenhum pedido em aberto para conceder desconto"); // PedidoInvalidoException
+			throw new RuntimeException("Nï¿½o existe nenhum pedido em aberto para conceder desconto"); // PedidoInvalidoException
 		}
 		
 		// Concedendo desconto
@@ -89,7 +88,7 @@ public class CaixaBLL {
 	
 	private void alteraStatus(StatusPedido status) {
 		if (CaixaBLL.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda está em aberto"); // PedidoAbertoException
+			throw new RuntimeException("Um pedido ainda estï¿½ em aberto"); // PedidoAbertoException
 		}
 		if (CaixaBLL.getPedidoAtual().getStatus() == status) {
 			throw new RuntimeException("O status continua sendo o mesmo"); // PedidoStatusException

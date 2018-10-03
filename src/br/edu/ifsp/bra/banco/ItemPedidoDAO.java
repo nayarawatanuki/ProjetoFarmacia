@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
-
 import java.util.Set;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import br.edu.ifsp.bra.modelo.ItemPedido;
 
@@ -30,10 +32,12 @@ public class ItemPedidoDAO {
 		}
 		return null;
 	}
-
-	public boolean adicionaItens(ItemPedido itempedido) {
+	
+	
+	public boolean create(ItemPedido itempedido) {
 		
 		Connection connection = ConnectionFactory.getConnection();
+		
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO itens_pedido VALUES (?, ?, ?, ?)");
 			ps.setInt(1, itempedido.getPedidoId());
@@ -44,14 +48,17 @@ public class ItemPedidoDAO {
 			if (ps.executeUpdate() == 1) {
 				return true;
 			}
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nProduto incluido com sucesso.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+			
 		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "Venda", JOptionPane.INFORMATION_MESSAGE);
 			ex.printStackTrace();
 		}
 
 		return false;
 	}
-		
-	
+
 	
 	public boolean modificar(ItemPedido itempedido) {
 		Connection connection = ConnectionFactory.getConnection();
@@ -82,4 +89,5 @@ public class ItemPedidoDAO {
 		itped.setPreco(rs.getDouble("total"));
 		return itped;
 	}
+	
 }

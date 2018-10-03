@@ -16,7 +16,7 @@ public class ItemPedidoBLL {
 	
 	public boolean adicionaItens(ItemPedido itempedido) {
 		
-		return dao.adicionaItens(itempedido);
+		return dao.create(itempedido);
 	}
 	
 	public boolean modificar(ItemPedido itempedido) {

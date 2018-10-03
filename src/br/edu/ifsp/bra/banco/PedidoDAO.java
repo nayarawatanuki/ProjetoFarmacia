@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import br.edu.ifsp.bra.modelo.Pedido;
 
-public class PedidoDAO {
+public class PedidoDAO{
 	
 	ItemPedidoDAO ItensDAO = new ItemPedidoDAO();
 	
@@ -42,7 +42,7 @@ public class PedidoDAO {
 			
 			if (ps.executeUpdate() == 1) {
 				// se o pedido for adicionado, adiciona os items ligando o id do mesmo em cada item.
-				ItensDAO.adicionaItens(pedido.getItens(), pedido.getId());
+				ItensDAO.create(pedido.getItens(), pedido.getId());
 				return true;
 			}
 		} catch (SQLException ex) {

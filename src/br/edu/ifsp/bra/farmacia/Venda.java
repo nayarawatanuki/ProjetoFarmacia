@@ -5,26 +5,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 
-import java.awt.Color;
-
-import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
 import java.awt.FlowLayout;
 
 import br.edu.ifsp.bra.dominio.ItemPedidoBLL;
@@ -33,20 +29,10 @@ import br.edu.ifsp.bra.dominio.PedidoBLL;
 import br.edu.ifsp.bra.farmacia.Login;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
-import br.edu.ifsp.bra.modelo.Pedido;
-import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
-import br.edu.ifsp.bra.modelo.Pagamento;
-import br.edu.ifsp.bra.modelo.Pagamento.TipoPagamento;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Set;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import javax.swing.SwingConstants;
 
 public class Venda {
@@ -79,6 +65,7 @@ public class Venda {
 			}
 		});
 	}
+	
 	
 	private void popularTabela(DefaultTableModel model)
 	{
@@ -445,8 +432,8 @@ public class Venda {
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
 				
-				Pagamento pg = new Pagamento();
-				pg.setTipo(TipoPagamento.DINHEIRO);
+				/*Pagamento pg = new Pagamento();
+				pg.setTipo(TipoPagamento.DINHEIRO);*/
 			}
 		});
 		panelPagamento.add(btnDinheiro);
@@ -464,8 +451,8 @@ public class Venda {
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
 				
-				Pagamento pg = new Pagamento();
-				pg.setTipo(TipoPagamento.DEBITO);
+				/*Pagamento pg = new Pagamento();
+				pg.setTipo(TipoPagamento.DEBITO);*/
 			}
 		});
 		panelPagamento.add(btnDebito);
@@ -483,8 +470,8 @@ public class Venda {
 				panelQtd.setVisible(false);
 				panelDesc.setVisible(false);
 				
-				Pagamento pg = new Pagamento();
-				pg.setTipo(TipoPagamento.CREDITO);
+				/*Pagamento pg = new Pagamento();
+				pg.setTipo(TipoPagamento.CREDITO);*/
 			}
 		});
 		panelPagamento.add(btnCredito);
@@ -547,32 +534,26 @@ public class Venda {
 		
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelAdd.setVisible(true);
-				panelMenu.setVisible(false);
-				panelConsulta.setVisible(false);
-				panelDesconto.setVisible(false);
-				panelPagamento.setVisible(false);
-				panelOpcoes.setVisible(false);
-				panelProdutos.setVisible(false);
-				panelQtd.setVisible(false);
-				panelDesc.setVisible(false);
 				
-				DefaultTableModel model = (DefaultTableModel) tableItemPedidos.getModel();
-				Medicamento ped = new Medicamento();
+				try {
+					panelAdd.setVisible(true);
+					panelMenu.setVisible(false);
+					panelConsulta.setVisible(false);
+					panelDesconto.setVisible(false);
+					panelPagamento.setVisible(false);
+					panelOpcoes.setVisible(false);
+					panelProdutos.setVisible(false);
+					panelQtd.setVisible(false);
+					panelDesc.setVisible(false);
+					
+					AdicionarItemPedido addItem = new AdicionarItemPedido();
+					addItem.frame.setVisible(true);
 				
-				model.addRow(new Object[] {});
-				
-				TableColumn ProdutoId = tableItemPedidos.getColumnModel().getColumn(2);
-				TableColumn Quantidade = tableItemPedidos.getColumnModel().getColumn(3);
-				
-				JComboBox produto = new JComboBox();
-				produto.addItem("Pílula A");
-				ProdutoId.setCellEditor(new DefaultCellEditor(produto));
-				
-				/*JSpinner quantidade = new JSpinner();
-				//quantidade.setEnabled(true);
-				Quantidade.setHeaderValue(quantidade);*/
-		        }
+		        }catch(Exception ex) {
+					JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+					ex.printStackTrace();
+				}
+			}
 		});
 		
 		panelMenu.add(btnAdicionar);

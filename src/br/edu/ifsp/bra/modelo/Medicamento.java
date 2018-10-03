@@ -17,6 +17,7 @@ public class Medicamento {
 				return NENHUM;
 			}
 		}
+		
 		public static int setTipo(TipoMedicamento tipo) {
 			switch (tipo) {
 			case PILULA:
@@ -46,40 +47,59 @@ public class Medicamento {
 		this.estoque = estoque;
 		this.tipo = tipo;
 	}
+	
+	
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
 	public String getCodigo() {
 		return codigo;
 	}
+	
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
+	
+	
 	public String getDescricao() {
 		return descricao;
 	}
+	
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	
 	public double getPreco() {
 		return preco;
 	}
+	
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
+	
+	
 	public int getEstoque() {
 		return estoque;
 	}
+	
 	public void setEstoque(int estoque) {
 		this.estoque = estoque;
 	}
+	
+	
 	public TipoMedicamento getTipo() {
 		return tipo;
 	}
+	
 	public void setTipo(TipoMedicamento tipo) {
 		this.tipo = tipo;
 	}
+	
 }
