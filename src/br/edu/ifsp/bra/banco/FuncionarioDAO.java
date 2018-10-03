@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.edu.ifsp.bra.modelo.Cliente;
 import br.edu.ifsp.bra.modelo.Funcionario;
 
 public class FuncionarioDAO {

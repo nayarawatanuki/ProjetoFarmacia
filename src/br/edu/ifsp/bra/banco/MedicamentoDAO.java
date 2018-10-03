@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
 
@@ -83,7 +87,7 @@ public class MedicamentoDAO {
 	public boolean adicionar(Medicamento med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO medicamento VALUES (DEFAULT, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO medicamento VALUES (DEFAULT, ?, ?, ?, ?, ?);");
 				ps.setInt(1, TipoMedicamento.setTipo(med.getTipo()));
 				ps.setString(2, med.getCodigo());
 				ps.setString(3, med.getDescricao());
@@ -93,7 +97,12 @@ public class MedicamentoDAO {
 			if (ps.executeUpdate() == 1) {
 				return true;
 			}
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nMedicamento cadastrado com sucesso.", "Produtos - Estoque", JOptionPane.INFORMATION_MESSAGE);
+			
 		} catch (SQLException ex) {
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha no cadastro de Medicamento.", "Produtos - Estoque", JOptionPane.INFORMATION_MESSAGE);
 			ex.printStackTrace();
 		}
 
@@ -126,13 +135,18 @@ public class MedicamentoDAO {
 	public boolean remover(int med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("delete from medicamento where medicamento_id = ?" );
+			PreparedStatement ps = connection.prepareStatement("call RemoveMedicamento(?);" );
 			ps.setInt(1, med);
 
 			if (ps.executeUpdate() == 1) {
 				return true;
 			}
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Deletar \n\n" + "\nMedicamento deletado com sucesso.", "Produtos - Estoque", JOptionPane.INFORMATION_MESSAGE);
+		
 		} catch (SQLException ex) {
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Deletar \n\n" + "\nFalha ao deletar Medicamento.", "Produtos - Estoque", JOptionPane.INFORMATION_MESSAGE);
 			ex.printStackTrace();
 		}
 		return false;

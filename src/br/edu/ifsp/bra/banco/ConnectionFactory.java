@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import com.mysql.cj.jdbc.Driver;
 
 public class ConnectionFactory {
@@ -16,7 +19,8 @@ public class ConnectionFactory {
 			DriverManager.registerDriver(new Driver());
 			return DriverManager.getConnection(URL, USER, PASS);
 		} catch (SQLException ex) {
-			throw new RuntimeException("Erro conectando ao banco de dados", ex);
+			JOptionPane.showMessageDialog(new JFrame(), "Banco de Dados \n\n" + "\nErro ao conectar.", "Conexão", JOptionPane.INFORMATION_MESSAGE);
+			throw new RuntimeException(ex);
 		}
 	}
 }
