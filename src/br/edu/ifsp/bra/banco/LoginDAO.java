@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,43 +16,42 @@ public class LoginDAO {
 	
 	Connection connection = ConnectionFactory.getConnection();
 	
-	public Login logar(String usuario, String senha) {
-
+	public List<Login> Logar(){
 		try {
 			
-			Login log = null;
-			String sql = "SELECT * FROM funcionario WHERE usuario=? AND senha=?";
-			
+			String sql = "SELECT * FROM funcionario";
 			PreparedStatement comando = connection.prepareStatement(sql);
-			//Statement stmt = connection.createStatement();
 			
-			comando.setString(1, usuario);
-			comando.setString(2, senha);
 			
-			ResultSet rs = comando.executeQuery(sql);
-		
+			ResultSet rs = null;
 			
-			if(rs.next()) {
-				Login l = new Login();
-				l.setLogin(rs.getString(usuario));
-				l.setSenha(rs.getString(senha));
+			List<Login> log = new ArrayList<>();
+			rs = comando.executeQuery();
+			
+			while(rs.next()) {
+				Login login = new Login();
+				login.setLogin(rs.getString("usuario"));
+				login.setSenha(rs.getString("senha"));
+				log.add(login);
 				
-				if(l.getLogin().equals(rs.getString(usuario)) && l.getSenha().equals(rs.getString(senha)))
+				sql = "SELECT * FROM funcionario WHERE usuario=? AND senha=?";
+				comando = connection.prepareStatement(sql);
+				
+				comando.setString(1, login.getLogin());
+				comando.setString(2, login.getSenha());
+				
+				if(login.getLogin().equals(rs.getString("usuario")) && login.getSenha().equals(rs.getString("senha")))
 				{
 					JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Permitido.", "Funcionario", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
-				//JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Permitido.", "Funcionario", JOptionPane.INFORMATION_MESSAGE);
+				return log;
 			}
 			
-			return log;
-			
-			
-		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nLogin e/ou senha invalidos.", "Funcionario", JOptionPane.INFORMATION_MESSAGE);
-			ex.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 		return null;
+		
 	}
-
 }

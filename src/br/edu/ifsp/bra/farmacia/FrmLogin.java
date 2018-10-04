@@ -100,31 +100,30 @@ public class FrmLogin {
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				if(txtUser.getText().toString() == "" || pwdSenha.getPassword().toString() == "") {
+				
 					JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
+				
 				}else{
+				
 					try {
-						Login log = new Login();
-						log.setLogin(txtUser.getText());
-						log.setSenha(pwdSenha.getPassword().toString());
+						Login login = new Login();
+						LoginDAO dao = new LoginDAO();
+						login.setLogin(txtUser.getText());
+						login.setSenha(pwdSenha.getPassword().toString());
 						
-						Login login = new LoginDAO().logar(log.getLogin().toString(), log.getSenha().toString());
+						dao.Logar();
 						
-						if(login == null) {
-							
-						}else {
-							Menu menu = new Menu();
-							menu.frame.setVisible(true);
-							
-							frame.dispose();
-						}
+						Menu menu = new Menu();
+						menu.frame.setVisible(true);
+						
+						frame.dispose();
 						
 						
 					}catch(Exception ex) {
 						ex.printStackTrace();
 					}
-					
-					
 					
 				}
 			}
