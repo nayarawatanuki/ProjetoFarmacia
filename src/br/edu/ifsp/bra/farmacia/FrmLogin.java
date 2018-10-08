@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
-import br.edu.ifsp.bra.banco.LoginDAO;
+import br.edu.ifsp.bra.dominio.LoginBLL;
 import br.edu.ifsp.bra.modelo.Login;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -109,11 +109,11 @@ public class FrmLogin {
 				
 					try {
 						Login login = new Login();
-						LoginDAO dao = new LoginDAO();
+						LoginBLL bll = new LoginBLL();
 						login.setLogin(txtUser.getText());
 						login.setSenha(pwdSenha.getPassword().toString());
 						
-						dao.Logar();
+						bll.Logar();
 						
 						Menu menu = new Menu();
 						menu.frame.setVisible(true);

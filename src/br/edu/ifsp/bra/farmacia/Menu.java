@@ -7,6 +7,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import br.edu.ifsp.bra.banco.CaixaDAO;
+import br.edu.ifsp.bra.dominio.CaixaBLL;
+import br.edu.ifsp.bra.modelo.Caixa;
+
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -66,6 +71,11 @@ public class Menu {
 		mntmIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
+					
+					CaixaDAO dao = new CaixaDAO();
+					Caixa caixa = new Caixa();
+					dao.caixaAberto(caixa);
+					
 					Venda venda = new Venda();
 					venda.frame.setVisible(true);
 				}catch (Exception ex) {
