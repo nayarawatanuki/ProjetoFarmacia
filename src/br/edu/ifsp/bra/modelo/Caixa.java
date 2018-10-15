@@ -1,6 +1,7 @@
 package br.edu.ifsp.bra.modelo;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 public class Caixa {
 	
@@ -17,18 +18,17 @@ public class Caixa {
 				return NENHUM;
 			}
 		}
-			
+		
 		public static int setStatus(StatusCaixa status) {
 			switch (status) {
 			case ABERTO:
 				return 1;
 			case FECHADO:
-				return 0;
+				return 2;
 			default:
 				return 0;
 			}
-		}
-	};
+		}};
 	
 	private int id;
 	private int atendenteId;
@@ -37,6 +37,13 @@ public class Caixa {
 	private Date dataFechamento;
 	
 	public Caixa() {};
+	
+	public Caixa(int atendenteId, StatusCaixa status, Date dataAbertura) {
+		this.atendenteId = atendenteId;
+		this.status = status;
+		this.dataAbertura = dataAbertura;
+	}
+	
 	public Caixa(int atendenteId, StatusCaixa status, Date dataAbertura, Date dataFechamento) {
 		this.atendenteId = atendenteId;
 		this.status = status;

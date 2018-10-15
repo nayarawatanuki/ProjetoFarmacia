@@ -42,7 +42,7 @@ public class LoginDAO {
 				
 				if(login.getLogin().equals(rs.getString("usuario")) && login.getSenha().equals(rs.getString("senha")))
 				{
-					JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Permitido.", "Funcionario", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Permitido.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 				return log;

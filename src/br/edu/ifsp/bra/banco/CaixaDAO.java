@@ -53,11 +53,11 @@ public class CaixaDAO {
 	public boolean caixaAberto(Caixa caixa) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO caixa VALUES (funcionario.funcionario_id, DEFAULT, ?, ?, ?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO caixa (atendente_id, is_aberto, data_abertura) VALUES (funcionario.funcionario_id, DEFAULT, ?)");
 				ps.setInt(1, caixa.getAtendenteId());
 				ps.setInt(2, StatusCaixa.setStatus(caixa.getStatus()));
-				ps.setDate(3, caixa.getDataAbertura());
-				ps.setDate(4, caixa.getDataFechamento());
+				ps.setDate(3, (java.sql.Date)caixa.getDataAbertura());
+				//ps.setDate(4, caixa.getDataFechamento());
 
 			if (ps.executeUpdate() == 1) {
 				return true;
@@ -79,8 +79,8 @@ public class CaixaDAO {
 				+ "c.data_abertura=?, c.data_fechamento=? WHERE c.caixa_id=?");
 			ps.setInt(1, caixa.getAtendenteId());
 			ps.setInt(2, StatusCaixa.setStatus(caixa.getStatus()));
-			ps.setDate(3, caixa.getDataAbertura());
-			ps.setDate(4, caixa.getDataFechamento());
+			ps.setDate(3, (java.sql.Date) caixa.getDataAbertura());
+			ps.setDate(4, (java.sql.Date) caixa.getDataFechamento());
 			ps.setInt(5, caixa.getId());
 
 			if (ps.executeUpdate() == 1) {

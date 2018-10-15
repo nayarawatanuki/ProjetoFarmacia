@@ -7,10 +7,12 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import br.edu.ifsp.bra.banco.CaixaDAO;
-import br.edu.ifsp.bra.dominio.CaixaBLL;
 import br.edu.ifsp.bra.modelo.Caixa;
+import br.edu.ifsp.bra.modelo.Caixa.StatusCaixa;
+import br.edu.ifsp.bra.modelo.Funcionario;
 
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
@@ -20,7 +22,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTree;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JButton;
 
 public class Menu {
 
@@ -57,47 +60,113 @@ public class Menu {
 		frame.setBounds(100, 100, 354, 237);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel panel = new JPanel();
+		JPanel panelAbrirCaixa = new JPanel();
+		panelAbrirCaixa.setVisible(false);
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(18)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelAbrirCaixa, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(17, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(19)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelAbrirCaixa, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"NENHUM", "ABERTO", "FECHADO"}));
+		JComboBox<StatusCaixa> cbStatus = new JComboBox<>();
+		cbStatus.setModel(new DefaultComboBoxModel<>(StatusCaixa.values()));
 		
 		JLabel lblStatusCaixa = new JLabel("Status Caixa:");
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(14)
-					.addComponent(lblStatusCaixa)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(103, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(16)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		
+		JDateChooser dateAbertura = new JDateChooser();
+		dateAbertura.setDateFormatString("yyyy-MM-dd");
+		
+		JLabel lblDataAbertura = new JLabel("Data de Abertura:");
+		
+		
+		JButton btnAbrirCaixa = new JButton("Abrir Caixa");
+		btnAbrirCaixa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbStatus.getSelectedItem() == "NENHUM" || dateAbertura.getCalendar() == null) {
+					JOptionPane.showMessageDialog(null, "Favor preencher todos os campos corretamente.");
+				}else {
+
+					Funcionario fun = new Funcionario();
+					Caixa caixa = new Caixa(
+							fun.getId(),
+							StatusCaixa.getStatus(cbStatus.getSelectedIndex()),
+							dateAbertura.getDate()
+							);
+					
+					/*Caixa caixa = new Caixa();
+					caixa.setAtendenteId(fun.getId());
+					StatusCaixa.setStatus(StatusCaixa.getStatus(cbStatus.getSelectedIndex()));
+					caixa.setDataAbertura(dateAbertura.getDate());*/
+					
+					
+					CaixaDAO dao = new CaixaDAO();
+					dao.caixaAberto(caixa);
+				}
+				try{
+					
+					CaixaDAO dao = new CaixaDAO();
+					Caixa caixa = new Caixa();
+					;
+					dao.caixaAberto(caixa);
+					
+					Venda venda = new Venda();
+					venda.frame.setVisible(true);
+				}catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		
+		GroupLayout gl_panelAbrirCaixa = new GroupLayout(panelAbrirCaixa);
+		gl_panelAbrirCaixa.setHorizontalGroup(
+			gl_panelAbrirCaixa.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelAbrirCaixa.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_panelAbrirCaixa.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lblStatusCaixa)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(111, Short.MAX_VALUE))
+						.addComponent(lblDataAbertura, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(gl_panelAbrirCaixa.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panelAbrirCaixa.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panelAbrirCaixa.createParallelGroup(Alignment.LEADING)
+								.addComponent(cbStatus, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+								.addComponent(dateAbertura, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap(61, Short.MAX_VALUE))
+						.addGroup(gl_panelAbrirCaixa.createSequentialGroup()
+							.addGap(59)
+							.addComponent(btnAbrirCaixa)
+							.addGap(14))))
 		);
-		panel.setLayout(gl_panel);
+		gl_panelAbrirCaixa.setVerticalGroup(
+			gl_panelAbrirCaixa.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelAbrirCaixa.createSequentialGroup()
+					.addGap(16)
+					.addGroup(gl_panelAbrirCaixa.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblStatusCaixa)
+						.addComponent(cbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panelAbrirCaixa.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelAbrirCaixa.createSequentialGroup()
+							.addGap(16)
+							.addComponent(lblDataAbertura))
+						.addGroup(gl_panelAbrirCaixa.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(dateAbertura, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+					.addComponent(btnAbrirCaixa)
+					.addGap(18))
+		);
+		panelAbrirCaixa.setLayout(gl_panelAbrirCaixa);
 		frame.getContentPane().setLayout(groupLayout);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -109,18 +178,7 @@ public class Menu {
 		JMenuItem mntmIniciar = new JMenuItem("Iniciar");
 		mntmIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try{
-					
-					CaixaDAO dao = new CaixaDAO();
-					Caixa caixa = new Caixa();
-					dao.caixaAberto(caixa);
-					
-					Venda venda = new Venda();
-					venda.frame.setVisible(true);
-				}catch (Exception ex) {
-					ex.printStackTrace();
-				}
-				
+				panelAbrirCaixa.setVisible(true);
 			}
 		});
 		mnCaixa.add(mntmIniciar);

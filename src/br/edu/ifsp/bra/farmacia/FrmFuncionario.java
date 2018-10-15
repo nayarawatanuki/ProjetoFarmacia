@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class Funcionario {
+public class FrmFuncionario {
 
 	private JFrame frame;
 
@@ -15,7 +15,7 @@ public class Funcionario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Funcionario window = new Funcionario();
+					FrmFuncionario window = new FrmFuncionario();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -27,7 +27,7 @@ public class Funcionario {
 	/**
 	 * Create the application.
 	 */
-	public Funcionario() {
+	public FrmFuncionario() {
 		initialize();
 	}
 
