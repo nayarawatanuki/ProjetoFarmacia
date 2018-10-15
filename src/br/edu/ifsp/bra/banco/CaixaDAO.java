@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.Caixa.StatusCaixa;
 
@@ -59,6 +62,8 @@ public class CaixaDAO {
 			if (ps.executeUpdate() == 1) {
 				return true;
 			}
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Caixa \n\n" + "\nCaixa aberto com sucesso.", "Vendas", JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

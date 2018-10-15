@@ -4,7 +4,8 @@ import java.sql.Date;
 
 public class Caixa {
 	
-	public static enum StatusCaixa {NENHUM, ABERTO, FECHADO;
+	public static enum StatusCaixa {
+		NENHUM, ABERTO, FECHADO;
 		
 		public static StatusCaixa getStatus(int status) {
 			switch (status) {
@@ -43,12 +44,12 @@ public class Caixa {
 		this.dataFechamento = dataFechamento;
 	}
 	
-	public boolean isAberto() {
+	/*public boolean isAberto() {
 		return this.getStatus() == StatusCaixa.ABERTO;
 	}
 	public boolean isFechado() {
 		return this.getStatus() == StatusCaixa.FECHADO;
-	}
+	}*/
 	
 	public int getId() {
 		return id;
