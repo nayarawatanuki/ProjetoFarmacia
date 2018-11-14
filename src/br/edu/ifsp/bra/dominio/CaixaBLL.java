@@ -108,6 +108,6 @@ public class CaixaBLL {
 	}
 
 	public static boolean isAberto() {
-		return isAberto;
+		return isAberto = true;
 	}
 }

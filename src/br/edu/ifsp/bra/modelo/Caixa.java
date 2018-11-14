@@ -90,7 +90,7 @@ public class Caixa {
 	}
 	
 	public void setValor(double valor) {
-		this.valor = valor;
+		Caixa.valor = valor;
 	}
 	
 	public Date getDataAbertura() {

@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
+import br.edu.ifsp.bra.dominio.CaixaBLL;
 import br.edu.ifsp.bra.dominio.LoginBLL;
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.Login;
@@ -103,6 +104,8 @@ public class FrmCaixa {
 					try {
 						Caixa caixa = new Caixa();
 						caixa.setValor(valor);
+						
+						CaixaBLL.isAberto();
 						
 						Menu menu = new Menu();
 						menu.frame.setVisible(true);

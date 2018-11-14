@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 import java.awt.FlowLayout;
 
+import br.edu.ifsp.bra.dominio.CaixaBLL;
 import br.edu.ifsp.bra.dominio.ItemPedidoBLL;
 import br.edu.ifsp.bra.dominio.MedicamentoBLL;
 import br.edu.ifsp.bra.dominio.PedidoBLL;
@@ -267,13 +268,16 @@ public class FrmVenda {
 		
 		
 		JLabel lblStatus = new JLabel("Status");
+		if(CaixaBLL.isAberto() == true) {
+			lblStatus.setText("Status: Aberto");
+		}
 		
 		JFormattedTextField frmtdtxtfldCaixa = new JFormattedTextField();
 		frmtdtxtfldCaixa.setToolTipText("");
 		frmtdtxtfldCaixa.setEnabled(false);
 		frmtdtxtfldCaixa.setEditable(false);
 		
-		frmtdtxtfldCaixa.setText("" + Caixa.getValor());
+		frmtdtxtfldCaixa.setText("R$ " + Caixa.getValor());
 		
 		GroupLayout gl_panelCaixa = new GroupLayout(panelCaixa);
 		gl_panelCaixa.setHorizontalGroup(
