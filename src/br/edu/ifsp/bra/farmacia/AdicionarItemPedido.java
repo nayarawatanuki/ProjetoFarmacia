@@ -67,10 +67,10 @@ public class AdicionarItemPedido {
 				cbMedicamento.addItem(rs.getString("descricao").toString());
 			}
 			
-			//JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nProduto incluido com sucesso.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+			//JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nProduto incluido com sucesso.", "FrmVenda", JOptionPane.INFORMATION_MESSAGE);
 			
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "FrmVenda", JOptionPane.INFORMATION_MESSAGE);
 			ex.printStackTrace();
 		}
 

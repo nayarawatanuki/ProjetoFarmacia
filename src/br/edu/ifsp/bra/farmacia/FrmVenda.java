@@ -36,7 +36,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 
-public class Venda {
+public class FrmVenda {
 
 	JFrame frame;
 	private JTable tableItemPedidos;
@@ -57,7 +57,7 @@ public class Venda {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Venda window = new Venda();
+					FrmVenda window = new FrmVenda();
 					window.frame.setVisible(true);
 					
 				} catch (Exception e) {
@@ -112,7 +112,7 @@ public class Venda {
 	/**
 	 * Create the application.
 	 */
-	public Venda() {
+	public FrmVenda() {
 		initialize();
 		frame.setLocationRelativeTo(null);
 	}
@@ -591,7 +591,7 @@ public class Venda {
 					addItem.frame.setVisible(true);
 				
 		        }catch(Exception ex) {
-					JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "FrmVenda", JOptionPane.INFORMATION_MESSAGE);
 					ex.printStackTrace();
 				}
 			}

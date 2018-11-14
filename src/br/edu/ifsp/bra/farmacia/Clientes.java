@@ -59,7 +59,7 @@ public class Clientes {
 		JLabel lblClientes = new JLabel("CLIENTES");
 		lblClientes.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		
-		JButton btnNovaVenda = new JButton("Nova Venda");
+		JButton btnNovaVenda = new JButton("Nova FrmVenda");
 		
 		JButton btnAtualizar = new JButton("Atualizar");
 		
