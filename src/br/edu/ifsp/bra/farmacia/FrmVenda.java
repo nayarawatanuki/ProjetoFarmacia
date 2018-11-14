@@ -26,6 +26,7 @@ import java.awt.FlowLayout;
 import br.edu.ifsp.bra.dominio.ItemPedidoBLL;
 import br.edu.ifsp.bra.dominio.MedicamentoBLL;
 import br.edu.ifsp.bra.dominio.PedidoBLL;
+import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
 
@@ -35,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import javax.swing.JFormattedTextField;
 
 public class FrmVenda {
 
@@ -263,26 +265,36 @@ public class FrmVenda {
 					.addGap(67))
 		);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
 		
 		JLabel lblStatus = new JLabel("Status");
+		
+		JFormattedTextField frmtdtxtfldCaixa = new JFormattedTextField();
+		frmtdtxtfldCaixa.setToolTipText("");
+		frmtdtxtfldCaixa.setEnabled(false);
+		frmtdtxtfldCaixa.setEditable(false);
+		
+		frmtdtxtfldCaixa.setText("" + Caixa.getValor());
+		
 		GroupLayout gl_panelCaixa = new GroupLayout(panelCaixa);
 		gl_panelCaixa.setHorizontalGroup(
-			gl_panelCaixa.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panelCaixa.createSequentialGroup()
-					.addContainerGap(19, Short.MAX_VALUE)
+			gl_panelCaixa.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panelCaixa.createSequentialGroup()
 					.addGroup(gl_panelCaixa.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblStatus)
-						.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.LEADING, gl_panelCaixa.createSequentialGroup()
+							.addGap(16)
+							.addComponent(frmtdtxtfldCaixa, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
+						.addGroup(gl_panelCaixa.createSequentialGroup()
+							.addContainerGap(314, Short.MAX_VALUE)
+							.addComponent(lblStatus)))
 					.addGap(16))
 		);
 		gl_panelCaixa.setVerticalGroup(
-			gl_panelCaixa.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panelCaixa.createSequentialGroup()
+			gl_panelCaixa.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panelCaixa.createSequentialGroup()
 					.addComponent(lblStatus)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(frmtdtxtfldCaixa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(12, Short.MAX_VALUE))
 		);
 		panelCaixa.setLayout(gl_panelCaixa);
 		

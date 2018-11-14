@@ -14,6 +14,7 @@ import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
 import br.edu.ifsp.bra.dominio.LoginBLL;
+import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.Login;
 
 import javax.swing.border.EtchedBorder;
@@ -100,7 +101,8 @@ public class FrmCaixa {
 				}else{
 				
 					try {
-						
+						Caixa caixa = new Caixa();
+						caixa.setValor(valor);
 						
 						Menu menu = new Menu();
 						menu.frame.setVisible(true);

@@ -33,8 +33,11 @@ public class Caixa {
 	private int id;
 	private int atendenteId;
 	private StatusCaixa status;
+	private static double valor;
 	private Date dataAbertura;
 	private Date dataFechamento;
+	
+	public static Caixa caixaAtual;
 	
 	public Caixa() {};
 	
@@ -82,6 +85,14 @@ public class Caixa {
 		this.status = status;
 	}
 	
+	public static double getValor() {
+		return valor;
+	}
+	
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+	
 	public Date getDataAbertura() {
 		return dataAbertura;
 	}
@@ -98,4 +109,12 @@ public class Caixa {
 		this.dataFechamento = dataFechamento;
 	}
 
+	@Override
+	public String toString() {
+		return "Caixa [getValor()=" + getValor() + "]";
+	}
+	
+	
+
+	
 }
