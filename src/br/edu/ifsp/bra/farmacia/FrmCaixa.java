@@ -8,8 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.border.TitledBorder;
+
+import br.edu.ifsp.bra.dominio.LoginBLL;
+import br.edu.ifsp.bra.modelo.Login;
+
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.JScrollPane;
@@ -82,6 +88,31 @@ public class FrmCaixa {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				String v;
+				double valor;
+				v = frmtdtxtValorAbertura.getText();
+				valor = Double.parseDouble(v);
+				
+				if(valor < 100) {
+					
+					JOptionPane.showMessageDialog(null, "Saldo do caixa invalido.");
+				
+				}else{
+				
+					try {
+						
+						
+						Menu menu = new Menu();
+						menu.frame.setVisible(true);
+						
+						frame.dispose();
+						
+						
+					}catch(Exception ex) {
+						ex.printStackTrace();
+					}
+					
+				}
 			}
 		});
 		

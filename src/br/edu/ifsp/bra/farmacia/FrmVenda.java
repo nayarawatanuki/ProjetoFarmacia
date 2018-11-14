@@ -516,6 +516,22 @@ public class FrmVenda {
 			}
 		});
 		panelPagamento.add(btnCredito);
+		
+		JButton btnCancelPG = new JButton("Cancelar");
+		btnCancelPG.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAdd.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
+			}
+		});
+		panelPagamento.add(btnCancelPG);
 		panelDesconto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		txtDesconto = new JTextField();

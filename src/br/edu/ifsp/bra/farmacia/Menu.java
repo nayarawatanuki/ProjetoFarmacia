@@ -83,6 +83,8 @@ public class Menu {
 				try{
 					FrmVenda venda = new FrmVenda();
 					venda.frame.setVisible(true);
+					
+					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -99,6 +101,8 @@ public class Menu {
 				try{
 					FrmCadastroMed med = new FrmCadastroMed();
 					med.frame.setVisible(true);
+					
+					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -112,6 +116,8 @@ public class Menu {
 				try{
 					FrmMedicamento med = new FrmMedicamento();
 					med.frame.setVisible(true);
+					
+					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -128,6 +134,8 @@ public class Menu {
 				try{
 					ClienteCadastro cliente = new ClienteCadastro();
 					cliente.frame.setVisible(true);
+					
+					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -141,6 +149,8 @@ public class Menu {
 				try{
 					Clientes cliente = new Clientes();
 					cliente.frame.setVisible(true);
+					
+					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
