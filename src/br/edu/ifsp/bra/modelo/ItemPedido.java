@@ -2,33 +2,23 @@ package br.edu.ifsp.bra.modelo;
 
 public class ItemPedido {
 	
-	private int pedidoId;
-	private int produtoId;
+	private Medicamento medicamento;
 	private double preco;
 	private int quantidade;
 	
 	public ItemPedido() {};
-	public ItemPedido(int pedidoId, int produtoId, int quantidade, double preco) {
-		this.pedidoId = pedidoId;
-		this.produtoId = produtoId;
+	public ItemPedido(Medicamento medicamento, int quantidade, double preco) {
+		this.medicamento = medicamento;
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
 	
-	public int getPedidoId() {
-		return pedidoId;
+	public Medicamento getMedicamento() {
+		return medicamento;
 	}
 	
-	public void setPedidoId(int pedidoId) {
-		this.pedidoId = pedidoId;
-	}
-	
-	public int getProdutoId() {
-		return produtoId;
-	}
-	
-	public void setProdutoId(int produtoId) {
-		this.produtoId = produtoId;
+	public void setMedicamento(Medicamento medicamento) {
+		this.medicamento = medicamento;
 	}
 	
 	public double getPreco() {
@@ -36,9 +26,11 @@ public class ItemPedido {
 	}
 	
 	public void setPreco(double preco) {
-		Medicamento m = new Medicamento();
-		preco = m.getPreco();
-		this.preco = preco * quantidade;
+		this.preco = preco;
+	}
+	
+	public double getTotal() {
+		return this.preco * this.quantidade;
 	}
 	
 	public int getQuantidade() {

@@ -40,6 +40,14 @@ public class Medicamento {
 	private TipoMedicamento tipo;
 	
 	public Medicamento() {};
+	public Medicamento(int id,String codigo, String descricao, double preco, int estoque, TipoMedicamento tipo) {
+		this.id = id;
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.estoque = estoque;
+		this.tipo = tipo;
+	}
 	public Medicamento(String codigo, String descricao, double preco, int estoque, TipoMedicamento tipo) {
 		this.codigo = codigo;
 		this.descricao = descricao;

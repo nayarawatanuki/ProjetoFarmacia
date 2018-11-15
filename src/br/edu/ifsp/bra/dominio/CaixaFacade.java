@@ -13,18 +13,14 @@ import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
 public class CaixaFacade {
 
-	private PedidoDAO pedidoDAO = new PedidoDAO();
-
-	private static Pedido pedidoAtual;
-	private static Funcionario funcionarioAtual;
 	private static boolean isAberto;
 
 	public void abrirCaixa(Funcionario f) {
-		if (CaixaFacade.isAberto() && CaixaFacade.getFuncionarioAtual() != null) {
+		if (CaixaFacade.isAberto() && Funcionario.getFuncionarioAtual() != null) {
 			throw new RuntimeException("O caixa n�o pode ser aberto pois j� est� aberto"); // CaixaAbertoException
 		}
 
-		CaixaFacade.funcionarioAtual = f;
+		Funcionario.setFuncionarioAtual( f);
 		CaixaFacade.isAberto = true;
 	}
 
@@ -35,13 +31,12 @@ public class CaixaFacade {
 		if (CaixaFacade.getPedidoAtual() != null) {
 			throw new RuntimeException("O caixa n�o pode ser fechado pois um pedido est� aberto"); // PedidoAbertoException
 		}
-
-		CaixaFacade.funcionarioAtual = null;
+		Funcionario.setFuncionarioAtual(null);
 		CaixaFacade.isAberto = false;
 	}
 
 	public void adicionaMedicamento(Medicamento m, int quantidade) {
-		CaixaFacade.getPedidoAtual().adicionaItem(new ItemPedido(CaixaFacade.getPedidoAtual().getId(), m.getId(), quantidade, m.getPreco()));
+		Pedido.getPedidoAtual().adicionaItem(new ItemPedido(m, quantidade, m.getPreco()));
 	}
 
 	public void novoPedido() {
@@ -49,7 +44,7 @@ public class CaixaFacade {
 			throw new RuntimeException("Um pedido ainda est� em aberto"); // PedidoAbertoException
 		}
 
-		CaixaFacade.pedidoAtual = new Pedido();
+		Pedido.setPedidoAtual(new Pedido());
 		CaixaFacade.getPedidoAtual().setCaixaId(1);
 		CaixaFacade.getPedidoAtual().setData(new Date(Calendar.getInstance().getTime().getTime()));
 		CaixaFacade.getPedidoAtual().setStatus(StatusPedido.ABERTO);
@@ -63,12 +58,12 @@ public class CaixaFacade {
 	}
 
 	public void cancelaVenda() {
-		if (CaixaFacade.getPedidoAtual() == null) {
+		if (Pedido.getPedidoAtual() == null) {
 			throw new RuntimeException("N�o existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
 		}
 
 		this.alteraStatus(StatusPedido.CANCELADO);
-		CaixaFacade.pedidoAtual = null;
+		Pedido.setPedidoAtual(null);
 	}
 	
 	public void concedeDesconto(Pagamento p, double desconto, Funcionario f) {
@@ -88,24 +83,24 @@ public class CaixaFacade {
 	}
 	
 	private void alteraStatus(StatusPedido status) {
-		if (CaixaFacade.getPedidoAtual() != null) {
+		if (Pedido.getPedidoAtual() != null) {
 			throw new RuntimeException("Um pedido ainda est� em aberto"); // PedidoAbertoException
 		}
-		if (CaixaFacade.getPedidoAtual().getStatus() == status) {
+		if (Pedido.getPedidoAtual().getStatus() == status) {
 			throw new RuntimeException("O status continua sendo o mesmo"); // PedidoStatusException
 		}
 
-		CaixaFacade.getPedidoAtual().setStatus(status);
+		Pedido.getPedidoAtual().setStatus(status);
 		// Modificando o status do pedido
 		// CaixaBLL.pedidoDAO.modificar(CaixaBLL.getPedidoAtual());
 	}
 	
 	public static Pedido getPedidoAtual() {
-		return pedidoAtual;
+		return Pedido.getPedidoAtual();
 	}
 
 	public static Funcionario getFuncionarioAtual() {
-		return funcionarioAtual;
+		return Funcionario.getFuncionarioAtual();
 	}
 
 	public static boolean isAberto() {

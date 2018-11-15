@@ -32,6 +32,8 @@ public class FrmCadastroMed {
 	private JTextField txtCodigo;
 	private JTextField txtNome;
 	private JTextField txtPreco;
+	private JSpinner txtEstoque;
+	JComboBox<TipoMedicamento> comboBox;
 	private MedicamentoBLL medBLL = new MedicamentoBLL();
 	/**
 	 * Launch the application.
@@ -60,6 +62,13 @@ public class FrmCadastroMed {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	private void limpaCampos() {
+			txtCodigo.setText("");
+			txtNome.setText("");
+			txtPreco.setText("");
+			txtEstoque.setValue(0);
+			comboBox.setSelectedItem(0);
+	}
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 549, 359);
@@ -138,10 +147,10 @@ public class FrmCadastroMed {
 		
 		JLabel lblTipo = new JLabel("Tipo:");
 		
-		JComboBox<TipoMedicamento> comboBox = new JComboBox<>();
+		this.comboBox = new JComboBox<>();
 		comboBox.setModel(new DefaultComboBoxModel<>(TipoMedicamento.values()));
 		
-		JSpinner txtEstoque = new JSpinner();
+		this.txtEstoque = new JSpinner();
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -158,19 +167,21 @@ public class FrmCadastroMed {
 							TipoMedicamento.getTipo(comboBox.getSelectedIndex())
 							);
 					
-					medBLL.adicionar(med);
+					if(medBLL.adicionar(med)) {
+						JOptionPane.showMessageDialog(new JFrame(), "Produto adicionado.\n\n", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+						limpaCampos();
+					}else {
+						JOptionPane.showMessageDialog(new JFrame(), "Erro ao adicionar.\n\n", "Falha", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 		});
 		
+		
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtCodigo.setText("");
-				txtNome.setText("");
-				txtPreco.setText("");
-				txtEstoque.setValue(0);
-				comboBox.setSelectedItem(0);
+				limpaCampos();
 			}
 		});
 		

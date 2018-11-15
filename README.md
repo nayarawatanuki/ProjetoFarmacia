@@ -8,10 +8,10 @@ Este é um Projeto de Farmácia para a disciplina de Programação Orientada à Objet
 - [x] ClienteDAO
 - [x] DinheiroDAO
 - [x] FuncionarioDAO
-- [ ] ItemPedidoDAO
+- [x] ItemPedidoDAO
 - [ ] LoginDAO
-- [ ] MedicamentoDAO
-- [ ] PedidoDAO
+- [x] MedicamentoDAO
+- [x] PedidoDAO
 
 ## Interação básica
 

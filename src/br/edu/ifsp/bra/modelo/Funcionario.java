@@ -29,7 +29,7 @@ public class Funcionario extends Pessoa {
 			}
 		}
 	};
-
+	private static Funcionario funcionarioAtual;
 	private String usuario;
 	private String senha;
 	private TipoFuncionario tipo;
@@ -40,6 +40,13 @@ public class Funcionario extends Pessoa {
 		this.usuario = usuario;
 		this.senha = senha;
 		this.tipo = tipo;
+	}
+	
+	public static Funcionario getFuncionarioAtual() {
+		return funcionarioAtual;
+	}
+	public static void setFuncionarioAtual(Funcionario funcionarioAtual) {
+		Funcionario.funcionarioAtual = funcionarioAtual;
 	}
 	public boolean isAtendente() {
 		return this.getTipo() == TipoFuncionario.ATENDENTE;

@@ -6,66 +6,41 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
 
+import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Pedido;
+import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
 public class PedidoDAO{
 	
-	ItemPedidoDAO ItensDAO = new ItemPedidoDAO();
-	
-	public Pedido getPedido(int id) {
-		Connection connection = ConnectionFactory.getConnection();
-		try {
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT pedido_id, preco, data_pedido, status_pedido FROM pedido " + 
-							"WHERE pedido_id=" + id);
-
-			if(rs.next()) {
-				return toPedido(rs);
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return null;
-	}
+	ItemPedidoDAO itensDAO = new ItemPedidoDAO();
 	
 	public boolean adicionar(Pedido pedido) {
+		
 		Connection connection = ConnectionFactory.getConnection();
+		
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO pedido VALUES (?, ?, ?)");
-			ps.setInt(1, pedido.getId());
-			ps.setInt(2, pedido.getCaixaId());
-			ps.setString(3, pedido.getStatus().toString()); 
-			ps.setDouble(4, pedido.getTotal());
-			ps.setDate(5, (Date) pedido.getData());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO pedido VALUES (DEFAULT,?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, pedido.getCaixaId());
+			ps.setInt(2, StatusPedido.getTipo(pedido.getStatus()));
+			ps.setDouble(3, pedido.getTotal());
+			Date utilDate = new Date(1);
+			ps.setDate(4, pedido.getData() != null ? (Date) pedido.getData() : new java.sql.Date(utilDate.getTime()));
 			
 			if (ps.executeUpdate() == 1) {
-				// se o pedido for adicionado, adiciona os items ligando o id do mesmo em cada item.
-				ItensDAO.create(pedido.getItens(), pedido.getId());
+			 ResultSet idPedido = ps.getGeneratedKeys();
+			 if(idPedido.next()) {
+				int id = idPedido.getInt(1);
+				for(ItemPedido item : pedido.getItens()) {
+					itensDAO.adiciona(item, id);
+				}
+			 }
 				return true;
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-
 		return false;
-	}
-	
-	public void modificar() {
-		
-	}
-	public void remover() {
-		
-	}
-	
-	private Pedido toPedido(ResultSet rs) throws SQLException {
-
-		Pedido pedido = new Pedido();
-		pedido.setId(rs.getInt("caixa_id"));
-		pedido.setItens(ItensDAO.getItens(pedido.getId()));
-		pedido.setStatus(pedido.getStatus());
-		pedido.setData(rs.getDate("data_pedido"));
-		return pedido;
 	}
 }
