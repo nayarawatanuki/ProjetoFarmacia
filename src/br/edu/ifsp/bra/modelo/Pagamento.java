@@ -36,17 +36,17 @@ public abstract class Pagamento {
 	private static double TAXA_DESCONTO_DINHEIRO = 0.05;
 
 	private int id;
-	private Cliente cliente;
-	private Pedido pedido;
+	private int clienteId;
+	private int pedidoId;
 	private double desconto;
 	private double total;
 	private double valorFinal;
 	private TipoPagamento tipo;
 
 	public Pagamento() {}
-	public Pagamento(Cliente cliente, Pedido pedido, double total, TipoPagamento tipo) {
-		this.cliente = cliente;
-		this.pedido = pedido;
+	public Pagamento(int clienteId, int pedidoId, double total, TipoPagamento tipo) {
+		this.clienteId = clienteId;
+		this.pedidoId = pedidoId;
 		this.total = total;
 		this.valorFinal = this.total - this.getTotalDesconto();
 		this.tipo = tipo;
@@ -63,17 +63,17 @@ public abstract class Pagamento {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Cliente getCliente() {
-		return cliente;
+	public int getClienteId() {
+		return clienteId;
 	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setClienteId(int clienteId) {
+		this.clienteId = clienteId;
 	}
-	public Pedido getPedido() {
-		return pedido;
+	public int getPedidoId() {
+		return pedidoId;
 	}
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setPedidoId(int pedidoId) {
+		this.pedidoId = pedidoId;
 	}
 	public double getDesconto() {
 		return desconto;

@@ -5,21 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Cliente;
 
 public class ClienteDAO {
-	
+
 	public Cliente getCliente(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT cliente_id, nome, endereco, telefone, cpf, data_nascimento, is_ativo, data_cadastro FROM pessoa p " + 
-							"JOIN cliente c on c.cliente_id = p.pessoa_id " + 
-							"WHERE c.cliente_id=" + id);
+					"SELECT cliente_id, nome, endereco, telefone, cpf, data_nascimento, data_cadastro FROM cliente " + 
+							"WHERE cliente_id=" + id);
 
 			if(rs.next()) {
 				return toCliente(rs);
@@ -30,13 +29,12 @@ public class ClienteDAO {
 		return null;
 	}
 
-	public Set<Cliente> getTodosClientes() {
+	public List<Cliente> getTodosClientes() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pessoa p " +
-					"JOIN cliente c on c.cliente_id = p.pessoa_id");
-			Set<Cliente> clientes = new HashSet<Cliente>();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM cliente");
+			List<Cliente> clientes = new ArrayList<Cliente>();
 			while(rs.next()) {
 				Cliente cliente = toCliente(rs);
 				clientes.add(cliente);
@@ -48,40 +46,42 @@ public class ClienteDAO {
 		return null;
 	}
 
-	public boolean novoCliente(Cliente cliente) {
+	public int novoCliente(Cliente cliente) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO cliente VALUES (?, ?, ?)");
-			ps.setInt(1, cliente.getId());
-			ps.setBoolean(2, cliente.isAtivo());
-			ps.setDate(3, cliente.getDataCadastro());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO cliente VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, cliente.getEndereco());
+			ps.setString(3, cliente.getTelefone());
+			ps.setString(4, cliente.getCpf());
+			ps.setDate(5, cliente.getDataNascimento());
+			ps.setDate(6, cliente.getDataCadastro());
+			ps.executeUpdate();
 
-			if (ps.executeUpdate() == 1) {
-				return true;
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				return rs.getInt(1);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 
-		return false;
+		return -1;
 	}
 
 	public boolean modificaCliente(Cliente cliente) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("UPDATE cliente c "
-				+ "JOIN pessoa p ON p.pessoa_id = c.cliente_id "
-				+ "SET c.is_ativo=?, c.data_cadastro=?, "
-				+ "p.nome=?, p.endereco=?, p.telefone=?, p.cpf=?, p.data_nascimento=? "
-				+ "WHERE c.cliente_id=?");
-			ps.setBoolean(1, cliente.isAtivo());
-			ps.setDate(2, cliente.getDataCadastro());
-			ps.setString(3, cliente.getNome());
-			ps.setString(4, cliente.getEndereco());
-			ps.setString(5, cliente.getTelefone());
-			ps.setString(6, cliente.getCpf());
-			ps.setDate(7, cliente.getDataNascimento());
-			ps.setInt(8, cliente.getId());
+			PreparedStatement ps = connection.prepareStatement("UPDATE cliente "
+					+ "SET nome=?, endereco=?, telefone=?, cpf=?, data_nascimento=?, data_cadastro=? "
+					+ "WHERE cliente_id=?");
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, cliente.getEndereco());
+			ps.setString(3, cliente.getTelefone());
+			ps.setString(4, cliente.getCpf());
+			ps.setDate(5, cliente.getDataNascimento());
+			ps.setDate(6, cliente.getDataCadastro());
+			ps.setInt(7, cliente.getId());
 
 			if (ps.executeUpdate() == 1) {
 				return true;
@@ -102,7 +102,6 @@ public class ClienteDAO {
 		cliente.setCpf(rs.getString("cpf"));
 		cliente.setDataNascimento(rs.getDate("data_nascimento"));
 		cliente.setDataCadastro(rs.getDate("data_cadastro"));
-		cliente.setAtivo(rs.getBoolean("is_ativo"));
 		return cliente;
 	}
 }

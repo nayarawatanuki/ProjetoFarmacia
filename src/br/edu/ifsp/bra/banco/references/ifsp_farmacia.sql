@@ -48,14 +48,27 @@ insert into funcionario values
 
 create table caixa (
 	caixa_id int not null auto_increment primary key,
+    descricao varchar(50) not null
+);
+
+insert into caixa values
+(1, 'Caixa 1'),
+(2, 'Caixa 2'),
+(3, 'Caixa 3'),
+(4, 'Caixa 4 (Preferencial)');
+
+create table caixa_historico (
+	historico_id int not null auto_increment primary key,
+    caixa_id int not null,
     atendente_id int not null,
-    is_aberto boolean not null default false,
+    valor_abertura double default 0,
+    valor_fechamento double default 0,
     data_abertura datetime not null default now(),
     data_fechamento datetime default null,
     foreign key (atendente_id) references funcionario(funcionario_id)
 );
 
-insert into caixa values (1, 2, true, '2018-09-10', null);
+insert into caixa_historico values (1, 1, 2, 100, 0, '2018-09-10', null);
 
 create table tipo_medicamento (
 	tipo_id int not null auto_increment primary key,

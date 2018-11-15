@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Dinheiro;
 
@@ -29,12 +29,12 @@ public class DinheiroDAO {
 		return null;
 	}
 
-	public Set<Dinheiro> getTodosPagamentos() {
+	public List<Dinheiro> getTodosPagamentos() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM pagamento_dinheiro");
-			Set<Dinheiro> pagamentos = new HashSet<Dinheiro>();
+			List<Dinheiro> pagamentos = new ArrayList<Dinheiro>();
 			while(rs.next()) {
 				Dinheiro dinheiro = toDinheiro(rs);
 				pagamentos.add(dinheiro);
@@ -46,29 +46,32 @@ public class DinheiroDAO {
 		return null;
 	}
 
-	public boolean novoPagamento(Dinheiro dinheiro) {
+	public int novoPagamento(Dinheiro dinheiro) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO dinheiro VALUES (DEFAULT, ?, ?, ?, ?)");
-			ps.setInt(1, dinheiro.getPedido().getId());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO dinheiro VALUES (DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, dinheiro.getPedidoId());
 			ps.setDouble(2, dinheiro.getDesconto());
 			ps.setDouble(3, dinheiro.getTotal());
 			ps.setDouble(2, dinheiro.getPago());
 			ps.setDouble(3, dinheiro.getTroco());
+			ps.executeUpdate();
 
-			if (ps.executeUpdate() == 1) {
-				return true;
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				return rs.getInt(1);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 
-		return false;
+		return -1;
 	}
 
 	private Dinheiro toDinheiro(ResultSet rs) throws SQLException {
 		Dinheiro dinheiro = new Dinheiro();
 		dinheiro.setId(rs.getInt("pagamento_id"));
+		dinheiro.setPedidoId(rs.getInt("pedido_id"));
 		dinheiro.setDesconto(rs.getDouble("desconto"));
 		dinheiro.setTotal(rs.getDouble("total"));
 		dinheiro.setPago(rs.getDouble("pago"));

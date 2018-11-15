@@ -1,6 +1,6 @@
 package br.edu.ifsp.bra.dominio;
 
-import java.util.Set;
+import java.util.List;
 
 import br.edu.ifsp.bra.banco.FuncionarioDAO;
 import br.edu.ifsp.bra.modelo.Funcionario;
@@ -13,11 +13,11 @@ public class FuncionarioBLL {
 		return dao.getFuncionario(id);
 	}
 
-	public Set<Funcionario> getTodosFuncionarios() {
+	public List<Funcionario> getTodosFuncionarios() {
 		return dao.getTodosFuncionarios();
 	}
 
-	public boolean novoFuncionario(Funcionario funcionario) {
+	public int novoFuncionario(Funcionario funcionario) {
 		return dao.novoFuncionario(funcionario);
 	}
 

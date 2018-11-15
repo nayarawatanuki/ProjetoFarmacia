@@ -1,6 +1,6 @@
 package br.edu.ifsp.bra.dominio;
 
-import java.util.Set;
+import java.util.List;
 
 import br.edu.ifsp.bra.banco.ClienteDAO;
 import br.edu.ifsp.bra.modelo.Cliente;
@@ -13,11 +13,11 @@ public class ClienteBLL {
 		return dao.getCliente(id);
 	}
 	
-	public Set<Cliente> getTodosClientes() {
+	public List<Cliente> getTodosClientes() {
 		return dao.getTodosClientes();
 	}
 	
-	public boolean novoCliente(Cliente cliente) {
+	public int novoCliente(Cliente cliente) {
 		return dao.novoCliente(cliente);
 	}
 	

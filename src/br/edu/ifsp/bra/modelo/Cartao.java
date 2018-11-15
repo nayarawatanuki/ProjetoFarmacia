@@ -6,8 +6,8 @@ public class Cartao extends Pagamento {
 	private String agencia;
 	
 	public Cartao() {}
-	public Cartao(Cliente cliente, Pedido pedido, double total, TipoPagamento tipo, String conta, String agencia) {
-		super(cliente, pedido, total, tipo);
+	public Cartao(int clienteId, int pedidoId, double total, TipoPagamento tipo, String conta, String agencia) {
+		super(clienteId, pedidoId, total, tipo);
 		this.conta = conta;
 		this.agencia = agencia;
 	}
@@ -28,7 +28,7 @@ public class Cartao extends Pagamento {
 		if (this.getDesconto() > 0.0)
 			return this.getDesconto();
 		
-		if (this.getCliente() != null && this.getCliente().isAtivo())
+		if (this.getClienteId() > 0)
 			return this.getTotal() * Pagamento.taxaDescontoAposentado();
 		
 		return this.getDesconto();

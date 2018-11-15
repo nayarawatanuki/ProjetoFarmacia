@@ -6,8 +6,8 @@ public class Dinheiro extends Pagamento{
 	private double troco;
 
 	public Dinheiro() {}
-	public Dinheiro(Cliente cliente, Pedido pedido, double total, TipoPagamento tipo, double pago, double troco) {
-		super(cliente, pedido, total, tipo);
+	public Dinheiro(int clienteId, int pedidoId, double total, TipoPagamento tipo, double pago, double troco) {
+		super(clienteId, pedidoId, total, tipo);
 		this.pago = pago;
 		this.troco = troco;
 	}
@@ -28,7 +28,7 @@ public class Dinheiro extends Pagamento{
 		if (this.getDesconto() > 0.0)
 			return this.getDesconto();
 		
-		if (this.getCliente() != null && this.getCliente().isAtivo())
+		if (this.getClienteId() > 0)
 			return this.getTotal() * Pagamento.taxaDescontoAposentado();
 
 		return this.getTotal() * Pagamento.taxaDescontoDinheiro();

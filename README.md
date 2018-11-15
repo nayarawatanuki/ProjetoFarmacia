@@ -1,20 +1,23 @@
-# ProjetoFarmacia
+# Projeto de Farmácia IFSP
 
-## To-Do
+## Checklist
+- [x] CaixaDAO
+- [x] CaixaHistoricoDAO
+- [x] CartaoDAO
+- [x] ClienteDAO
+- [x] DinheiroDAO
+- [x] FuncionarioDAO
+- [ ] ItemPedidoDAO
+- [ ] LoginDAO
+- [ ] MedicamentoDAO
+- [ ] PedidoDAO
 
-### Login
-- caixa
-- lista de clientes
-- lista de produtos
+## Interação básica
 
-### Lista clientes
-- abre
-- janela adicionar/remoer
+### Atendente
+1. Realizar login no sistema
+2. Exibir tela de caixa (adicionar item, remover item, conceder desconto, fechar pedido, sair)
 
-### Lista Produtos
-- abre
-- janela add/remover
-
-### Abrir caixa
-- efetuar vendas
-- também pode abrir lista de clientes e  produtos
+### Gerente
+1. Login
+2. Menu de opções (medicamentos, clientes, funcionário, vendas, pagamentos)

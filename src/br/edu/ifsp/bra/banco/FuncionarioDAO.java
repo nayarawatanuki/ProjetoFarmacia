@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Funcionario;
 
@@ -16,9 +16,8 @@ public class FuncionarioDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT funcionario_id, nome, endereco, telefone, cpf, data_nascimento, tipo_id, usuario FROM pessoa p " + 
-							"JOIN funcionario f f.funcionario_id = p.pessoa_id " + 
-							"WHERE f.funcionario_id=" + id);
+					"SELECT funcionario_id, nome, endereco, telefone, cpf, data_nascimento, tipo_id, usuario FROM funcionario " + 
+							"WHERE funcionario_id=" + id);
 
 			if(rs.next()) {
 				return toFuncionario(rs);
@@ -29,13 +28,12 @@ public class FuncionarioDAO {
 		return null;
 	}
 
-	public Set<Funcionario> getTodosFuncionarios() {
+	public List<Funcionario> getTodosFuncionarios() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pessoa p " +
-					"JOIN funcionario f on f.funcionario_id= p.pessoa_id");
-			Set<Funcionario> funcionarios = new HashSet<Funcionario>();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM funcionario");
+			List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 			while(rs.next()) {
 				Funcionario funcionario = toFuncionario(rs);
 				funcionarios.add(funcionario);
@@ -47,32 +45,37 @@ public class FuncionarioDAO {
 		return null;
 	}
 
-	public boolean novoFuncionario(Funcionario funcionario) {
+	public int novoFuncionario(Funcionario funcionario) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO funcionario VALUES (?, ?, ?, ?)");
-			ps.setInt(1, funcionario.getId());
-			ps.setInt(2, Integer.parseInt(funcionario.getTipo().toString()));
-			ps.setString(3, funcionario.getUsuario());
-			ps.setString(4, funcionario.getSenha());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO funcionario VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, Funcionario.TipoFuncionario.setTipo(funcionario.getTipo()));
+			ps.setString(2, funcionario.getUsuario());
+			ps.setString(3, funcionario.getSenha());
+			ps.setString(4, funcionario.getNome());
+			ps.setString(5, funcionario.getEndereco());
+			ps.setString(6, funcionario.getTelefone());
+			ps.setString(7, funcionario.getCpf());
+			ps.setDate(8, funcionario.getDataNascimento());
+			ps.executeUpdate();
 
-			if (ps.executeUpdate() == 1) {
-				return true;
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				return rs.getInt(1);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 
-		return false;
+		return -1;
 	}
 
 	public boolean modificaFuncionario(Funcionario funcionario) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("UPDATE funcionario f "
-				+ "JOIN pessoa p ON p.pessoa_id = f.funcionario_id "
-				+ "SET f.tipo_id=?, f.usuario=?, f.senha=?, "
-				+ "p.nome=?, p.endereco=?, p.telefone=?, p.cpf=?, p.data_nascimento=? "
+			PreparedStatement ps = connection.prepareStatement("UPDATE funcionario "
+				+ "SET tipo_id=?, usuario=?, senha=?, "
+				+ "nome=?, endereco=?, telefone=?, cpf=?, data_nascimento=? "
 				+ "WHERE c.cliente_id=?");
 			ps.setInt(1, Integer.parseInt(funcionario.getTipo().toString()));
 			ps.setString(2, funcionario.getUsuario());
@@ -82,7 +85,7 @@ public class FuncionarioDAO {
 			ps.setString(6, funcionario.getTelefone());
 			ps.setString(7, funcionario.getCpf());
 			ps.setDate(8, funcionario.getDataNascimento());
-			ps.setInt(5, funcionario.getId());
+			ps.setInt(9, funcionario.getId());
 
 			if (ps.executeUpdate() == 1) {
 				return true;
@@ -97,13 +100,14 @@ public class FuncionarioDAO {
 	private Funcionario toFuncionario(ResultSet rs) throws SQLException {
 		Funcionario funcionario = new Funcionario();
 		funcionario.setId(rs.getInt("funcionario_id"));
-		funcionario.setNome(rs.getString("nome"));
-		funcionario.setEndereco(rs.getString("nome"));
-		funcionario.setTelefone(rs.getString("nome"));
-		funcionario.setCpf(rs.getString("cpf"));
-		funcionario.setDataNascimento(rs.getDate("data_nascimento"));
 		funcionario.setTipo(Funcionario.TipoFuncionario.getTipo(rs.getInt("tipo_id")));
 		funcionario.setUsuario(rs.getString("usuario"));
+		funcionario.setSenha(null);
+		funcionario.setNome(rs.getString("nome"));
+		funcionario.setEndereco(rs.getString("endereco"));
+		funcionario.setTelefone(rs.getString("telefone"));
+		funcionario.setCpf(rs.getString("cpf"));
+		funcionario.setDataNascimento(rs.getDate("data_nascimento"));
 		return funcionario;
 	}
 }

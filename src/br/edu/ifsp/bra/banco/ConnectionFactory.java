@@ -12,7 +12,7 @@ import com.mysql.cj.jdbc.Driver;
 public class ConnectionFactory {
 	public static final String URL = "jdbc:mysql://localhost:3306/ifsp_farmacia?useSSL=false&useTimezone=true&serverTimezone=UTC";
 	public static final String USER = "root";
-	public static final String PASS = "secret18";
+	public static final String PASS = "";
 
 	public static Connection getConnection() {
 		try {
