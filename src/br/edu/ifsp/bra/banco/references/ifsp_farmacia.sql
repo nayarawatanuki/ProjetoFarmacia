@@ -1,4 +1,3 @@
-drop database if exists ifsp_farmacia;
 create database ifsp_farmacia;
 use ifsp_farmacia;
 
@@ -118,8 +117,7 @@ create table itens_pedido (
 	pedido_id int not null,
     medicamento_id int not null,
     quantidade int not null,
-    total double not null,
-    primary key (pedido_id, medicamento_id),
+    valor__pago double not null,
     foreign key (pedido_id) references pedido(pedido_id),
     foreign key (medicamento_id) references medicamento(medicamento_id)
 );
