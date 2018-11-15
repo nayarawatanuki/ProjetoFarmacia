@@ -1,3 +1,4 @@
+drop database if exists ifsp_farmacia;
 create database ifsp_farmacia;
 use ifsp_farmacia;
 
@@ -12,8 +13,8 @@ create table pessoa (
 
 insert into pessoa values
 (1, 'Cliente', 'Rua Fulano Beltrano, 476', '(11) 4033-4909', '123.456.789-01', '1990-09-09'),
-(2, 'Atendente', 'Rua JoÃ£o Pedro Veloso, 1046', '(11) 99411-2210',  '123.456.789-01', '1990-09-09'),
-(3, 'Gerente', 'Avenida JoÃ£o InÃ¡cio, 940', '(11) 2477-1756',  '123.456.789-01', '1990-09-09');
+(2, 'Atendente', 'Rua JoÃƒÂ£o Pedro Veloso, 1046', '(11) 99411-2210',  '123.456.789-01', '1990-09-09'),
+(3, 'Gerente', 'Avenida JoÃƒÂ£o InÃƒÂ¡cio, 940', '(11) 2477-1756',  '123.456.789-01', '1990-09-09');
 
 create table cliente (
 	cliente_id int not null primary key references pessoa(pessoa_id),
@@ -75,9 +76,9 @@ create table tipo_medicamento (
 );
 
 insert into tipo_medicamento values
-(1, 'Pílula'),
-(2, 'Cápsula'),
-(3, 'Drágea');
+(1, 'PÃ­lula'),
+(2, 'CÃ¡psula'),
+(3, 'DrÃ¡gea');
 
 create table medicamento (
 	medicamento_id int not null auto_increment primary key,
@@ -89,7 +90,7 @@ create table medicamento (
     foreign key (tipo_id) references tipo_medicamento(tipo_id)
 );
 
-insert into medicamento values (1, 1, '123', 'Pílula A', 12.0, 20);
+insert into medicamento values (1, 1, '123', 'PÃ­lula A', 12.0, 20);
 
 create table pedido_status (
 	status_id int not null auto_increment primary key,
@@ -117,7 +118,7 @@ create table itens_pedido (
 	pedido_id int not null,
     medicamento_id int not null,
     quantidade int not null,
-    valor__pago double not null,
+    valor_pago double not null,
     foreign key (pedido_id) references pedido(pedido_id),
     foreign key (medicamento_id) references medicamento(medicamento_id)
 );
