@@ -317,6 +317,19 @@ public class FrmVenda {
 		panelDesc.add(btnSalvardesc);
 		
 		JButton btnCancelardesc = new JButton("Cancelar");
+		btnCancelardesc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(true);
+				panelAdd.setVisible(false);
+				panelConsulta.setVisible(false);
+				panelDesconto.setVisible(false);
+				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(false);
+				panelProdutos.setVisible(false);
+				panelQtd.setVisible(false);
+				panelDesc.setVisible(false);
+			}
+		});
 		panelDesc.add(btnCancelardesc);
 		
 		JButton btnSalvarqtd = new JButton("Salvar");
@@ -711,13 +724,22 @@ public class FrmVenda {
 		});
 		panelMenu.add(btnOpcoes);
 		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				
+				try{
+					Menu menu = new Menu();
+					menu.frame.setVisible(true);
+					
+					frame.dispose();
+				}catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
-		panelMenu.add(btnCancelar);
+		panelMenu.add(btnSair);
 		
 		frame.getContentPane().setLayout(groupLayout);
 	}
