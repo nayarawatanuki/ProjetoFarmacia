@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.CaixaHistorico;
+import br.edu.ifsp.bra.modelo.Cartao;
+import br.edu.ifsp.bra.modelo.Dinheiro;
 import br.edu.ifsp.bra.modelo.Funcionario;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
@@ -16,6 +18,8 @@ public class CaixaFacade {
 	private static double totalCaixa;
 	private CaixaHistorico historico;
 	private PedidoBLL pedidoBLL = new PedidoBLL();
+	private CartaoBLL cartaoBLL = new CartaoBLL();
+	private DinheiroBLL dinheiroBLL = new DinheiroBLL();
 	private CaixaHistoricoBLL historicoBLL = new CaixaHistoricoBLL();
 	
 	public CaixaFacade() {}
@@ -63,9 +67,21 @@ public class CaixaFacade {
 
 	public int efetuaVenda() {
 		CaixaFacade.setPedidoStatus(StatusPedido.FECHADO);
-		int id = this.pedidoBLL.adicionar(CaixaFacade.getPedidoAtual());
+		return this.pedidoBLL.adicionar(CaixaFacade.getPedidoAtual());
+	}
+	
+	public int realizaPagamento(Pagamento p) {
 		Pedido.setPedidoAtual(null);
-		return id;
+		switch (p.getTipo()) {
+		case DINHEIRO:
+			return this.dinheiroBLL.novoPagamento((Dinheiro)p);
+		case CREDITO:
+			return this.cartaoBLL.novoPagamento((Cartao)p);
+		case DEBITO:
+			return this.cartaoBLL.novoPagamento((Cartao)p);
+		default:
+			return -1;
+		}
 	}
 
 	public void cancelaVenda() {

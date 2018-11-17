@@ -49,9 +49,9 @@ public class CartaoDAO {
 	public int novoPagamento(Cartao cartao) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO cartao VALUES (DEFAULT, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO pagamento_cartao VALUES (DEFAULT, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, cartao.getPedidoId());
-			ps.setDouble(2, cartao.getDesconto());
+			ps.setDouble(2, cartao.getTotalDesconto());
 			ps.setDouble(3, cartao.getTotal());
 			ps.setString(4, cartao.getConta());
 			ps.setString(5, cartao.getAgencia());

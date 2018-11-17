@@ -3,13 +3,11 @@ package br.edu.ifsp.bra.modelo;
 public class Dinheiro extends Pagamento{
 
 	private double pago;
-	private double troco;
 
 	public Dinheiro() {}
-	public Dinheiro(int clienteId, int pedidoId, double total, TipoPagamento tipo, double pago, double troco) {
+	public Dinheiro(int clienteId, int pedidoId, double total, TipoPagamento tipo, double pago) {
 		super(clienteId, pedidoId, total, tipo);
 		this.pago = pago;
-		this.troco = troco;
 	}
 	public double getPago() {
 		return pago;
@@ -18,10 +16,7 @@ public class Dinheiro extends Pagamento{
 		this.pago = pago;
 	}
 	public double getTroco() {
-		return troco;
-	}
-	public void setTroco(double troco) {
-		this.troco = troco;
+		return this.getPago() - this.getTotal();
 	}
 	@Override
 	public double getTotalDesconto() {
