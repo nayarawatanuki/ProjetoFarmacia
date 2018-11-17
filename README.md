@@ -1,5 +1,5 @@
 # Projeto de Farmácia IFSP
-Este é um Projeto de Farmácia para a disciplina de Programação Orientada à Objetos. É baseado na arquitetura em três camadas MVC, BCE, etc. e programada em Java.
+Este é um Projeto de Farmácia para a disciplina de Programação Orientada a Objetos. É baseado na arquitetura em três camadas e programada em Java.
 
 ## Checklist
 - [x] CaixaDAO
