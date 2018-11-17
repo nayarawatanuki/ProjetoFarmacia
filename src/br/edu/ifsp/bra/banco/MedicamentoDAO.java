@@ -21,8 +21,8 @@ public class MedicamentoDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * from medicamento c" +
-							"WHERE c.medicamento_id=" + codigo);
+					"SELECT * from medicamento " +
+							"WHERE medicamento_id=" + codigo);
 
 			if(rs.next()) {
 				return toMedicamento(rs);
@@ -38,8 +38,8 @@ public class MedicamentoDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * from medicamento c" +
-							"WHERE c.medicamento_id=" + id);
+					"SELECT * from medicamento " +
+							"WHERE medicamento_id=" + id);
 
 			if(rs.next()) {
 				return toMedicamento(rs);
@@ -71,7 +71,7 @@ public class MedicamentoDAO {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM medicamento m where m.estoque <=" + filtro);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM medicamento where estoque <= " + filtro);
 			Set<Medicamento> listaMed = new HashSet<Medicamento>();
 			while(rs.next()) {
 				Medicamento medicamento = toMedicamento(rs);
@@ -112,9 +112,9 @@ public class MedicamentoDAO {
 	public boolean modificar(Medicamento med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("UPDATE medicamento m "
-				+ "SET m.tipo_id=?, m.codigo=?, "
-				+ "m.descricao=?, m.preco=?, m.estoque=? WHERE m.medicamento_id=?");
+			PreparedStatement ps = connection.prepareStatement("UPDATE medicamento "
+				+ "SET tipo_id=?, codigo=?, "
+				+ "descricao=?, preco=?, estoque=? WHERE medicamento_id=?");
 			ps.setInt(1, TipoMedicamento.setTipo(med.getTipo()));
 			ps.setString(2, med.getCodigo());
 			ps.setString(3, med.getDescricao());
