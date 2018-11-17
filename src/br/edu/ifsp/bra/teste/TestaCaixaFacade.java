@@ -30,8 +30,6 @@ public class TestaCaixaFacade {
 		Funcionario funcionario = funcionarioBLL.getFuncionario(1);
 
 		Medicamento m1 = medicamentoBLL.getMedicamento(1);
-		//Medicamento m2 = medicamentoBLL.getMedicamento(2);
-		//Medicamento m3 = medicamentoBLL.getMedicamento(3);
 
 		System.out.println(caixa);
 		System.out.println(funcionario);
@@ -44,12 +42,8 @@ public class TestaCaixaFacade {
 		System.out.println("Produtos: " + Arrays.toString(Pedido.getPedidoAtual().getItens().toArray()));
 
 		facade.adicionaMedicamento(m1, 7);
-		//facade.adicionaMedicamento(m2, 9);
-		//facade.adicionaMedicamento(m3, 35);
 		System.out.println("Produtos: " + Arrays.toString(Pedido.getPedidoAtual().getItens().toArray()));
 
-		//System.out.println(Pedido.getPedidoAtual().getTotal());
-		
 		int pedidoId = facade.efetuaVenda();
 		Pagamento pagamento = new Dinheiro(
 				cliente.getId(),

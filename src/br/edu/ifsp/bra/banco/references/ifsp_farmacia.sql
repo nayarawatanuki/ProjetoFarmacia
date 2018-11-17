@@ -127,6 +127,7 @@ create table tipo_pagamento (
 
 create table pagamento_cartao (
 	pagamento_id int not null auto_increment primary key,
+    cliente_id int,
     pedido_id int not null,
     desconto double not null,
     total double,
@@ -135,10 +136,11 @@ create table pagamento_cartao (
     foreign key (pedido_id) references pedido(pedido_id)
 );
 
-insert into pagamento_cartao values (1, 1, 0.0, 12.0, '123', '123');
+insert into pagamento_cartao values (1, 1, 1, 0.0, 12.0, '123', '123');
 
 create table pagamento_dinheiro (
 	pagamento_id int not null auto_increment primary key,
+    cliente_id int,
     pedido_id int not null,
     desconto double not null,
     total double,
