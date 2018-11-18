@@ -2,6 +2,7 @@ package br.edu.ifsp.bra.dominio;
 
 import java.sql.Date;
 
+import br.edu.ifsp.bra.farmacia.FrmNotaFiscal;
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.CaixaHistorico;
 import br.edu.ifsp.bra.modelo.Cartao;
@@ -62,7 +63,7 @@ public class CaixaFacade {
 	}
 
 	public void adicionaMedicamento(Medicamento m, int quantidade) {
-		Pedido.getPedidoAtual().adicionaItem(new ItemPedido(m, quantidade, m.getPreco()));
+		Pedido.getPedidoAtual().adicionaItem(new ItemPedido(m, quantidade));
 	}
 
 	public int efetuaVenda() {
@@ -104,8 +105,9 @@ public class CaixaFacade {
 		p.setDesconto(desconto);
 	}
 	
-	public void geraNotaFiscal() {
-		// Gerando nota fiscal
+	public void geraNotaFiscal(Pagamento pagamento) {
+
+		FrmNotaFiscal nota = new FrmNotaFiscal(pagamento);
 	}
 	
 	private static void setPedidoStatus(StatusPedido status) {

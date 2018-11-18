@@ -25,7 +25,7 @@ public class PedidoDAO{
 			ps.setInt(2, StatusPedido.getTipo(pedido.getStatus()));
 			ps.setDouble(3, pedido.getTotal());
 			Date utilDate = new Date(1);
-			ps.setDate(4, pedido.getData() != null ? (Date) pedido.getData() : new java.sql.Date(utilDate.getTime()));
+			ps.setDate(4, pedido.getData() != null ? new java.sql.Date(pedido.getData().getTime()) : new java.sql.Date(utilDate.getTime()));
 			ps.executeUpdate();
 
 			ResultSet rs = ps.getGeneratedKeys();
@@ -40,5 +40,34 @@ public class PedidoDAO{
 			ex.printStackTrace();
 		}
 		return -1;
+	}
+	
+	public Pedido buscarPedido(int idPedido)
+	{
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT pedido_id, caixa_id, status_id, total, data FROM pedido " + 
+							"WHERE pedido_id=" + idPedido);
+
+			if(rs.next()) {
+				return toPedido(rs);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	private Pedido toPedido(ResultSet rs) throws SQLException {
+		
+		ItemPedidoDAO itensDAO = new ItemPedidoDAO();
+		Pedido pedido = new Pedido();
+		pedido.setId(rs.getInt("caixa_id"));
+		pedido.setItens(itensDAO.buscarItens(pedido.getId()));
+		pedido.setStatus(pedido.getStatus());
+		pedido.setData(rs.getDate("data"));
+		return pedido;
 	}
 }

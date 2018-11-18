@@ -2,7 +2,11 @@ package br.edu.ifsp.bra.banco;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -38,13 +42,12 @@ public class ItemPedidoDAO {
 		return false;
 	}
 	
-	/*
-	public List<ItemPedido> getItens(int id) {
+	public List<ItemPedido> buscarItens(int idItemPedido) {
 
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM itens_pedido;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM itens_pedido where pedido_id = " + idItemPedido + ";");
 			List<ItemPedido> list = new LinkedList<ItemPedido>();
 			while(rs.next()) {
 				ItemPedido itempedido = toItemPedido(rs);
@@ -65,5 +68,4 @@ public class ItemPedidoDAO {
 		itped.setPreco(rs.getDouble("total"));
 		return itped;
 	}
-	*/
 }

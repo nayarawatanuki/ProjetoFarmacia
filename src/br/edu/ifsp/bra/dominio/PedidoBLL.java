@@ -11,4 +11,8 @@ public class PedidoBLL {
 		return dao.adicionar(pedido);
 		
 	}
+	public Pedido buscarPedido(int idPedido)
+	{
+		return dao.buscarPedido(idPedido);
+	}
 }
