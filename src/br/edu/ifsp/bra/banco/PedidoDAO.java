@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Instant;
 
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Pedido;
@@ -16,31 +15,30 @@ public class PedidoDAO{
 	
 	ItemPedidoDAO itensDAO = new ItemPedidoDAO();
 	
-	public boolean adicionar(Pedido pedido) {
+	public int adicionar(Pedido pedido) {
 		
 		Connection connection = ConnectionFactory.getConnection();
 		
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO pedido VALUES (DEFAULT,?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO pedido VALUES (DEFAULT,?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, pedido.getCaixaId());
 			ps.setInt(2, StatusPedido.getTipo(pedido.getStatus()));
 			ps.setDouble(3, pedido.getTotal());
 			Date utilDate = new Date(1);
 			ps.setDate(4, pedido.getData() != null ? (Date) pedido.getData() : new java.sql.Date(utilDate.getTime()));
-			
-			if (ps.executeUpdate() == 1) {
-			 ResultSet idPedido = ps.getGeneratedKeys();
-			 if(idPedido.next()) {
-				int id = idPedido.getInt(1);
+			ps.executeUpdate();
+
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				int id = rs.getInt(1);
 				for(ItemPedido item : pedido.getItens()) {
 					itensDAO.adiciona(item, id);
 				}
-			 }
-				return true;
+				return id;
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-		return false;
+		return -1;
 	}
 }

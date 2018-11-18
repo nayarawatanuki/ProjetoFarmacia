@@ -53,11 +53,11 @@ public class Pedido {
 		this.itens = new LinkedList<ItemPedido>();
 	}
 	public Pedido(int caixaId, StatusPedido status, double total, Date data) {
+		this();
 		this.caixaId = caixaId;
 		this.status = status;
 		this.total = total;
 		this.data = data;
-		this.itens = new LinkedList<ItemPedido>();// Composition
 	}
 
 	public int getId() {
@@ -68,7 +68,6 @@ public class Pedido {
 		this.id = id;
 	}
 	
-	
 	public int getCaixaId() {
 		return caixaId;
 	}
@@ -77,7 +76,6 @@ public class Pedido {
 		this.caixaId = caixaId;
 	}
 	
-	
 	public StatusPedido getStatus() {
 		return status;
 	}
@@ -85,7 +83,6 @@ public class Pedido {
 	public void setStatus(StatusPedido status) {
 		this.status = status;
 	}
-	
 	
 	public List<ItemPedido> getItens() {
 		return itens;
@@ -117,7 +114,6 @@ public class Pedido {
 		this.itens.remove(item);
 	}
 	
-	
 	public double getTotal() {
 		
 		return total;
@@ -127,7 +123,6 @@ public class Pedido {
 		this.total = total;
 	}
 	
-	
 	public Date getData() {
 		return data;
 	}
@@ -135,5 +130,4 @@ public class Pedido {
 	public void setData(Date data) {
 		this.data = data;
 	}
-
 }

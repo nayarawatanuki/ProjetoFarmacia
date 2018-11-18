@@ -17,11 +17,11 @@ public class CaixaHistoricoBLL {
 		return dao.getCaixaHistorico();
 	}
 
-	public int novoCaixaHistorico(CaixaHistorico caixa) {
-		return dao.novoCaixaHistorico(caixa);
+	public int novoCaixaHistorico(CaixaHistorico historico) {
+		return dao.novoCaixaHistorico(historico);
 	}
 
-	public boolean modificaFuncionario(CaixaHistorico caixa) {
-		return dao.modificaCaixaHistorico(caixa);
+	public boolean modificaCaixaHistorico(CaixaHistorico historico) {
+		return dao.modificaCaixaHistorico(historico);
 	}
 }

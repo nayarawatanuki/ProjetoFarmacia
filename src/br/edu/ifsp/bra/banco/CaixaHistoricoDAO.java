@@ -11,7 +11,7 @@ import java.util.List;
 import br.edu.ifsp.bra.modelo.CaixaHistorico;
 
 public class CaixaHistoricoDAO {
-	
+
 	public CaixaHistorico getCaixaHistorico(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -33,12 +33,12 @@ public class CaixaHistoricoDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM caixa_historico");
-			List<CaixaHistorico> caixas = new ArrayList<CaixaHistorico>();
+			List<CaixaHistorico> historicos = new ArrayList<CaixaHistorico>();
 			while(rs.next()) {
-				CaixaHistorico caixa = toCaixaHistorico(rs);
-				caixas.add(caixa);
+				CaixaHistorico historico = toCaixaHistorico(rs);
+				historicos.add(historico);
 			}
-			return caixas;
+			return historicos;
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -67,13 +67,13 @@ public class CaixaHistoricoDAO {
 
 		return -1;
 	}
-	
+
 	public boolean modificaCaixaHistorico(CaixaHistorico caixa) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("UPDATE caixa_historico c "
-				+ "SET c.atendente_id=?, c.valor_abertura=?, c.valor_fechamento=?"
-				+ "c.data_abertura=?, c.data_fechamento=? WHERE c.historico_id=?");
+			PreparedStatement ps = connection.prepareStatement("UPDATE caixa_historico "
+					+ "SET atendente_id=?, valor_abertura=?, valor_fechamento=?"
+					+ "data_abertura=?, data_fechamento=? WHERE historico_id=?");
 			ps.setInt(1, caixa.getAtendenteId());
 			ps.setDouble(2, caixa.getValorAbertura());
 			ps.setDouble(3, caixa.getValorFechamento());
@@ -92,14 +92,14 @@ public class CaixaHistoricoDAO {
 	}
 
 	private CaixaHistorico toCaixaHistorico(ResultSet rs) throws SQLException {
-		CaixaHistorico caixa = new CaixaHistorico();
-		caixa.setId(rs.getInt("historico_id"));
-		caixa.setCaixaId(rs.getInt("caixa_id"));
-		caixa.setAtendenteId(rs.getInt("atendente_id"));
-		caixa.setValorAbertura(rs.getDouble("valor_abertura"));
-		caixa.setValorFechamento(rs.getDouble("valor_fechamento"));
-		caixa.setDataAbertura(rs.getDate("data_abertura"));
-		caixa.setDataFechamento(rs.getDate("data_fechamento"));
-		return caixa;
+		CaixaHistorico historico = new CaixaHistorico();
+		historico.setId(rs.getInt("historico_id"));
+		historico.setCaixaId(rs.getInt("caixa_id"));
+		historico.setAtendenteId(rs.getInt("atendente_id"));
+		historico.setValorAbertura(rs.getDouble("valor_abertura"));
+		historico.setValorFechamento(rs.getDouble("valor_fechamento"));
+		historico.setDataAbertura(rs.getDate("data_abertura"));
+		historico.setDataFechamento(rs.getDate("data_fechamento"));
+		return historico;
 	}
 }

@@ -16,7 +16,7 @@ public class CartaoDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT pagamento_id, pedido_id, desconto, total, conta, agencia "
+					"SELECT pagamento_id, cliente_id, pedido_id, desconto, total, conta, agencia "
 							+ "FROM pagamento_cartao "
 							+ "WHERE pagamento_id=" + id);
 
@@ -49,12 +49,13 @@ public class CartaoDAO {
 	public int novoPagamento(Cartao cartao) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO cartao VALUES (DEFAULT, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, cartao.getPedidoId());
-			ps.setDouble(2, cartao.getDesconto());
-			ps.setDouble(3, cartao.getTotal());
-			ps.setString(4, cartao.getConta());
-			ps.setString(5, cartao.getAgencia());
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO pagamento_cartao VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, cartao.getClienteId());
+			ps.setInt(2, cartao.getPedidoId());
+			ps.setDouble(3, cartao.getTotalDesconto());
+			ps.setDouble(4, cartao.getTotal());
+			ps.setString(5, cartao.getConta());
+			ps.setString(6, cartao.getAgencia());
 			ps.executeUpdate();
 
 			ResultSet rs = ps.getGeneratedKeys();
@@ -71,6 +72,7 @@ public class CartaoDAO {
 	private Cartao toCartao(ResultSet rs) throws SQLException {
 		Cartao cartao = new Cartao();
 		cartao.setId(rs.getInt("pagamento_id"));
+		cartao.setClienteId(rs.getInt("cliente_id"));
 		cartao.setPedidoId(rs.getInt("pedido_id"));
 		cartao.setDesconto(rs.getDouble("desconto"));
 		cartao.setTotal(rs.getDouble("total"));

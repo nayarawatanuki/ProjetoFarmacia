@@ -7,7 +7,7 @@ public class PedidoBLL {
 
 	PedidoDAO dao = new PedidoDAO();
 
-	public boolean adicionar(Pedido pedido) {
+	public int adicionar(Pedido pedido) {
 		return dao.adicionar(pedido);
 		
 	}

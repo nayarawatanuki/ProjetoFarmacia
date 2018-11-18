@@ -2,28 +2,18 @@ drop database if exists ifsp_farmacia;
 create database ifsp_farmacia;
 use ifsp_farmacia;
 
-create table pessoa (
-	pessoa_id int not null auto_increment primary key,
+create table cliente (
+	cliente_id int not null auto_increment primary key,
 	nome varchar(50) not null,
     endereco varchar(150) not null,
     telefone varchar(20) not null,
 	cpf varchar(14) not null,
-	data_nascimento date not null
-);
-
-insert into pessoa values
-(1, 'Cliente', 'Rua Fulano Beltrano, 476', '(11) 4033-4909', '123.456.789-01', '1990-09-09'),
-(2, 'Atendente', 'Rua JoÃƒÂ£o Pedro Veloso, 1046', '(11) 99411-2210',  '123.456.789-01', '1990-09-09'),
-(3, 'Gerente', 'Avenida JoÃƒÂ£o InÃƒÂ¡cio, 940', '(11) 2477-1756',  '123.456.789-01', '1990-09-09');
-
-create table cliente (
-	cliente_id int not null primary key references pessoa(pessoa_id),
-    is_ativo boolean not null default true,
+	data_nascimento date not null,
 	data_cadastro datetime not null default now()
 );
 
 insert into cliente values
-(1, true, now());
+(1, 'Cliente', 'Rua Fulano Beltrano, 476', '(11) 4033-4909', '123.456.789-01', '1990-09-09', now());
 
 create table tipo_funcionario (
 	tipo_id int not null auto_increment primary key,
@@ -35,16 +25,21 @@ insert into tipo_funcionario values
 (2, 'Gerente');
 
 create table funcionario (
-	funcionario_id int not null primary key references funcionario(funcionario_id),
+	funcionario_id int not null auto_increment primary key,
     tipo_id int not null,
     usuario varchar(50) not null,
     senha varchar(256) not null,
+	nome varchar(50) not null,
+    endereco varchar(150) not null,
+    telefone varchar(20) not null,
+	cpf varchar(14) not null,
+	data_nascimento date not null,
     foreign key (tipo_id) references tipo_funcionario(tipo_id)
 );
 
 insert into funcionario values
-(2, 1, 'atendente', '123'),
-(3, 2, 'gerente', '123');
+(1, 1, 'atendente', '123', 'Atendente', 'Rua JoÃƒÂ£o Pedro Veloso, 1046', '(11) 99411-2210',  '123.456.789-01', '1990-09-09'),
+(2, 2, 'gerente', '123', 'Gerente', 'Avenida JoÃƒÂ£o InÃƒÂ¡cio, 940', '(11) 2477-1756',  '123.456.789-01', '1990-09-09');
 
 create table caixa (
 	caixa_id int not null auto_increment primary key,
@@ -131,7 +126,8 @@ create table tipo_pagamento (
 );
 
 create table pagamento_cartao (
-	pagamento_id int not null primary key references pagamento(pagamento_id),
+	pagamento_id int not null auto_increment primary key,
+    cliente_id int,
     pedido_id int not null,
     desconto double not null,
     total double,
@@ -140,10 +136,11 @@ create table pagamento_cartao (
     foreign key (pedido_id) references pedido(pedido_id)
 );
 
-insert into pagamento_cartao values (1, 1, 0.0, 12.0, '123', '123');
+insert into pagamento_cartao values (1, 1, 1, 0.0, 12.0, '123', '123');
 
 create table pagamento_dinheiro (
-	pagamento_id int not null primary key references pagamento(pagamento_id),
+	pagamento_id int not null auto_increment primary key,
+    cliente_id int,
     pedido_id int not null,
     desconto double not null,
     total double,

@@ -1,9 +1,11 @@
 package br.edu.ifsp.bra.dominio;
 
 import java.sql.Date;
-import java.util.Calendar;
 
-import br.edu.ifsp.bra.banco.PedidoDAO;
+import br.edu.ifsp.bra.modelo.Caixa;
+import br.edu.ifsp.bra.modelo.CaixaHistorico;
+import br.edu.ifsp.bra.modelo.Cartao;
+import br.edu.ifsp.bra.modelo.Dinheiro;
 import br.edu.ifsp.bra.modelo.Funcionario;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
@@ -13,56 +15,80 @@ import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
 public class CaixaFacade {
 
-	private static boolean isAberto;
-
-	public void abrirCaixa(Funcionario f) {
-		if (CaixaFacade.isAberto() && Funcionario.getFuncionarioAtual() != null) {
-			throw new RuntimeException("O caixa nï¿½o pode ser aberto pois jï¿½ estï¿½ aberto"); // CaixaAbertoException
-		}
-
-		Funcionario.setFuncionarioAtual( f);
-		CaixaFacade.isAberto = true;
+	private static double totalCaixa;
+	private CaixaHistorico historico;
+	private PedidoBLL pedidoBLL = new PedidoBLL();
+	private CartaoBLL cartaoBLL = new CartaoBLL();
+	private DinheiroBLL dinheiroBLL = new DinheiroBLL();
+	private CaixaHistoricoBLL historicoBLL = new CaixaHistoricoBLL();
+	
+	public CaixaFacade() {}
+	public CaixaFacade(Caixa c, Funcionario f, double valorAbertura) {
+		this.abrir(c, f, valorAbertura, new Date(System.currentTimeMillis()));
+	}
+	
+	public void abrir(Caixa c, Funcionario f, double valorAbertura, Date dataAbertura) {
+		CaixaFacade.totalCaixa = valorAbertura;
+		this.historico = new CaixaHistorico();
+		this.historico.setCaixaId(c.getId());
+		this.historico.setAtendenteId(f.getId());
+		this.historico.setValorAbertura(valorAbertura);
+		this.historico.setDataAbertura(dataAbertura);
+		this.historico.setId(this.historicoBLL.novoCaixaHistorico(this.historico));
 	}
 
-	public void fecharCaixa(Funcionario f) {
+	public void fechar(Funcionario f) {
 		if (!f.isGerente()) {
 			throw new RuntimeException("O caixa pode ser fechado apenas por um gerente");	// TipoFuncionarioException
 		}
 		if (CaixaFacade.getPedidoAtual() != null) {
-			throw new RuntimeException("O caixa nï¿½o pode ser fechado pois um pedido estï¿½ aberto"); // PedidoAbertoException
+			throw new RuntimeException("O caixa não pode ser fechado pois um pedido está aberto"); // PedidoAbertoException
 		}
-		Funcionario.setFuncionarioAtual(null);
-		CaixaFacade.isAberto = false;
+
+		this.historico.setValorFechamento(CaixaFacade.totalCaixa);
+		this.historico.setDataFechamento(new Date(System.currentTimeMillis()));
+		this.historicoBLL.modificaCaixaHistorico(this.historico);
+	}
+	
+	public void novoPedido() {
+		if (CaixaFacade.getPedidoAtual() != null) {
+			throw new RuntimeException("Um pedido ainda está em aberto"); // PedidoAbertoException
+		}
+
+		Pedido.setPedidoAtual(new Pedido());
+		CaixaFacade.getPedidoAtual().setCaixaId(1);
+		CaixaFacade.getPedidoAtual().setData(new Date(System.currentTimeMillis()));
+		CaixaFacade.setPedidoStatus(StatusPedido.ABERTO);
 	}
 
 	public void adicionaMedicamento(Medicamento m, int quantidade) {
 		Pedido.getPedidoAtual().adicionaItem(new ItemPedido(m, quantidade, m.getPreco()));
 	}
 
-	public void novoPedido() {
-		if (CaixaFacade.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda estï¿½ em aberto"); // PedidoAbertoException
-		}
-
-		Pedido.setPedidoAtual(new Pedido());
-		CaixaFacade.getPedidoAtual().setCaixaId(1);
-		CaixaFacade.getPedidoAtual().setData(new Date(Calendar.getInstance().getTime().getTime()));
-		CaixaFacade.getPedidoAtual().setStatus(StatusPedido.ABERTO);
-		
-		// Retornando o ï¿½ltimo id
-		// CaixaBLL.getPedidoAtual().setId(pedidoDAO.adicionar(CaixaBLL.getPedidoAtual()));
+	public int efetuaVenda() {
+		CaixaFacade.setPedidoStatus(StatusPedido.FECHADO);
+		return this.pedidoBLL.adicionar(CaixaFacade.getPedidoAtual());
 	}
-
-	public void efetuaVenda() {
-		this.alteraStatus(StatusPedido.FECHADO);
+	
+	public int realizaPagamento(Pagamento p) {
+		Pedido.setPedidoAtual(null);
+		switch (p.getTipo()) {
+		case DINHEIRO:
+			return this.dinheiroBLL.novoPagamento((Dinheiro)p);
+		case CREDITO:
+			return this.cartaoBLL.novoPagamento((Cartao)p);
+		case DEBITO:
+			return this.cartaoBLL.novoPagamento((Cartao)p);
+		default:
+			return -1;
+		}
 	}
 
 	public void cancelaVenda() {
 		if (Pedido.getPedidoAtual() == null) {
-			throw new RuntimeException("Nï¿½o existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
+			throw new RuntimeException("Não existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
 		}
 
-		this.alteraStatus(StatusPedido.CANCELADO);
 		Pedido.setPedidoAtual(null);
 	}
 	
@@ -71,7 +97,7 @@ public class CaixaFacade {
 			throw new RuntimeException("O desconto pode ser concedidos apenas por um gerente");	// TipoFuncionarioException
 		}
 		if (CaixaFacade.getPedidoAtual() == null) {
-			throw new RuntimeException("Nï¿½o existe nenhum pedido em aberto para conceder desconto"); // PedidoInvalidoException
+			throw new RuntimeException("Não existe nenhum pedido em aberto para conceder desconto"); // PedidoInvalidoException
 		}
 		
 		// Concedendo desconto
@@ -82,28 +108,27 @@ public class CaixaFacade {
 		// Gerando nota fiscal
 	}
 	
-	private void alteraStatus(StatusPedido status) {
-		if (Pedido.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda estï¿½ em aberto"); // PedidoAbertoException
-		}
+	private static void setPedidoStatus(StatusPedido status) {
 		if (Pedido.getPedidoAtual().getStatus() == status) {
 			throw new RuntimeException("O status continua sendo o mesmo"); // PedidoStatusException
 		}
 
 		Pedido.getPedidoAtual().setStatus(status);
-		// Modificando o status do pedido
-		// CaixaBLL.pedidoDAO.modificar(CaixaBLL.getPedidoAtual());
 	}
 	
 	public static Pedido getPedidoAtual() {
 		return Pedido.getPedidoAtual();
 	}
 
-	public static Funcionario getFuncionarioAtual() {
-		return Funcionario.getFuncionarioAtual();
-	}
-
-	public static boolean isAberto() {
-		return isAberto;
+	@Override
+	public String toString() {
+		return String.format("%d Caixa %d - %d - %.2f - %.2f - %s - %s",
+				this.historico.getId(),
+				this.historico.getCaixaId(),
+				this.historico.getAtendenteId(),
+				this.historico.getValorAbertura(),
+				this.historico.getValorFechamento(),
+				this.historico.getDataAbertura(),
+				this.historico.getDataFechamento());
 	}
 }
