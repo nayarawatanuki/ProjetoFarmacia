@@ -17,7 +17,7 @@ import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Pagamento;
 
-public class frmNotaFiscal {
+public class FrmNotaFiscal {
 
 	JFrame frame;
 	JPanel panel;
@@ -26,7 +26,7 @@ public class frmNotaFiscal {
 	DefaultTableModel model;
 	PedidoBLL pedBll;
 	
-	public frmNotaFiscal(Pagamento pagamento)
+	public FrmNotaFiscal(Pagamento pagamento)
 	{
 		
 		pedBll = new PedidoBLL();
@@ -50,8 +50,7 @@ public class frmNotaFiscal {
 		
 		infoPedido = new JTable();
 		criarTabela();
-		//Precisa de um metodo que pegue um pedido por pelo id e um que pegue os itens ligados aquele pedido
-		popularTabela(pedBll.getPedido(pagamento.getPedidoId()).getItens());
+		popularTabela(pedBll.buscarPedido(pagamento.getPedidoId()).getItens());
 		
 		frame.pack();
 		frame.setVisible(true);
@@ -74,13 +73,16 @@ public class frmNotaFiscal {
 	private void popularTabela(List<ItemPedido> itens)
 	{
 		Object[] lista = new Object[5];
-		MedicamentoBLL medBll = new MedicamentoBLL();
+		if(itens == null)
+		{
+			return;
+		}
 		for(ItemPedido item : itens)
 		{
-			lista[0] = item.getProdutoId();
+			lista[0] = item.getMedicamento().getId();
 			lista[1] = item.getQuantidade();
-			lista[2] = medBll.getMedicamento(item.getProdutoId()).getDescricao();
-			lista[3] = medBll.getMedicamento(item.getProdutoId()).getPreco();
+			lista[2] = item.getMedicamento().getDescricao();
+			lista[3] = item.getMedicamento().getPreco();
 			lista[4] = item.getPreco();
 			model.addRow(lista);	
 		}
@@ -89,3 +91,4 @@ public class frmNotaFiscal {
 	
 	
 }
+
