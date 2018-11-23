@@ -16,14 +16,11 @@ public class LoginDAO {
 	
 	Connection connection = ConnectionFactory.getConnection();
 	
-	public List<Login> Logar(){
+	public boolean Logar(String usuario, String senha){
+		
 		try {
 			
-			String sql = "SELECT * FROM funcionario";
-			PreparedStatement comando = connection.prepareStatement(sql);
-			
-			
-			ResultSet rs = null;
+			/*ResultSet rs = null;
 			
 			List<Login> log = new ArrayList<>();
 			rs = comando.executeQuery();
@@ -32,26 +29,29 @@ public class LoginDAO {
 				Login login = new Login();
 				login.setLogin(rs.getString("usuario"));
 				login.setSenha(rs.getString("senha"));
-				log.add(login);
+				log.add(login);*/
 				
-				sql = "SELECT * FROM funcionario WHERE usuario=? AND senha=?";
-				comando = connection.prepareStatement(sql);
+				String sql = "SELECT usuario, senha FROM funcionario WHERE usuario=? AND senha=?;";
+				PreparedStatement comando = connection.prepareStatement(sql);
 				
-				comando.setString(1, login.getLogin());
-				comando.setString(2, login.getSenha());
+				comando.setString(1, usuario);
+				comando.setString(2, senha);
 				
-				if(login.getLogin().equals(rs.getString("usuario")) && login.getSenha().equals(rs.getString("senha")))
+				ResultSet rs = null;
+				rs = comando.executeQuery();
+				
+				if(rs.next())
 				{
 					JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Permitido.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
+					return true;
 				}
-				
-				return log;
-			}
+				JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Negado.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
+				return false;
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
-		return null;
+		return false;
 		
 	}
 }

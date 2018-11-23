@@ -52,7 +52,9 @@ public class PedidoDAO{
 							"WHERE pedido_id=" + idPedido);
 
 			if(rs.next()) {
-				return toPedido(rs);
+				Pedido pedido = new Pedido();
+				pedido.setId(idPedido);
+				return toPedido(rs, pedido);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -60,11 +62,10 @@ public class PedidoDAO{
 		return null;
 	}
 	
-	private Pedido toPedido(ResultSet rs) throws SQLException {
+	private Pedido toPedido(ResultSet rs, Pedido pedido) throws SQLException {
 		
 		ItemPedidoDAO itensDAO = new ItemPedidoDAO();
-		Pedido pedido = new Pedido();
-		pedido.setId(rs.getInt("caixa_id"));
+		pedido.setCaixaId(rs.getInt("caixa_id"));
 		pedido.setItens(itensDAO.buscarItens(pedido.getId()));
 		pedido.setStatus(pedido.getStatus());
 		pedido.setData(rs.getDate("data"));

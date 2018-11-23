@@ -23,7 +23,7 @@ public class TesteNotaFiscal {
 		Medicamento med1 = new Medicamento("123", "Paracetol", 1.5, 30, TipoMedicamento.PILULA);
 		med1.setId(1);
 		Medicamento med2 = new Medicamento("456", "Dipirona", 1, 50, TipoMedicamento.PILULA);
-		med2.setId(2);
+		med2.setId(1);
 		Medicamento med3 = new Medicamento("123", "Amoxilina", 6, 80, TipoMedicamento.DRAGEA);
 		med3.setId(3);
 		
@@ -33,12 +33,12 @@ public class TesteNotaFiscal {
 		Pedido ped1 = new Pedido(1, StatusPedido.FECHADO, 0, new Date());
 		
 		ItemPedido item1 = new ItemPedido(med1, 5);
-		ItemPedido item2 = new ItemPedido(med2, 9);
-		ItemPedido item3 = new ItemPedido(med3, 2);
+	//	ItemPedido item2 = new ItemPedido(med2, 9);
+		//ItemPedido item3 = new ItemPedido(med3, 2);
 		
 		ped1.adicionaItem(item1);
-		ped1.adicionaItem(item2);
-		ped1.adicionaItem(item3);
+	//	ped1.adicionaItem(item2);
+	//	ped1.adicionaItem(item3);
 		
 		PedidoDAO pedDAO = new PedidoDAO();
 		pedDAO.adicionar(ped1);
@@ -49,7 +49,7 @@ public class TesteNotaFiscal {
 		Cliente cliente = new Cliente("Jean", "Extrema", "912345678", "13574901607", new java.sql.Date(data1.getTime()), new java.sql.Date(data2.getTime()));
 		cliente.setId(9);
 		
-		Pagamento pagamento = new Dinheiro(9,1, 100.0, TipoPagamento.DINHEIRO, (7.5 + 2 + 36 + 1));
+		Pagamento pagamento = new Dinheiro(9,5, 100.0, TipoPagamento.DINHEIRO, (7.5 + 2 + 36 + 1));
 		
 		FrmNotaFiscal nota = new FrmNotaFiscal(pagamento);
 		

@@ -42,12 +42,12 @@ public class ItemPedidoDAO {
 		return false;
 	}
 	
-	public List<ItemPedido> buscarItens(int idItemPedido) {
+	public List<ItemPedido> buscarItens(int idPedido) {
 
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM itens_pedido where pedido_id = " + idItemPedido + ";");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM itens_pedido where pedido_id = " + idPedido + ";");
 			List<ItemPedido> list = new LinkedList<ItemPedido>();
 			while(rs.next()) {
 				ItemPedido itempedido = toItemPedido(rs);
@@ -65,7 +65,7 @@ public class ItemPedidoDAO {
 		ItemPedido itped = new ItemPedido();
 		itped.setMedicamento(med.getMedicamento(rs.getInt("medicamento_id")));
 		itped.setQuantidade(rs.getInt("quantidade"));
-		itped.setPreco(rs.getDouble("total"));
+		itped.setPreco(rs.getDouble("valor_pago"));
 		return itped;
 	}
 }

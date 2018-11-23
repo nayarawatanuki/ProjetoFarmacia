@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +26,7 @@ public class FrmNotaFiscal {
 	JTable infoPedido;
 	DefaultTableModel model;
 	PedidoBLL pedBll;
+	JScrollPane scroll;
 	
 	public FrmNotaFiscal(Pagamento pagamento)
 	{
@@ -41,18 +43,22 @@ public class FrmNotaFiscal {
 				"\r\n";
 		
 		frame = new JFrame(" Nota Fiscal ");
+		frame.setSize(500,800);
 		
 		panel = new JPanel();
-		frame.add(panel);
+		frame.getContentPane().add(panel);
 		
 		infoEmpresa = new JTextArea(strInfoEmpresa);
 		panel.add(infoEmpresa);
 		
-		infoPedido = new JTable();
-		criarTabela();
-		popularTabela(pedBll.buscarPedido(pagamento.getPedidoId()).getItens());
 		
-		frame.pack();
+		criarTabela();
+		infoPedido = new JTable(model);
+		scroll = new JScrollPane(infoPedido);
+		popularTabela(pedBll.buscarPedido(pagamento.getPedidoId()).getItens());
+		scroll.setViewportView(infoPedido);
+		panel.add(scroll);
+		
 		frame.setVisible(true);
 		
 

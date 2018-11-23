@@ -119,8 +119,8 @@ public class FrmLogin {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(txtUser.getText().toString() == "" || pwdSenha.getPassword().toString() == "") {
-				
-					JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
+					
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
 				
 				}else{
 				
@@ -129,14 +129,20 @@ public class FrmLogin {
 						LoginBLL bll = new LoginBLL();
 						login.setLogin(txtUser.getText());
 						login.setSenha(pwdSenha.getPassword().toString());
+						login.setCaixa(comboBox.getToolTipText());
 						
-						bll.Logar();
+						//Funcionario.setFuncionarioAtual(Login.getLogin());
+						
+						
+						bll.Logar(txtUser.getText(), pwdSenha.getText());
 						
 						FrmCaixa caixa = new FrmCaixa();
 						caixa.frame.setVisible(true);
 						
 						frame.dispose();
 						
+						
+		
 						
 					}catch(Exception ex) {
 						ex.printStackTrace();
