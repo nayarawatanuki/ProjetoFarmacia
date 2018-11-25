@@ -8,6 +8,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.12.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/javax.xml.bind_2.2.0.v201105210648.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
