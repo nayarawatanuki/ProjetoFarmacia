@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import br.edu.ifsp.bra.modelo.Funcionario;
 
 public class FuncionarioDAO {
@@ -22,6 +25,40 @@ public class FuncionarioDAO {
 			if(rs.next()) {
 				return toFuncionario(rs);
 			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Funcionario getFuncionario(String usuario, String senha) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			
+			String sql = "SELECT funcionario_id, nome, endereco, telefone, cpf, data_nascimento, tipo_id, usuario FROM funcionario WHERE usuario=? AND senha=?";
+			PreparedStatement comando = connection.prepareStatement(sql);
+			
+			comando.setString(1, usuario);
+			comando.setString(2, senha);
+			
+			ResultSet rs = null;
+			rs = comando.executeQuery();
+			
+			if(rs.next())
+			{
+				JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Permitido.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
+				return toFuncionario(rs);
+			}
+			//JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Negado.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
+			
+			/*Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT funcionario_id, nome, endereco, telefone, cpf, data_nascimento, tipo_id, usuario FROM funcionario " + 
+							"WHERE usuario=? AND senha=?");
+
+			if(rs.next()) {
+				return toFuncionario(rs);
+			}*/
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
