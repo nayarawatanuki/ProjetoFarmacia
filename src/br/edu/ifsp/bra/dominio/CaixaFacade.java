@@ -43,7 +43,7 @@ public class CaixaFacade {
 			throw new RuntimeException("O caixa pode ser fechado apenas por um gerente");	// TipoFuncionarioException
 		}
 		if (CaixaFacade.getPedidoAtual() != null) {
-			throw new RuntimeException("O caixa não pode ser fechado pois um pedido está aberto"); // PedidoAbertoException
+			throw new RuntimeException("O caixa nï¿½o pode ser fechado pois um pedido estï¿½ aberto"); // PedidoAbertoException
 		}
 
 		this.historico.setValorFechamento(CaixaFacade.totalCaixa);
@@ -53,7 +53,7 @@ public class CaixaFacade {
 	
 	public void novoPedido() {
 		if (CaixaFacade.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda está em aberto"); // PedidoAbertoException
+			throw new RuntimeException("Um pedido ainda estï¿½ em aberto"); // PedidoAbertoException
 		}
 
 		Pedido.setPedidoAtual(new Pedido());
@@ -87,7 +87,7 @@ public class CaixaFacade {
 
 	public void cancelaVenda() {
 		if (Pedido.getPedidoAtual() == null) {
-			throw new RuntimeException("Não existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
+			throw new RuntimeException("Nï¿½o existe nenhum pedido em aberto para cancelar"); // PedidoInvalidoException
 		}
 
 		Pedido.setPedidoAtual(null);
@@ -98,7 +98,7 @@ public class CaixaFacade {
 			throw new RuntimeException("O desconto pode ser concedidos apenas por um gerente");	// TipoFuncionarioException
 		}
 		if (CaixaFacade.getPedidoAtual() == null) {
-			throw new RuntimeException("Não existe nenhum pedido em aberto para conceder desconto"); // PedidoInvalidoException
+			throw new RuntimeException("Nï¿½o existe nenhum pedido em aberto para conceder desconto"); // PedidoInvalidoException
 		}
 		
 		// Concedendo desconto
@@ -107,7 +107,7 @@ public class CaixaFacade {
 	
 	public void geraNotaFiscal(Pagamento pagamento) {
 
-		FrmNotaFiscal nota = new FrmNotaFiscal(pagamento);
+		new FrmNotaFiscal(pagamento);
 	}
 	
 	private static void setPedidoStatus(StatusPedido status) {

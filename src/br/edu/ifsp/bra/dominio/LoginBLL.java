@@ -4,7 +4,7 @@ import br.edu.ifsp.bra.banco.LoginDAO;
 
 public class LoginBLL {
 
-	public void Logar(String usuario, String senha){
+	public void Logar(Object usuario, String senha){
 		
 		LoginDAO login = new LoginDAO();
 		login.Logar(usuario, senha);

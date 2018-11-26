@@ -16,7 +16,7 @@ public class LoginDAO {
 	
 	Connection connection = ConnectionFactory.getConnection();
 	
-	public boolean Logar(String usuario, String senha){
+	public boolean Logar(Object usuario, String senha){
 		
 		try {
 			
@@ -34,7 +34,7 @@ public class LoginDAO {
 				String sql = "SELECT usuario, senha FROM funcionario WHERE usuario=? AND senha=?;";
 				PreparedStatement comando = connection.prepareStatement(sql);
 				
-				comando.setString(1, usuario);
+				comando.setObject(1, usuario);
 				comando.setString(2, senha);
 				
 				ResultSet rs = null;

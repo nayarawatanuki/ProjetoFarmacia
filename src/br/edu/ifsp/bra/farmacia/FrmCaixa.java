@@ -3,7 +3,6 @@ package br.edu.ifsp.bra.farmacia;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -11,22 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.border.TitledBorder;
 
-import br.edu.ifsp.bra.dominio.CaixaBLL;
 import br.edu.ifsp.bra.dominio.CaixaFacade;
-import br.edu.ifsp.bra.dominio.LoginBLL;
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.Funcionario;
-import br.edu.ifsp.bra.modelo.Login;
 
-import javax.swing.border.EtchedBorder;
-import java.awt.Color;
-import javax.swing.JScrollPane;
-import java.awt.Component;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -92,12 +82,9 @@ public class FrmCaixa {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String v;
-				double valor;
-				v = frmtdtxtValorAbertura.getText();
-				valor = Double.parseDouble(v);
+				Caixa.setValorAbertura(Double.parseDouble(frmtdtxtValorAbertura.getText()));
 				
-				if(valor < 100) {
+				if(Caixa.getValorAbertura() < 100) {
 					
 					JOptionPane.showMessageDialog(null, "Saldo do caixa invalido.");
 				
@@ -106,13 +93,10 @@ public class FrmCaixa {
 					try {
 						
 						
-						//new CaixaFacade(Caixa.getCaixaAtual(), Funcionario.getFuncionarioAtual(), valor);
-						System.out.println(" verificar \n" + Caixa.getCaixaAtual() + "\n" + Funcionario.getFuncionarioAtual() + "\n" + valor);
+						new CaixaFacade(Caixa.getCaixaAtual(), Funcionario.getFuncionarioAtual(), Caixa.getValorAbertura());
 						
-						
-						
-						Menu menu = new Menu();
-						menu.frame.setVisible(true);
+						FrmVendas vendas = new FrmVendas();
+						vendas.frame.setVisible(true);
 						
 						frame.dispose();
 						

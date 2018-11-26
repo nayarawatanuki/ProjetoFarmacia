@@ -8,12 +8,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
-import br.edu.ifsp.bra.banco.FuncionarioDAO;
 import br.edu.ifsp.bra.dominio.CaixaBLL;
+import br.edu.ifsp.bra.dominio.FuncionarioBLL;
 import br.edu.ifsp.bra.dominio.LoginBLL;
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.Funcionario;
@@ -21,7 +20,6 @@ import br.edu.ifsp.bra.modelo.Login;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
@@ -31,7 +29,6 @@ import javax.swing.DefaultComboBoxModel;
 public class FrmLogin {
 
 	JFrame frame;
-	private JTextField txtUser;
 	private JButton btnEntrar;
 	private JPasswordField pwdSenha;
 
@@ -73,9 +70,6 @@ public class FrmLogin {
 		
 		JLabel lblSenha = new JLabel("Senha:");
 		
-		txtUser = new JTextField();
-		txtUser.setColumns(10);
-		
 		pwdSenha = new JPasswordField();
 		
 		JLabel lblCaixa = new JLabel("Caixa:");
@@ -89,13 +83,22 @@ public class FrmLogin {
 			comboBox.addItem(c);
 		}
 		
+		FuncionarioBLL func = new FuncionarioBLL();
+		List<Funcionario> fun = func.getTodosFuncionarios();
+		
+		JComboBox<Funcionario> cbxUser = new JComboBox<Funcionario>();
+		//cbxUser.setModel(new DefaultComboBoxModel(new String[] {""}));
+		for (Funcionario f : fun) {
+			cbxUser.addItem(f);
+		}
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(23)
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(lblCaixa, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(comboBox, 0, 130, Short.MAX_VALUE))
@@ -104,9 +107,9 @@ public class FrmLogin {
 								.addComponent(lblUser)
 								.addComponent(lblSenha))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(pwdSenha)
-								.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(pwdSenha, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+								.addComponent(cbxUser, 0, 130, Short.MAX_VALUE))))
 					.addGap(28))
 		);
 		gl_panel.setVerticalGroup(
@@ -115,7 +118,7 @@ public class FrmLogin {
 					.addGap(15)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblUser)
-						.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(cbxUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSenha)
@@ -124,7 +127,7 @@ public class FrmLogin {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblCaixa)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(17, Short.MAX_VALUE))
+					.addContainerGap(16, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		
@@ -132,7 +135,7 @@ public class FrmLogin {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(txtUser.getText().toString() == "" || pwdSenha.getPassword().toString() == "" || comboBox.getSelectedItem() == "") {
+				if(cbxUser.getSelectedItem() == "" || pwdSenha.getPassword().toString() == "" || comboBox.getSelectedItem() == "") {
 					
 					JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
 				
@@ -141,15 +144,17 @@ public class FrmLogin {
 					try {
 						Login login = new Login();
 						LoginBLL bll = new LoginBLL();
-						FuncionarioDAO f = new FuncionarioDAO();
 						CaixaBLL c = new CaixaBLL();
 						
-						login.setLogin(txtUser.getText());
+						
+						login.setLogin(cbxUser.getSelectedItem().toString());
 						login.setSenha(pwdSenha.getText());
 						
 						
-						bll.Logar(txtUser.getText(), pwdSenha.getText());
-						Funcionario.setFuncionarioAtual(f.getFuncionario(txtUser.getText(), pwdSenha.getPassword().toString()));
+						
+						bll.Logar(cbxUser.getSelectedItem(), pwdSenha.getText());
+						
+						Funcionario.setFuncionarioAtual((Funcionario) cbxUser.getSelectedItem());
 						Caixa.setCaixaAtual(c.getCaixa(comboBox.getSelectedIndex()));
 						
 						FrmCaixa caixa = new FrmCaixa();

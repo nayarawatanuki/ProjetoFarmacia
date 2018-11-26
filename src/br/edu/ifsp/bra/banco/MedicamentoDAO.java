@@ -38,8 +38,7 @@ public class MedicamentoDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * from medicamento " +
-							"WHERE medicamento_id=" + id);
+					"SELECT * from medicamento WHERE medicamento_id=" + id);
 
 			if(rs.next()) {
 				return toMedicamento(rs);

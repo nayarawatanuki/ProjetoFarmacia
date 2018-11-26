@@ -7,11 +7,11 @@ public class ItemPedido {
 	private int quantidade;
 	
 	public ItemPedido() {};
-	//Preço pra mim é desnecessario, ja que temos a quantidade e o preco do Medicamento
+	//Preï¿½o pra mim ï¿½ desnecessario, ja que temos a quantidade e o preco do Medicamento
 	public ItemPedido(Medicamento medicamento, int quantidade) {
 		this.medicamento = medicamento;
 		this.quantidade = quantidade;
-		this.preco = medicamento.getPreco();
+		//this.preco = medicamento.getPreco();
 	}
 	
 	public Medicamento getMedicamento() {
@@ -30,15 +30,15 @@ public class ItemPedido {
 		this.preco = preco;
 	}
 	
-	public double getTotal() {
-		return this.preco * this.quantidade;
-	}
-	
 	public int getQuantidade() {
 		return quantidade;
 	}
 	
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+	
+	public double getTotal() {
+		return (this.getPreco() * this.getQuantidade());
 	}
 }

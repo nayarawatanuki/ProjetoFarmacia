@@ -109,5 +109,9 @@ public class Medicamento {
 	public void setTipo(TipoMedicamento tipo) {
 		this.tipo = tipo;
 	}
+	@Override
+	public String toString() {
+		return this.getDescricao();
+	}
 	
 }

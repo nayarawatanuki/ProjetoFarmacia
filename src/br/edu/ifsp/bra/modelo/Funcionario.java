@@ -74,8 +74,8 @@ public class Funcionario extends Pessoa {
 	}
 	@Override
 	public String toString() {
-		if (this.isGerente()) return "[Gerente] " + this.getNome();
-		if (this.isAtendente()) return "[Atendente] " + this.getNome();
-		return "[Funcionário] " + this.getNome();
+		if (this.isGerente()) return this.getNome() + " [Gerente]";
+		if (this.isAtendente()) return this.getNome() + " [Atendente]";
+		return this.getNome() + " [Funcionario]";
 	}
 }

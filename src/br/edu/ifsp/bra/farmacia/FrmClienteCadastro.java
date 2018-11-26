@@ -20,7 +20,7 @@ import javax.swing.text.MaskFormatter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class ClienteCadastro {
+public class FrmClienteCadastro {
 
 	JFrame frame;
 	private JTextField txtNome;
@@ -36,7 +36,7 @@ public class ClienteCadastro {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClienteCadastro window = new ClienteCadastro();
+					FrmClienteCadastro window = new FrmClienteCadastro();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +48,7 @@ public class ClienteCadastro {
 	/**
 	 * Create the application.
 	 */
-	public ClienteCadastro() {
+	public FrmClienteCadastro() {
 		initialize();
 	}
 

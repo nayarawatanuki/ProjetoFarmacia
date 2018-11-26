@@ -3,6 +3,7 @@ package br.edu.ifsp.bra.modelo;
 public class Caixa {
 	
 	private static Caixa caixaAtual;
+	private static double valorAbertura;
 	private int id;
 	private String descricao;
 	
@@ -15,9 +16,19 @@ public class Caixa {
 	public static Caixa getCaixaAtual() {
 		return caixaAtual;
 	}
+	
 	public static void setCaixaAtual(Caixa caixaAtual) {
 		Caixa.caixaAtual = caixaAtual;
 	}
+	
+	public static double getValorAbertura() {
+		return valorAbertura;
+	}
+	
+	public static void setValorAbertura(double valorAbertura) {
+		Caixa.valorAbertura = valorAbertura;
+	}
+	
 	public int getId() {
 		return id;
 	}
