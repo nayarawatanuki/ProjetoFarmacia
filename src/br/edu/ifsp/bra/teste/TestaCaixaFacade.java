@@ -7,7 +7,6 @@ import br.edu.ifsp.bra.dominio.CaixaFacade;
 import br.edu.ifsp.bra.dominio.ClienteBLL;
 import br.edu.ifsp.bra.dominio.FuncionarioBLL;
 import br.edu.ifsp.bra.dominio.MedicamentoBLL;
-import br.edu.ifsp.bra.dominio.PedidoBLL;
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.Cliente;
 import br.edu.ifsp.bra.modelo.Dinheiro;
@@ -22,7 +21,7 @@ public class TestaCaixaFacade {
 	private static ClienteBLL clienteBLL = new ClienteBLL();
 	private static FuncionarioBLL funcionarioBLL = new FuncionarioBLL();
 	private static MedicamentoBLL medicamentoBLL = new MedicamentoBLL();
-	private static PedidoBLL pedidoBLL = new PedidoBLL();
+	//private static PedidoBLL pedidoBLL = new PedidoBLL();
 
 	public static void main(String[] args) {
 		Caixa caixa = caixaBLL.getCaixa(1);

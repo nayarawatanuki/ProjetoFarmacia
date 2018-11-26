@@ -51,7 +51,8 @@ public class TesteNotaFiscal {
 		
 		Pagamento pagamento = new Dinheiro(9,5, 100.0, TipoPagamento.DINHEIRO, (7.5 + 2 + 36 + 1));
 		
-		FrmNotaFiscal nota = new FrmNotaFiscal(pagamento);
+		//FrmNotaFiscal nota = 
+				new FrmNotaFiscal(pagamento);
 		
 	}
 
