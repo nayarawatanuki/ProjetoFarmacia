@@ -18,7 +18,6 @@ import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Pedido;
 
-import java.awt.Font;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
@@ -29,6 +28,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTextPane;
+import java.awt.FlowLayout;
 
 public class FrmVendas {
 
@@ -53,54 +53,17 @@ public class FrmVendas {
 	{
 		frame = new JFrame("  Venda  ");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(499, 678);
+		frame.setSize(499, 715);
 		
 		panel = new JPanel();
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
-		btnAddItem = new JButton("Adicionar Item");
-		btnAddItem.setBounds(31, 575, 143, 23);
-		btnAddItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				if(FrmVendas.isAtualizada)
-					 new FrmAddItem();
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Atualize a tabela antes");
-				}
-				
-			}
-		});
-		panel.add(btnAddItem);
 		
 		criarTabela();
 		
-		JButton btnPagamento = new JButton("Pagamento");
-		btnPagamento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CaixaFacade facade = new CaixaFacade();
-				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
-				frame.dispose();
-			}
-		});
-		btnPagamento.setBounds(186, 575, 113, 23);
-		panel.add(btnPagamento);
-		
-		JButton btnCancelar_1 = new JButton("Cancelar");
-		btnCancelar_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				CaixaFacade facade = new CaixaFacade();
-				facade.cancelaVenda();
-			}
-		});
-		btnCancelar_1.setBounds(317, 575, 89, 23);
-		panel.add(btnCancelar_1);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Itens", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(25, 183, 381, 361);
+		panel_1.setBounds(25, 183, 423, 361);
 		panel.add(panel_1);
 		
 		lblCliente = new JLabel("Cliente: ");
@@ -134,16 +97,16 @@ public class FrmVendas {
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(17, Short.MAX_VALUE)
+					.addContainerGap(22, Short.MAX_VALUE)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 						.addComponent(btnAtualizarTabela, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(scroll, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
 							.addGroup(gl_panel_1.createSequentialGroup()
 								.addComponent(lblCliente)
 								.addGap(25)
 								.addComponent(btnAlterar, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
-							.addComponent(scpTotal, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)))
+							.addComponent(scpTotal, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+							.addComponent(scroll, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE)))
 					.addGap(19))
 		);
 		gl_panel_1.setVerticalGroup(
@@ -157,7 +120,7 @@ public class FrmVendas {
 					.addComponent(scpTotal, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scroll, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
 					.addComponent(btnAtualizarTabela, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -168,7 +131,7 @@ public class FrmVendas {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Caixa Total", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(25, 80, 178, 102);
+		panel_2.setBounds(25, 80, 220, 102);
 		panel.add(panel_2);
 		
 		vlrTotal = new JLabel("" + Caixa.getValorAbertura());
@@ -269,7 +232,8 @@ public class FrmVendas {
 		mnClientes.add(mntmConsultaC);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(227, 82, 178, 100);
+		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "  ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_3.setBounds(257, 80, 191, 102);
 		panel.add(panel_3);
 		
 		JTextPane txtpnFarmaciaTel = new JTextPane();
@@ -279,19 +243,88 @@ public class FrmVendas {
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addGap(15)
-					.addComponent(txtpnFarmaciaTel, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(17, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_3.createSequentialGroup()
+					.addContainerGap(16, Short.MAX_VALUE)
+					.addComponent(txtpnFarmaciaTel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+					.addGap(14))
 		);
 		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_3.createSequentialGroup()
-					.addGap(14)
 					.addComponent(txtpnFarmaciaTel, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(14, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_3.setLayout(gl_panel_3);
+		
+		JPanel panelOpcoes = new JPanel();
+		panelOpcoes.setBounds(25, 556, 423, 39);
+		panel.add(panelOpcoes);
+		panelOpcoes.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		panelOpcoes.add(btnCancelar);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.dispose();
+				CaixaFacade facade = new CaixaFacade();
+				facade.cancelaVenda();
+			}
+		});
+		
+		JButton btnPagamento = new JButton("Pagamento");
+		panelOpcoes.add(btnPagamento);
+		btnAddItem = new JButton("Adicionar Item");
+		panelOpcoes.add(btnAddItem);
+		
+		JPanel panelPagamento = new JPanel();
+		panelPagamento.setBounds(25, 607, 423, 39);
+		panelPagamento.setVisible(false);
+		panel.add(panelPagamento);
+		
+		JButton btnDinheiro = new JButton("Dinheiro");
+		panelPagamento.add(btnDinheiro);
+		
+		JButton btnCredito = new JButton("Credito");
+		panelPagamento.add(btnCredito);
+		
+		JButton btnDebito = new JButton("Debito");
+		panelPagamento.add(btnDebito);
+		
+		JButton btnCancelarpg = new JButton("Cancelar");
+		btnCancelarpg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				panelOpcoes.setVisible(true);
+				panelPagamento.setVisible(false);
+			}
+		});
+		panelPagamento.add(btnCancelarpg);
+		
+		btnAddItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(FrmVendas.isAtualizada)
+					 new FrmAddItem();
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Atualize a tabela antes");
+				}
+				
+			}
+		});
+		btnPagamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CaixaFacade facade = new CaixaFacade();
+				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
+				
+				panelPagamento.setVisible(true);
+				panelOpcoes.setVisible(false);
+				
+				
+				//frame.dispose();
+			}
+		});
 		
 		
 		frame.setVisible(true);		
