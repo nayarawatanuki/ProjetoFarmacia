@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifsp.bra.dominio.CaixaFacade;
+import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Pedido;
 
@@ -170,23 +171,23 @@ public class FrmVendas {
 		panel_2.setBounds(25, 80, 178, 102);
 		panel.add(panel_2);
 		
-		vlrTotal = new JLabel("0.00");
-		vlrTotal.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		vlrTotal = new JLabel("" + Caixa.getValorAbertura());
+		vlrTotal.setFont(vlrTotal.getFont().deriveFont(30f));
 		
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap(70, Short.MAX_VALUE)
-					.addComponent(vlrTotal, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-					.addGap(24))
+				.addGroup(Alignment.LEADING, gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(vlrTotal, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addGap(23)
 					.addComponent(vlrTotal, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(24, Short.MAX_VALUE))
+					.addContainerGap(26, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
 		
@@ -215,7 +216,6 @@ public class FrmVendas {
 					FrmCadastroMed med = new FrmCadastroMed();
 					med.frame.setVisible(true);
 					
-					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -230,7 +230,6 @@ public class FrmVendas {
 					FrmMedicamento med = new FrmMedicamento();
 					med.frame.setVisible(true);
 					
-					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -238,7 +237,7 @@ public class FrmVendas {
 		});
 		mnMedicamentos.add(mntmConsultaM);
 		
-		JMenu mnClientes = new JMenu("FrmClientesConsulta");
+		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
 		
 		JMenuItem mntmCadastroC = new JMenuItem("Cadastro");
@@ -248,7 +247,6 @@ public class FrmVendas {
 					FrmClienteCadastro cliente = new FrmClienteCadastro();
 					cliente.frame.setVisible(true);
 					
-					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -263,7 +261,6 @@ public class FrmVendas {
 					FrmClientesConsulta cliente = new FrmClientesConsulta();
 					cliente.frame.setVisible(true);
 					
-					frame.dispose();
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
