@@ -104,10 +104,12 @@ public class FrmCaixa {
 				}else{
 				
 					try {
-						Caixa caixa = new Caixa();
-						caixa.(valor);
 						
-						CaixaBLL.isAberto();
+						
+						//new CaixaFacade(Caixa.getCaixaAtual(), Funcionario.getFuncionarioAtual(), valor);
+						System.out.println(" verificar \n" + Caixa.getCaixaAtual() + "\n" + Funcionario.getFuncionarioAtual() + "\n" + valor);
+						
+						
 						
 						Menu menu = new Menu();
 						menu.frame.setVisible(true);

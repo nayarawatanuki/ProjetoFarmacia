@@ -80,8 +80,15 @@ public class FrmLogin {
 		
 		JLabel lblCaixa = new JLabel("Caixa:");
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		CaixaBLL cx = new CaixaBLL();
+		List<Caixa> caixas = cx.getTodosCaixas();
+		
+		JComboBox<Caixa> comboBox = new JComboBox<Caixa>();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {""}));
+		for (Caixa c : caixas) {
+			comboBox.addItem(c);
+		}
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -125,7 +132,7 @@ public class FrmLogin {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(txtUser.getText().toString() == "" || pwdSenha.getPassword().toString() == "") {
+				if(txtUser.getText().toString() == "" || pwdSenha.getPassword().toString() == "" || comboBox.getSelectedItem() == "") {
 					
 					JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
 				
@@ -134,14 +141,16 @@ public class FrmLogin {
 					try {
 						Login login = new Login();
 						LoginBLL bll = new LoginBLL();
-						login.setLogin(txtUser.getText());
-						login.setSenha(pwdSenha.getPassword().toString());
-					//	login.setCaixa(comboBox.getToolTipText());
+						FuncionarioDAO f = new FuncionarioDAO();
+						CaixaBLL c = new CaixaBLL();
 						
-						//Funcionario.setFuncionarioAtual(Login.getLogin());
+						login.setLogin(txtUser.getText());
+						login.setSenha(pwdSenha.getText());
 						
 						
 						bll.Logar(txtUser.getText(), pwdSenha.getText());
+						Funcionario.setFuncionarioAtual(f.getFuncionario(txtUser.getText(), pwdSenha.getPassword().toString()));
+						Caixa.setCaixaAtual(c.getCaixa(comboBox.getSelectedIndex()));
 						
 						FrmCaixa caixa = new FrmCaixa();
 						caixa.frame.setVisible(true);
