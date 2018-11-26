@@ -148,3 +148,12 @@ create table pagamento_dinheiro (
     troco double not null,
     foreign key (pedido_id) references pedido(pedido_id)
 );
+
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PesquisarClientes`(in filtro varchar(40))
+BEGIN
+ select * from cliente
+ where `nome` LIKE CONCAT('%', filtro, '%')
+        OR `cpf` LIKE CONCAT('%', filtro, '%');
+END ;;
+DELIMITER ;

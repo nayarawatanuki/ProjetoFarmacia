@@ -352,7 +352,7 @@ public class FrmVendas {
 				lista[0] = item.getMedicamento().getDescricao();
 				lista[1] = item.getMedicamento().getPreco();
 				lista[2] = item.getQuantidade();
-				lista[3] = (item.getMedicamento().getPreco() * item.getQuantidade());
+				lista[3] = (item.getTotal());
 			
 				model.addRow(lista);
 				setPrecoTotal(Pedido.getPedidoAtual().getTotal());
