@@ -14,8 +14,10 @@ import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
 import br.edu.ifsp.bra.dominio.CaixaBLL;
+import br.edu.ifsp.bra.dominio.CaixaFacade;
 import br.edu.ifsp.bra.dominio.LoginBLL;
 import br.edu.ifsp.bra.modelo.Caixa;
+import br.edu.ifsp.bra.modelo.Funcionario;
 import br.edu.ifsp.bra.modelo.Login;
 
 import javax.swing.border.EtchedBorder;

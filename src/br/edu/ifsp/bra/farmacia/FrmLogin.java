@@ -12,10 +12,17 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
+import br.edu.ifsp.bra.banco.FuncionarioDAO;
+import br.edu.ifsp.bra.dominio.CaixaBLL;
 import br.edu.ifsp.bra.dominio.LoginBLL;
+import br.edu.ifsp.bra.modelo.Caixa;
+import br.edu.ifsp.bra.modelo.Funcionario;
 import br.edu.ifsp.bra.modelo.Login;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
