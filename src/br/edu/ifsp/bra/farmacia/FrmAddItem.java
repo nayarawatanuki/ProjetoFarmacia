@@ -122,8 +122,8 @@ public class FrmAddItem {
 	
 	private void popularTabela(ItemPedido item)
 	{
-		item.setQuantidade((int) spinner.getValue());
-		txtpnProduto.setText("Descricao: " + item.getMedicamento().getDescricao() + "\n" + "Preco Unitario: " + item.getMedicamento().getPreco() + "\n" + "Quantidade: " + item.getQuantidade() + "\n" + "Preco Total: " + (item.getMedicamento().getPreco() * (int) spinner.getValue()));
+		
+		txtpnProduto.setText("Descricao: " + item.getMedicamento().getDescricao() + "\n" + "Preco Unitario: " + item.getMedicamento().getPreco() + "\n" + "Quantidade: " + (int) spinner.getValue() + "\n" + "Preco Total: " + (item.getMedicamento().getPreco() * (int) spinner.getValue()));
 		
 		FrmVendas.isAtualizada = false;
 	}

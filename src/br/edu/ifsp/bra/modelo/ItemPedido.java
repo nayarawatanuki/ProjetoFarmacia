@@ -11,7 +11,7 @@ public class ItemPedido {
 	public ItemPedido(Medicamento medicamento, int quantidade) {
 		this.medicamento = medicamento;
 		this.quantidade = quantidade;
-		//this.preco = medicamento.getPreco();
+		this.preco = medicamento.getPreco();
 	}
 	
 	public Medicamento getMedicamento() {
@@ -39,6 +39,6 @@ public class ItemPedido {
 	}
 	
 	public double getTotal() {
-		return (this.getPreco() * this.getQuantidade());
+		return (this.medicamento.getPreco() * this.getQuantidade());
 	}
 }
