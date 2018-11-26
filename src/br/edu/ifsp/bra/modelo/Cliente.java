@@ -4,6 +4,13 @@ import java.sql.Date;
 
 public class Cliente extends Pessoa {
 	
+	private static Cliente clienteAtual;
+	public static Cliente getClienteAtual() {
+		return Cliente.clienteAtual;
+	}
+	public static void setClienteAtual(Cliente clienteAtual) {
+		Cliente.clienteAtual = clienteAtual;
+	}
 	private Date dataCadastro;
 	
 	public Cliente() {}

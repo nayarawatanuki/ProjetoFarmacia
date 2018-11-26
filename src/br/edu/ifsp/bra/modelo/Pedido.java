@@ -94,11 +94,24 @@ public class Pedido {
 	}
 	
 	public void adicionaItem(ItemPedido item) {
-		if(itens.contains(item))
+		boolean contem = false;
+		int index = 0;
+		for(ItemPedido i : itens)
 		{
-			int quantidade = itens.get(itens.indexOf(item)).getQuantidade();
-			itens.get(itens.indexOf(item)).setQuantidade(quantidade + item.getQuantidade());
+			if(i.getMedicamento().getId() == item.getMedicamento().getId())
+			{
+				contem = true;
+				index = itens.indexOf(i);
+				break;
+			}
+		}
+		if(contem)
+		{
 			this.total += item.getTotal();
+			int quantidade = itens.get(index).getQuantidade();
+			itens.get(index).setQuantidade(quantidade + item.getQuantidade());
+			
+			
 		}
 		else
 		{

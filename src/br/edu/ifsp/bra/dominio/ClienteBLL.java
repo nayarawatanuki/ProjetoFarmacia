@@ -24,4 +24,8 @@ public class ClienteBLL {
 	public boolean modificaCliente(Cliente cliente) {
 		return dao.modificaCliente(cliente);
 	}
+	public List<Cliente> PesquisarCliente(String filtro)
+	{
+		return dao.PesquisarClientes(filtro);
+	}
 }

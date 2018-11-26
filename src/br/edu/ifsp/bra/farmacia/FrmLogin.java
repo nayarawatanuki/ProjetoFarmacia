@@ -129,7 +129,7 @@ public class FrmLogin {
 						LoginBLL bll = new LoginBLL();
 						login.setLogin(txtUser.getText());
 						login.setSenha(pwdSenha.getPassword().toString());
-						login.setCaixa(comboBox.getToolTipText());
+					//	login.setCaixa(comboBox.getToolTipText());
 						
 						//Funcionario.setFuncionarioAtual(Login.getLogin());
 						

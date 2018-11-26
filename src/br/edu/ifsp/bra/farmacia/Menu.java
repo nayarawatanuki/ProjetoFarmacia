@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifsp.bra.banco.CaixaDAO;
 import br.edu.ifsp.bra.modelo.Caixa;
-import br.edu.ifsp.bra.modelo.Caixa.StatusCaixa;
+//import br.edu.ifsp.bra.modelo.Caixa.StatusCaixa;
 import br.edu.ifsp.bra.modelo.Funcionario;
 
 import javax.swing.JMenu;

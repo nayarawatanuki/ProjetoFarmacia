@@ -29,3 +29,5 @@ public class Dinheiro extends Pagamento{
 		return this.getTotal() * Pagamento.taxaDescontoDinheiro();
 	}
 }
+
+

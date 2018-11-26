@@ -103,7 +103,7 @@ public class FrmCaixa {
 				
 					try {
 						Caixa caixa = new Caixa();
-						caixa.setValor(valor);
+						caixa.(valor);
 						
 						CaixaBLL.isAberto();
 						

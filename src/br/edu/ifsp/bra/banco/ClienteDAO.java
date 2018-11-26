@@ -92,6 +92,26 @@ public class ClienteDAO {
 
 		return false;
 	}
+	
+	public List<Cliente> PesquisarClientes(String filtro) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("call PesquisarClientes(?);");
+			ps.setString(1, filtro);
+			
+			ResultSet rs = ps.executeQuery();
+			List<Cliente> clientes = new ArrayList<Cliente>();
+			while(rs.next()) {
+				Cliente cliente = toCliente(rs);
+				clientes.add(cliente);
+			}
+			return clientes;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
 
 	private Cliente toCliente(ResultSet rs) throws SQLException {
 		Cliente cliente = new Cliente();

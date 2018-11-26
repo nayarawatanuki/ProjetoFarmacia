@@ -30,7 +30,9 @@ import br.edu.ifsp.bra.dominio.PedidoBLL;
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
+import br.edu.ifsp.bra.modelo.Pedido;
 
+import java.util.List;
 import java.util.Set;
 import javax.swing.JScrollPane;
 
@@ -75,7 +77,7 @@ public class FrmVenda {
 	{
 		ItemPedidoBLL ItemPedBLL = new ItemPedidoBLL();
 		
-		Set<ItemPedido> list = ItemPedBLL.getItens();
+		List<ItemPedido> list = ItemPedBLL.buscarItens(Pedido.getPedidoAtual().getId());
 		
 		for(ItemPedido ped : list)
 		{
@@ -84,7 +86,7 @@ public class FrmVenda {
 			Set<Medicamento> listmed = medBLL.getTodosMedicamento();
 			
 			for(Medicamento med : listmed) {
-				model.addRow(new Object[] {ped.getPedidoId(), ped.getProdutoId(), med.getDescricao(),
+				model.addRow(new Object[] {Pedido.getPedidoAtual().getId(), med.getId(), med.getDescricao(),
 						ped.getQuantidade(), ped.getPreco()});
 			}
 			
@@ -146,7 +148,7 @@ public class FrmVenda {
 		JTextPane txtpnFarmciaTel = new JTextPane();
 		txtpnFarmciaTel.setEnabled(false);
 		txtpnFarmciaTel.setEditable(false);
-		txtpnFarmciaTel.setText("                   \n\n            FARMÁCIA   \n\n       Tel.: 3468-2211");
+		txtpnFarmciaTel.setText("                   \n\n            FARMÃ�CIA   \n\n       Tel.: 3468-2211");
 		
 		
 		
@@ -268,16 +270,16 @@ public class FrmVenda {
 		
 		
 		JLabel lblStatus = new JLabel("Status");
-		if(CaixaBLL.isAberto() == true) {
+	/*	if(CaixaBLL.isAberto() == true) {
 			lblStatus.setText("Status: Aberto");
-		}
+		}*/
 		
 		JFormattedTextField frmtdtxtfldCaixa = new JFormattedTextField();
 		frmtdtxtfldCaixa.setToolTipText("");
 		frmtdtxtfldCaixa.setEnabled(false);
 		frmtdtxtfldCaixa.setEditable(false);
 		
-		frmtdtxtfldCaixa.setText("R$ " + Caixa.getValor());
+		//frmtdtxtfldCaixa.setText("R$ " + Caixa.getValor());
 		
 		GroupLayout gl_panelCaixa = new GroupLayout(panelCaixa);
 		gl_panelCaixa.setHorizontalGroup(
@@ -310,7 +312,8 @@ public class FrmVenda {
 				double desconto = Double.parseDouble(txtDesconto.getText()) / 100;
 				double preco = Double.parseDouble(txtTotal.getText()) * desconto;
 				
-				itempedidoBLL.modificar(itempedido);
+				itempedido.setPreco(preco);
+		//		itempedidoBLL.modificar(itempedido);
 			}
 		});
 		panelDesc.add(btnSalvardesc);
@@ -349,13 +352,13 @@ public class FrmVenda {
 		            total += Double.parseDouble(tableItemPedidos.getValueAt(i, 4).toString());
 		            txtTotal.setText(total.toString());
 		        }
-				
+		        Pedido ped = Pedido.getPedidoAtual();
+				MedicamentoBLL medBLL = new MedicamentoBLL();
 				ItemPedido itempedido = new ItemPedido();
-				itempedido.setPedidoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 0));
-				itempedido.setProdutoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1));
+				itempedido.setMedicamento(medBLL.getMedicamento((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1)));
 				itempedido.setQuantidade((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 3));
 				itempedido.setPreco((Double)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 4));				
-				ItemPedBLL.modificar(itempedido);
+				ped.adicionaItem(itempedido);
 			}
 		});
 		panelQtd.add(btnSalvarqtd);
@@ -431,7 +434,7 @@ public class FrmVenda {
 		);
 		panelProdutos.setLayout(gl_panelProdutos);
 		
-		JButton btnTrocarUsuario = new JButton("Trocar Usuário");
+		JButton btnTrocarUsuario = new JButton("Trocar UsuÃ¡rio");
 		btnTrocarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		
@@ -507,7 +510,7 @@ public class FrmVenda {
 		});
 		panelPagamento.add(btnDinheiro);
 		
-		JButton btnDebito = new JButton("Débito");
+		JButton btnDebito = new JButton("DÃ©bito");
 		btnDebito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
@@ -526,7 +529,7 @@ public class FrmVenda {
 		});
 		panelPagamento.add(btnDebito);
 		
-		JButton btnCredito = new JButton("Crédito");
+		JButton btnCredito = new JButton("CrÃ©dito");
 		btnCredito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMenu.setVisible(true);
@@ -582,12 +585,12 @@ public class FrmVenda {
 				panelDesc.setVisible(false);
 				
 				try {
-					ItemPedido itempedido = new ItemPedido();
+					/*ItemPedido itempedido = new ItemPedido();
 					
 					itempedido.setProdutoId((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 1));
 					itempedido.setQuantidade((int)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 3));		
 					itempedido.setPreco((Double)tableItemPedidos.getModel().getValueAt(tableItemPedidos.getSelectedRow(), 4));			
-					ItemPedBLL.adicionaItens(itempedido);
+					ItemPedBLL.adicionaItens(itempedido);*/
 				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -635,7 +638,7 @@ public class FrmVenda {
 					addItem.frame.setVisible(true);
 				
 		        }catch(Exception ex) {
-					JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusão de Produto.", "FrmVenda", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(new JFrame(), "Cadastro \n\n" + "\nFalha na inclusÃ£o de Produto.", "FrmVenda", JOptionPane.INFORMATION_MESSAGE);
 					ex.printStackTrace();
 				}
 			}
@@ -707,7 +710,7 @@ public class FrmVenda {
 		});
 		panelMenu.add(btnDesconto);
 		
-		JButton btnOpcoes = new JButton("Opções");
+		JButton btnOpcoes = new JButton("OpÃ§Ãµes");
 		btnOpcoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelOpcoes.setVisible(true);
