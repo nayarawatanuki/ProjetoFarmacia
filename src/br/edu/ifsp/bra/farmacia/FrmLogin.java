@@ -87,7 +87,7 @@ public class FrmLogin {
 		List<Funcionario> fun = func.getTodosFuncionarios();
 		
 		JComboBox<Funcionario> cbxUser = new JComboBox<Funcionario>();
-		//cbxUser.setModel(new DefaultComboBoxModel(new String[] {""}));
+		
 		for (Funcionario f : fun) {
 			cbxUser.addItem(f);
 		}

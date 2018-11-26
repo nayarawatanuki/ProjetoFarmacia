@@ -1,7 +1,6 @@
 package br.edu.ifsp.bra.farmacia;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,12 +9,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-import br.edu.ifsp.bra.dominio.CaixaBLL;
-import br.edu.ifsp.bra.dominio.ItemPedidoBLL;
-import br.edu.ifsp.bra.dominio.MedicamentoBLL;
 import br.edu.ifsp.bra.dominio.PedidoBLL;
 import br.edu.ifsp.bra.modelo.ItemPedido;
-import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Pagamento;
 
 public class FrmNotaFiscal {
@@ -33,9 +28,9 @@ public class FrmNotaFiscal {
 		
 		pedBll = new PedidoBLL();
 		
-		String strInfoEmpresa = "                       Farmácia Projeto                                         \r\n" + 
+		String strInfoEmpresa = "                       Farmacia Projeto                                         \r\n" + 
 				"\r\n" + 
-				"Endereço: \r\n" + 
+				"Endereco: \r\n" + 
 				"Bairro:\r\n" + 
 				"CEP:\r\n" + 
 				"Telefone:\r\n" + 
@@ -67,11 +62,11 @@ public class FrmNotaFiscal {
 	private void criarTabela()
 	{
 		model = new DefaultTableModel();
-		model.addColumn("Código");
+		model.addColumn("Codigo");
 		model.addColumn("Quantidade");
 		model.addColumn("Descricao");
-		model.addColumn("Preço Unitário");
-		model.addColumn("Preço Total");
+		model.addColumn("Preco Unitario");
+		model.addColumn("Preco Total");
 
 
 	}

@@ -1,4 +1,5 @@
 package br.edu.ifsp.bra.farmacia;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -53,7 +54,6 @@ public class FrmAddItem {
 		lblMed.setBounds(31, 45, 96, 29);
 		panel.add(lblMed);
 		
-		//comboBox = new JComboBox();
 		
 		MedicamentoBLL me = new MedicamentoBLL();
 		Set<Medicamento> med = me.getTodosMedicamento();
@@ -102,23 +102,9 @@ public class FrmAddItem {
 		btnFinalizar.setBounds(327, 90, 96, 23);
 		panel.add(btnFinalizar);
 		
-	/*	criarTabela();
-		itens = new JTable(model);
-		JScrollPane scroll = new JScrollPane(itens);
-		scroll.setViewportView(itens);
-		panel.add(scroll);*/
 		
 		frame.setVisible(true);
 	}
-	
-	/*private void criarTabela()
-	{
-		model = new DefaultTableModel();
-		model.addColumn("Descricao");
-		model.addColumn("Preco Unitario");
-		model.addColumn("Quantidade");
-		model.addColumn("Preco Total");
-	}*/
 	
 	private void popularTabela(ItemPedido item)
 	{
