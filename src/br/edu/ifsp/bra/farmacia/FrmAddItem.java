@@ -1,6 +1,5 @@
 package br.edu.ifsp.bra.farmacia;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,9 +15,7 @@ import br.edu.ifsp.bra.modelo.Pedido;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.util.Set;
 import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
