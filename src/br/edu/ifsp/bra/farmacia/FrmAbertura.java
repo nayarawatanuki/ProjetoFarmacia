@@ -1,36 +1,32 @@
 package br.edu.ifsp.bra.farmacia;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.TitledBorder;
 
-import br.edu.ifsp.bra.dominio.CaixaBLL;
-import br.edu.ifsp.bra.dominio.FuncionarioBLL;
-import br.edu.ifsp.bra.dominio.LoginBLL;
+import java.awt.Font;
+
+import br.edu.ifsp.bra.dominio.CaixaFacade;
 import br.edu.ifsp.bra.modelo.Caixa;
 import br.edu.ifsp.bra.modelo.Funcionario;
-import br.edu.ifsp.bra.modelo.Login;
 
-public class FrmLogin {
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-	private JFrame frame;
-	private JPasswordField pwdSenha = new JPasswordField();
-	private CaixaBLL caixaBLL = new CaixaBLL();
-	private FuncionarioBLL funcionarioBLL = new FuncionarioBLL();
+public class FrmAbertura {
+
+	JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -39,7 +35,7 @@ public class FrmLogin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmLogin window = new FrmLogin();
+					FrmAbertura window = new FrmAbertura();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +47,7 @@ public class FrmLogin {
 	/**
 	 * Create the application.
 	 */
-	public FrmLogin() {
+	public FrmAbertura() {
 		initialize();
 	}
 
@@ -59,121 +55,89 @@ public class FrmLogin {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Farmácia IFSP - Entrar");
-		frame.setBounds(100, 100, 346, 273);
+		frame = new JFrame("Abertura de caixa");
+		frame.setBounds(100, 100, 297, 217);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Entrar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-
-		JLabel lblUsuario = new JLabel("Usuário:");
-		JLabel lblSenha = new JLabel("Senha:");
-		JLabel lblCaixa = new JLabel("Caixa:");
-
-		JComboBox<Caixa> comboBox = new JComboBox<Caixa>();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {""}));
-		for (Caixa c : caixaBLL.getTodosCaixas()) {
-			comboBox.addItem(c);
-		}
-
-		JComboBox<Funcionario> cmbUsuario = new JComboBox<Funcionario>();
-		for (Funcionario f : funcionarioBLL.getTodosFuncionarios()) {
-			cmbUsuario.addItem(f);
-		}
-
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-						.addGap(23)
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-										.addComponent(lblCaixa, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(comboBox, 0, 130, Short.MAX_VALUE))
-								.addGroup(gl_panel.createSequentialGroup()
-										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblUsuario)
-												.addComponent(lblSenha))
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-												.addComponent(pwdSenha, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-												.addComponent(cmbUsuario, 0, 130, Short.MAX_VALUE))))
-						.addGap(28))
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addGap(32)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(78, Short.MAX_VALUE))
 				);
-		gl_panel.setVerticalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-						.addGap(15)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblUsuario)
-								.addComponent(cmbUsuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblSenha)
-								.addComponent(pwdSenha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGap(18)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblCaixa)
-								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(16, Short.MAX_VALUE))
+		groupLayout.setVerticalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addGap(27)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(30, Short.MAX_VALUE))
 				);
 
-		panel.setLayout(gl_panel);
+		JLabel lblValorDeAbertura = new JLabel("Valor de abertura");
+		lblValorDeAbertura.setFont(new Font("Verdana", Font.PLAIN, 18));
 
-		JButton btnEntrar = new JButton("Entrar");
-		btnEntrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (cmbUsuario.getSelectedItem() == "" || pwdSenha.getPassword().toString() == "" || comboBox.getSelectedItem() == "") {
-					JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos.");
-					return;
+		JFormattedTextField frmtdtxtValorAbertura = new JFormattedTextField();
+		frmtdtxtValorAbertura.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				JTextField jtf = (JTextField) e.getSource();
+				char key = e.getKeyChar();
+				boolean press = (key == KeyEvent.VK_PERIOD || key == KeyEvent.VK_ENTER || key == KeyEvent.VK_DELETE || Character.isDigit(key));
+				if (!press || jtf.getText().length() == 50) {
+					e.consume();
 				}
+			}
+		});
 
+		JButton btnOk = new JButton("Abrir caixa");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				try {
-					Login login = new Login();
-					LoginBLL bll = new LoginBLL();
-					CaixaBLL c = new CaixaBLL();
-
-					login.setLogin(((Funcionario)cmbUsuario.getSelectedItem()).getUsuario());
-					login.setSenha(String.valueOf(pwdSenha.getPassword()));
-					
-					if (!bll.Logar(login)) {
-						JOptionPane.showMessageDialog(new JFrame(), "Usuário e/ou senha inválido(s).", "Autenticação", JOptionPane.INFORMATION_MESSAGE);
+					Caixa.setValorAbertura(Double.parseDouble(frmtdtxtValorAbertura.getText()));
+					if (Caixa.getValorAbertura() < 100) {
+						JOptionPane.showMessageDialog(null, "O caixa deve ser aberto com um valor mínimo de 100");
 						return;
 					}
 
-					Funcionario.setFuncionarioAtual((Funcionario) cmbUsuario.getSelectedItem());
-					Caixa.setCaixaAtual(c.getCaixa(comboBox.getSelectedIndex()));
+					new CaixaFacade(Caixa.getCaixaAtual(), Funcionario.getFuncionarioAtual(), Caixa.getValorAbertura());
 
-					FrmAbertura abertura = new FrmAbertura();
-					abertura.frame.setVisible(true);
-					
+					FrmVendas vendas = new FrmVendas();
+					vendas.frame.setVisible(true);
+
 					frame.dispose();
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		});
-		
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-						.addGap(49)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnEntrar))
-						.addContainerGap(51, Short.MAX_VALUE))
+
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+						.addGap(25)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblValorDeAbertura, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+										.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+										.addComponent(frmtdtxtValorAbertura, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap(34, Short.MAX_VALUE))
 				);
-		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-						.addContainerGap(19, Short.MAX_VALUE)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(btnEntrar)
-						.addGap(20))
+		gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+						.addGap(21)
+						.addComponent(lblValorDeAbertura, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(frmtdtxtValorAbertura, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(btnOk)
+						.addContainerGap(23, Short.MAX_VALUE))
 				);
+		panel.setLayout(gl_panel);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }
