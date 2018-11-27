@@ -49,7 +49,7 @@ public class FrmPagamento {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panelValorCompra = new JPanel();
 		panelValorCompra.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Total da Compra", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));

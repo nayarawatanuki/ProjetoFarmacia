@@ -58,7 +58,7 @@ public class FrmClienteCadastro {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 568, 403);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JLabel lblClientes = new JLabel("CLIENTES");
 		lblClientes.setFont(new Font("Lucida Grande", Font.PLAIN, 16));

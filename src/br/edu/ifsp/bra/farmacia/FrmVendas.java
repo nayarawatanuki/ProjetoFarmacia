@@ -83,6 +83,8 @@ public class FrmVendas {
 		itens = new JTable(model);
 		scroll.setViewportView(itens);
 		
+		JLabel lblTotalpedido = new JLabel("TotalPedido");
+		
 		JButton btnAtualizarTabela = new JButton("Atualizar");
 		btnAtualizarTabela.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,6 +92,7 @@ public class FrmVendas {
 				{
 					popularTabela();
 					FrmVendas.isAtualizada = true;
+					lblTotalpedido.setText(Pedido.getPedidoAtual().getTotal() + "");
 				}
 			}
 		});
@@ -125,7 +128,7 @@ public class FrmVendas {
 					.addContainerGap())
 		);
 		
-		JLabel lblTotalpedido = new JLabel("TotalPedido");
+		
 		scpTotal.setViewportView(lblTotalpedido);
 		panel_1.setLayout(gl_panel_1);
 		

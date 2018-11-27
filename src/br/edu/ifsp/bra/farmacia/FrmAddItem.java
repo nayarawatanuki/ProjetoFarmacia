@@ -83,11 +83,13 @@ public class FrmAddItem {
 		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				MedicamentoBLL medBll = new MedicamentoBLL();
 				Medicamento med = medBll.getMedicamento(comboBox.getSelectedIndex());
 				CaixaFacade facade = new CaixaFacade();
 				facade.adicionaMedicamento(med, (int) spinner.getValue());
 				popularTabela(Pedido.getPedidoAtual().getItens().get((Pedido.getPedidoAtual().getItens().size()) - 1));
+				btnConfirmar.setEnabled(false);
 			}
 		});
 		btnConfirmar.setBounds(327, 46, 96, 29);

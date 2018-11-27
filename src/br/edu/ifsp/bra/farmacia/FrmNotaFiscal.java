@@ -39,6 +39,7 @@ public class FrmNotaFiscal {
 		
 		frame = new JFrame(" Nota Fiscal ");
 		frame.setSize(500,800);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		panel = new JPanel();
 		frame.getContentPane().add(panel);

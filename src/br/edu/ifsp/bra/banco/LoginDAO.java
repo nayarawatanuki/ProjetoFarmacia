@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import br.edu.ifsp.bra.modelo.Login;
+
 public class LoginDAO {
 	
 	Connection connection = ConnectionFactory.getConnection();
 	
-	public boolean Logar(Object usuario, String senha){
+	public boolean Logar(Login login){
 		
 		try {
 			
@@ -30,18 +32,16 @@ public class LoginDAO {
 				String sql = "SELECT usuario, senha FROM funcionario WHERE usuario=? AND senha=?;";
 				PreparedStatement comando = connection.prepareStatement(sql);
 				
-				comando.setObject(1, usuario);
-				comando.setString(2, senha);
+				comando.setString(1, login.getLogin());
+				comando.setString(2, login.getSenha());
 				
 				ResultSet rs = null;
 				rs = comando.executeQuery();
 				
 				if(rs.next())
 				{
-					JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Permitido.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
 					return true;
 				}
-				JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Negado.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
 				return false;
 			
 		}catch(SQLException e) {

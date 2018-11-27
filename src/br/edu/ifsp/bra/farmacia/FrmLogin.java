@@ -147,21 +147,28 @@ public class FrmLogin {
 						CaixaBLL c = new CaixaBLL();
 						
 						
-						login.setLogin(cbxUser.getSelectedItem().toString());
+						login.setLogin(((Funcionario)cbxUser.getSelectedItem()).getUsuario());
 						login.setSenha(pwdSenha.getText());
 						
 						
 						
-						bll.Logar(cbxUser.getSelectedItem(), pwdSenha.getText());
+						if(bll.Logar(login))
+						{
 						
-						Funcionario.setFuncionarioAtual((Funcionario) cbxUser.getSelectedItem());
-						Caixa.setCaixaAtual(c.getCaixa(comboBox.getSelectedIndex()));
+							Funcionario.setFuncionarioAtual((Funcionario) cbxUser.getSelectedItem());
+							Caixa.setCaixaAtual(c.getCaixa(comboBox.getSelectedIndex()));
 						
-						FrmCaixa caixa = new FrmCaixa();
-						caixa.frame.setVisible(true);
+							FrmCaixa caixa = new FrmCaixa();
+							caixa.frame.setVisible(true);
 						
-						frame.dispose();
-						
+							frame.dispose();
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Negado.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
+
+							
+						}
 						
 		
 						

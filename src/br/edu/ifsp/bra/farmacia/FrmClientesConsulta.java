@@ -10,6 +10,7 @@ import br.edu.ifsp.bra.dominio.ClienteBLL;
 import br.edu.ifsp.bra.modelo.Cliente;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Font;
 
@@ -121,10 +122,16 @@ public class FrmClientesConsulta {
 		btnPesquisa = new JButton("Pesquisa");
 		btnPesquisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClienteBLL bll = new ClienteBLL();
-				listaCliente = bll.PesquisarCliente(txtPesquisa.getText());
-				popularTabela(listaCliente);
-				
+				if(!txtPesquisa.getText().equals(""))
+				{
+					ClienteBLL bll = new ClienteBLL();
+					listaCliente = bll.PesquisarCliente(txtPesquisa.getText());
+					popularTabela(listaCliente);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Campo Pesquisar em branco");
+				}
 			}
 		});
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
