@@ -5,9 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import br.edu.ifsp.bra.modelo.Login;
 
 public class LoginDAO {
@@ -17,17 +14,6 @@ public class LoginDAO {
 	public boolean Logar(Login login){
 		
 		try {
-			
-			/*ResultSet rs = null;
-			
-			List<Login> log = new ArrayList<>();
-			rs = comando.executeQuery();
-			
-			while(rs.next()) {
-				Login login = new Login();
-				login.setLogin(rs.getString("usuario"));
-				login.setSenha(rs.getString("senha"));
-				log.add(login);*/
 				
 				String sql = "SELECT usuario, senha FROM funcionario WHERE usuario=? AND senha=?;";
 				PreparedStatement comando = connection.prepareStatement(sql);

@@ -167,7 +167,6 @@ public class FrmLogin {
 						{
 							JOptionPane.showMessageDialog(new JFrame(), "Login \n\n" + "\nAcesso Negado.", "FrmFuncionario", JOptionPane.INFORMATION_MESSAGE);
 
-							
 						}
 						
 		
