@@ -11,7 +11,6 @@ import br.edu.ifsp.bra.modelo.Funcionario;
 import br.edu.ifsp.bra.modelo.IPagamento;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
-import br.edu.ifsp.bra.modelo.Pagamento;
 import br.edu.ifsp.bra.modelo.Pedido;
 import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
@@ -94,7 +93,7 @@ public class CaixaFacade {
 		Pedido.setPedidoAtual(null);
 	}
 	
-	public void concedeDesconto(Pagamento p, double desconto, Funcionario f) {
+	public void concedeDesconto(IPagamento p, double desconto, Funcionario f) {
 		if (!f.isGerente()) {
 			throw new RuntimeException("O desconto pode ser concedidos apenas por um gerente");	// TipoFuncionarioException
 		}
@@ -106,7 +105,7 @@ public class CaixaFacade {
 		p.setDesconto(desconto);
 	}
 	
-	public void geraNotaFiscal(Pagamento pagamento) {
+	public void geraNotaFiscal(IPagamento pagamento) {
 
 		new FrmNotaFiscal(pagamento);
 	}

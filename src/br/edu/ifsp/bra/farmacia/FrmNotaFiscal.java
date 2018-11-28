@@ -10,8 +10,8 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifsp.bra.dominio.PedidoBLL;
+import br.edu.ifsp.bra.modelo.IPagamento;
 import br.edu.ifsp.bra.modelo.ItemPedido;
-import br.edu.ifsp.bra.modelo.Pagamento;
 
 public class FrmNotaFiscal {
 
@@ -22,12 +22,12 @@ public class FrmNotaFiscal {
 	DefaultTableModel model;
 	PedidoBLL pedBll;
 	JScrollPane scroll;
-	
-	public FrmNotaFiscal(Pagamento pagamento)
+
+	public FrmNotaFiscal(IPagamento pagamento)
 	{
-		
+
 		pedBll = new PedidoBLL();
-		
+
 		String strInfoEmpresa = "                       Farmacia Projeto                                         \r\n" + 
 				"\r\n" + 
 				"Endereco: \r\n" + 
@@ -36,30 +36,30 @@ public class FrmNotaFiscal {
 				"Telefone:\r\n" + 
 				"CNPJ:\r\n" + 
 				"\r\n";
-		
+
 		frame = new JFrame(" Nota Fiscal ");
 		frame.setSize(500,800);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+
 		panel = new JPanel();
 		frame.getContentPane().add(panel);
-		
+
 		infoEmpresa = new JTextArea(strInfoEmpresa);
 		panel.add(infoEmpresa);
-		
-		
+
+
 		criarTabela();
 		infoPedido = new JTable(model);
 		scroll = new JScrollPane(infoPedido);
 		popularTabela(pedBll.buscarPedido(pagamento.getPedidoId()).getItens());
 		scroll.setViewportView(infoPedido);
 		panel.add(scroll);
-		
+
 		frame.setVisible(true);
-		
+
 
 	}
-	
+
 	private void criarTabela()
 	{
 		model = new DefaultTableModel();
@@ -71,7 +71,7 @@ public class FrmNotaFiscal {
 
 
 	}
-	
+
 	private void popularTabela(List<ItemPedido> itens)
 	{
 		Object[] lista = new Object[5];
@@ -89,8 +89,8 @@ public class FrmNotaFiscal {
 			model.addRow(lista);	
 		}
 	}
-	
-	
-	
+
+
+
 }
 

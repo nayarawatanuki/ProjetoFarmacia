@@ -1,26 +1,25 @@
 package br.edu.ifsp.bra.farmacia;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Set;
 
-import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifsp.bra.dominio.MedicamentoBLL;
 import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
-
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.Set;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class FrmMedicamento {
 
