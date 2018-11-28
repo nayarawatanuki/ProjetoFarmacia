@@ -10,8 +10,9 @@ import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Cliente;
 
-public class ClienteDAO {
+public class ClienteDAO implements IClienteDAO {
 
+	@Override
 	public Cliente getCliente(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -29,6 +30,7 @@ public class ClienteDAO {
 		return null;
 	}
 
+	@Override
 	public List<Cliente> getTodosClientes() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -46,6 +48,7 @@ public class ClienteDAO {
 		return null;
 	}
 
+	@Override
 	public int novoCliente(Cliente cliente) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -69,6 +72,7 @@ public class ClienteDAO {
 		return -1;
 	}
 
+	@Override
 	public boolean modificaCliente(Cliente cliente) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -92,7 +96,8 @@ public class ClienteDAO {
 
 		return false;
 	}
-	
+
+	@Override
 	public List<Cliente> PesquisarClientes(String filtro) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {

@@ -10,7 +10,9 @@ import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Cartao;
 
-public class CartaoDAO {
+public class CartaoDAO implements ICartaoDAO {
+	
+	@Override
 	public Cartao getPagamento(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -29,6 +31,7 @@ public class CartaoDAO {
 		return null;
 	}
 
+	@Override
 	public List<Cartao> getTodosPagamentos() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -46,6 +49,7 @@ public class CartaoDAO {
 		return null;
 	}
 
+	@Override
 	public int novoPagamento(Cartao cartao) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {

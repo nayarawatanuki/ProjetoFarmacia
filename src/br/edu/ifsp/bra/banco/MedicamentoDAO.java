@@ -14,8 +14,9 @@ import javax.swing.JOptionPane;
 import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Medicamento.TipoMedicamento;
 
-public class MedicamentoDAO {
-	
+public class MedicamentoDAO implements IMedicamentoDAO {
+
+	@Override
 	public Medicamento getMedicamento(String codigo) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -32,7 +33,8 @@ public class MedicamentoDAO {
 		}
 		return null;
 	}
-	
+
+	@Override
 	public Medicamento getMedicamento(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -49,6 +51,7 @@ public class MedicamentoDAO {
 		return null;
 	}
 
+	@Override
 	public Set<Medicamento> getTodosMedicamento() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -65,7 +68,8 @@ public class MedicamentoDAO {
 		}
 		return null;
 	}
-	
+
+	@Override
 	public Set<Medicamento> getEstoque(int filtro) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -83,6 +87,7 @@ public class MedicamentoDAO {
 		return null;
 	}
 
+	@Override
 	public boolean adicionar(Medicamento med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -108,6 +113,7 @@ public class MedicamentoDAO {
 		return false;
 	}
 
+	@Override
 	public boolean modificar(Medicamento med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -130,7 +136,8 @@ public class MedicamentoDAO {
 
 		return false;
 	}
-	
+
+	@Override
 	public boolean remover(int med) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {

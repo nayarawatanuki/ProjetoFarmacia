@@ -10,7 +10,9 @@ import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Dinheiro;
 
-public class DinheiroDAO {
+public class DinheiroDAO implements IDinheiroDAO {
+	
+	@Override
 	public Dinheiro getPagamento(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -29,6 +31,7 @@ public class DinheiroDAO {
 		return null;
 	}
 
+	@Override
 	public List<Dinheiro> getTodosPagamentos() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -46,6 +49,7 @@ public class DinheiroDAO {
 		return null;
 	}
 
+	@Override
 	public int novoPagamento(Dinheiro dinheiro) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {

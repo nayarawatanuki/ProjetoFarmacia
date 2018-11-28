@@ -11,10 +11,11 @@ import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Pedido;
 import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
-public class PedidoDAO{
+public class PedidoDAO implements IPedidoDAO {
 	
 	ItemPedidoDAO itensDAO = new ItemPedidoDAO();
-	
+
+	@Override
 	public int adicionar(Pedido pedido) {
 		
 		Connection connection = ConnectionFactory.getConnection();
@@ -41,7 +42,8 @@ public class PedidoDAO{
 		}
 		return -1;
 	}
-	
+
+	@Override
 	public Pedido buscarPedido(int idPedido)
 	{
 		Connection connection = ConnectionFactory.getConnection();

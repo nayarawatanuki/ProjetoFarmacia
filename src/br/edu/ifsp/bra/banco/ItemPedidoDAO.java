@@ -13,10 +13,9 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifsp.bra.modelo.ItemPedido;
 
-public class ItemPedidoDAO {
+public class ItemPedidoDAO implements IITemPedidoDAO {
 
-
-	
+	@Override
 	public boolean adiciona(ItemPedido itempedido, int pedidoId) {
 		
 		Connection connection = ConnectionFactory.getConnection();
@@ -41,7 +40,8 @@ public class ItemPedidoDAO {
 
 		return false;
 	}
-	
+
+	@Override
 	public List<ItemPedido> buscarItens(int idPedido) {
 
 		Connection connection = ConnectionFactory.getConnection();

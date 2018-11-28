@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifsp.bra.modelo.Funcionario;
 
-public class FuncionarioDAO {
+public class FuncionarioDAO implements IFuncionarioDAO {
+	
+	@Override
 	public Funcionario getFuncionario(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -30,7 +32,8 @@ public class FuncionarioDAO {
 		}
 		return null;
 	}
-	
+
+	@Override
 	public Funcionario getFuncionario(String usuario, String senha) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -65,6 +68,7 @@ public class FuncionarioDAO {
 		return null;
 	}
 
+	@Override
 	public List<Funcionario> getTodosFuncionarios() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -82,6 +86,7 @@ public class FuncionarioDAO {
 		return null;
 	}
 
+	@Override
 	public int novoFuncionario(Funcionario funcionario) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -107,6 +112,7 @@ public class FuncionarioDAO {
 		return -1;
 	}
 
+	@Override
 	public boolean modificaFuncionario(Funcionario funcionario) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {

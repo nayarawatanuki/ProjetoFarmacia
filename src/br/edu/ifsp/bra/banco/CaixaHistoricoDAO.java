@@ -10,8 +10,9 @@ import java.util.List;
 
 import br.edu.ifsp.bra.modelo.CaixaHistorico;
 
-public class CaixaHistoricoDAO {
+public class CaixaHistoricoDAO implements ICaixaHistoricoDAO {
 
+	@Override
 	public CaixaHistorico getCaixaHistorico(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -28,6 +29,7 @@ public class CaixaHistoricoDAO {
 		return null;
 	}
 
+	@Override
 	public List<CaixaHistorico> getCaixaHistorico() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -45,6 +47,7 @@ public class CaixaHistoricoDAO {
 		return null;
 	}
 
+	@Override
 	public int novoCaixaHistorico(CaixaHistorico caixa) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -68,6 +71,7 @@ public class CaixaHistoricoDAO {
 		return -1;
 	}
 
+	@Override
 	public boolean modificaCaixaHistorico(CaixaHistorico caixa) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {

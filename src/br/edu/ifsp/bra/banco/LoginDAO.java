@@ -10,10 +10,11 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifsp.bra.modelo.Login;
 
-public class LoginDAO {
+public class LoginDAO implements ILoginDAO {
 	
 	Connection connection = ConnectionFactory.getConnection();
-	
+
+	@Override
 	public boolean Logar(Login login){
 		
 		try {

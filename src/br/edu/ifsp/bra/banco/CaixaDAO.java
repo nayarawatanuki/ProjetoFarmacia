@@ -9,8 +9,9 @@ import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Caixa;
 
-public class CaixaDAO {
+public class CaixaDAO implements ICaixaDAO {
 
+	@Override
 	public Caixa getCaixa(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
@@ -27,6 +28,7 @@ public class CaixaDAO {
 		return null;
 	}
 
+	@Override
 	public List<Caixa> getCaixa() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
