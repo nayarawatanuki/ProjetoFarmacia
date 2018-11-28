@@ -43,7 +43,7 @@ public class CaixaFacade {
 			throw new RuntimeException("O caixa pode ser fechado apenas por um gerente");	// TipoFuncionarioException
 		}
 		if (CaixaFacade.getPedidoAtual() != null) {
-			throw new RuntimeException("O caixa n�o pode ser fechado pois um pedido est� aberto"); // PedidoAbertoException
+			throw new RuntimeException("O caixa nao pode ser fechado pois um pedido esta aberto"); // PedidoAbertoException
 		}
 
 		this.historico.setValorFechamento(CaixaFacade.totalCaixa);
@@ -53,7 +53,7 @@ public class CaixaFacade {
 	
 	public void novoPedido() {
 		if (CaixaFacade.getPedidoAtual() != null) {
-			throw new RuntimeException("Um pedido ainda est� em aberto"); // PedidoAbertoException
+			throw new RuntimeException("Um pedido ainda esta em aberto"); // PedidoAbertoException
 		}
 
 		Pedido.setPedidoAtual(new Pedido());

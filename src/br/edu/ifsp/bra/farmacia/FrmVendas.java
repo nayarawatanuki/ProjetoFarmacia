@@ -1,8 +1,6 @@
 package br.edu.ifsp.bra.farmacia;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +10,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -280,43 +277,23 @@ public class FrmVendas {
 		panelOpcoes.add(btnCancelar);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(btnCancelar.getText() == "Cancelar Venda") {
-					
-					facade.cancelaVenda();
-					
-					lblCliente.setText("Cliente: ");
-					
-					String caixa = vlrTotal.getText();
-					vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
-					
-					lblTotalpedido.setText("");
-					
-					itens.selectAll();
-					((DefaultTableModel) itens.getModel()).setRowCount(0);
-					itens = new JTable(model);
-					
-					btnCancelar.setText("Cancelar Venda");
-					
-					facade.novoPedido();
-					
-				}else if(btnCancelar.getText() == "Novo Pedido") {
-					
-					lblCliente.setText("Cliente: ");
-					
-					String caixa = vlrTotal.getText();
-					vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
-					
-					lblTotalpedido.setText("");
-					
-					itens.selectAll();
-					((DefaultTableModel) itens.getModel()).setRowCount(0);
-					
-					
-					btnCancelar.setText("Cancelar Venda");
-					
-					facade.novoPedido();
-					
-				}
+				
+				facade.cancelaVenda();
+				
+				lblCliente.setText("Cliente: ");
+				
+				String caixa = vlrTotal.getText();
+				vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
+				
+				lblTotalpedido.setText("");
+				
+				itens.selectAll();
+				((DefaultTableModel) itens.getModel()).setRowCount(0);
+				itens = new JTable(model);
+				
+				btnCancelar.setText("Cancelar Venda");
+				
+				facade.novoPedido();
 				
 			}
 		});
@@ -342,7 +319,21 @@ public class FrmVendas {
 				JOptionPane.showMessageDialog(null, "Pagamento por dinheiro realizado com sucesso.");
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(true);
-				btnCancelar.setText("Novo Pedido");
+				
+				lblCliente.setText("Cliente: ");
+				
+				String caixa = vlrTotal.getText();
+				vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
+				
+				lblTotalpedido.setText("");
+				
+				itens.selectAll();
+				((DefaultTableModel) itens.getModel()).setRowCount(0);
+				
+				
+				btnCancelar.setText("Cancelar Venda");
+				
+				facade.novoPedido();
 				
 			}
 		});
@@ -360,7 +351,21 @@ public class FrmVendas {
 				JOptionPane.showMessageDialog(null, "Pagamento por credito realizado com sucesso.");
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(true);
-				btnCancelar.setText("Novo Pedido");
+
+				lblCliente.setText("Cliente: ");
+				
+				String caixa = vlrTotal.getText();
+				vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
+				
+				lblTotalpedido.setText("");
+				
+				itens.selectAll();
+				((DefaultTableModel) itens.getModel()).setRowCount(0);
+				
+				
+				btnCancelar.setText("Cancelar Venda");
+				
+				facade.novoPedido();
 			}
 		});
 		panelPagamento.add(btnCredito);
@@ -376,7 +381,21 @@ public class FrmVendas {
 				JOptionPane.showMessageDialog(null, "Pagamento por debito realizado com sucesso.");
 				panelPagamento.setVisible(false);
 				panelOpcoes.setVisible(true);
-				btnCancelar.setText("Novo Pedido");
+				
+				lblCliente.setText("Cliente: ");
+				
+				String caixa = vlrTotal.getText();
+				vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
+				
+				lblTotalpedido.setText("");
+				
+				itens.selectAll();
+				((DefaultTableModel) itens.getModel()).setRowCount(0);
+				
+				
+				btnCancelar.setText("Cancelar Venda");
+				
+				facade.novoPedido();
 			}
 		});
 		panelPagamento.add(btnDebito);
@@ -409,8 +428,6 @@ public class FrmVendas {
 				panelPagamento.setVisible(true);
 				panelOpcoes.setVisible(false);
 				
-				
-				//frame.dispose();
 			}
 		});
 		
@@ -444,12 +461,7 @@ public class FrmVendas {
 				lista[3] = (item.getTotal());
 			
 				model.addRow(lista);
-				setPrecoTotal(Pedido.getPedidoAtual().getTotal());
 			}
 		}
-	}
-	private void setPrecoTotal(double preco)
-	{
-		//lblTotalpedido.setText(preco + "");
 	}
 }
