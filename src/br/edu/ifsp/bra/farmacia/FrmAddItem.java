@@ -1,6 +1,5 @@
 package br.edu.ifsp.bra.farmacia;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,11 +15,10 @@ import br.edu.ifsp.bra.modelo.Pedido;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.util.Set;
 import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
+import javax.swing.JTextField;
 public class FrmAddItem {
 
 	static JFrame frame;
@@ -35,6 +33,7 @@ public class FrmAddItem {
 	
 	private JButton btnFinalizar;
 	private JSpinner spinner;
+	private JTextField txtCodMed;
 	
 	public FrmAddItem()
 	{
@@ -50,30 +49,17 @@ public class FrmAddItem {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		lblMed = new JLabel("Medicamento");
-		lblMed.setBounds(31, 45, 96, 29);
+		lblMed = new JLabel("Cod. do Medicamento");
+		lblMed.setBounds(31, 46, 116, 29);
 		panel.add(lblMed);
 		
-		
-		MedicamentoBLL me = new MedicamentoBLL();
-		Set<Medicamento> med = me.getTodosMedicamento();
-				
-		JComboBox<Medicamento> comboBox = new JComboBox<Medicamento>();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {""}));
-			
-			for (Medicamento m : med) {
-				comboBox.addItem(m);
-			}
-
-		comboBox.setBounds(128, 47, 139, 27);
-		panel.add(comboBox);
 		
 		lblQuant = new JLabel("Quantidade");
 		lblQuant.setBounds(31, 86, 89, 29);
 		panel.add(lblQuant);
 		
 		spinner = new JSpinner();
-		spinner.setBounds(128, 86, 96, 26);
+		spinner.setBounds(157, 87, 96, 26);
 		panel.add(spinner);
 		
 		txtpnProduto = new JTextPane();
@@ -83,13 +69,20 @@ public class FrmAddItem {
 		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				MedicamentoBLL medBll = new MedicamentoBLL();
-				Medicamento med = medBll.getMedicamento(comboBox.getSelectedIndex());
-				CaixaFacade facade = new CaixaFacade();
-				facade.adicionaMedicamento(med, (int) spinner.getValue());
-				popularTabela(Pedido.getPedidoAtual().getItens().get((Pedido.getPedidoAtual().getItens().size()) - 1));
-				btnConfirmar.setEnabled(false);
+				try
+				{
+					MedicamentoBLL medBll = new MedicamentoBLL();
+					//Mudar a forma de adicionar medicamento ao pedido
+					Medicamento med = medBll.getMedicamento(Integer.parseInt(txtCodMed.getText()));
+					CaixaFacade facade = new CaixaFacade();
+					facade.adicionaMedicamento(med, (int) spinner.getValue());
+					popularTabela(Pedido.getPedidoAtual().getItens().get((Pedido.getPedidoAtual().getItens().size()) - 1));
+					btnConfirmar.setEnabled(false);
+				}
+				catch(Exception e1)
+				{
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnConfirmar.setBounds(327, 46, 96, 29);
@@ -103,6 +96,11 @@ public class FrmAddItem {
 		});
 		btnFinalizar.setBounds(327, 90, 96, 23);
 		panel.add(btnFinalizar);
+		
+		txtCodMed = new JTextField();
+		txtCodMed.setBounds(157, 46, 96, 24);
+		panel.add(txtCodMed);
+		txtCodMed.setColumns(10);
 		
 		
 		frame.setVisible(true);

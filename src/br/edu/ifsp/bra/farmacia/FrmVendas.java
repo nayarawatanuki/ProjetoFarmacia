@@ -264,7 +264,7 @@ public class FrmVendas {
 		panel.add(panelOpcoes);
 		panelOpcoes.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Cancelar Venda");
 		panelOpcoes.add(btnCancelar);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -286,15 +286,33 @@ public class FrmVendas {
 		panel.add(panelPagamento);
 		
 		JButton btnDinheiro = new JButton("Dinheiro");
+		btnDinheiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CaixaFacade facade = new CaixaFacade();
+				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
+			}
+		});
 		panelPagamento.add(btnDinheiro);
 		
 		JButton btnCredito = new JButton("Credito");
+		btnCredito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CaixaFacade facade = new CaixaFacade();
+				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
+			}
+		});
 		panelPagamento.add(btnCredito);
 		
 		JButton btnDebito = new JButton("Debito");
+		btnDebito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CaixaFacade facade = new CaixaFacade();
+				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
+			}
+		});
 		panelPagamento.add(btnDebito);
 		
-		JButton btnCancelarpg = new JButton("Cancelar");
+		JButton btnCancelarpg = new JButton("Voltar");
 		btnCancelarpg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -318,8 +336,6 @@ public class FrmVendas {
 		});
 		btnPagamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CaixaFacade facade = new CaixaFacade();
-				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
 				
 				panelPagamento.setVisible(true);
 				panelOpcoes.setVisible(false);

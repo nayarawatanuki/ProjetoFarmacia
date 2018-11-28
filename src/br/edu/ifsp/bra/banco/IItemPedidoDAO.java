@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.edu.ifsp.bra.modelo.ItemPedido;
 
-public interface IITemPedidoDAO {
-	boolean adiciona(ItemPedido itempedido, int pedidoId);
+public interface IItemPedidoDAO {
+	boolean adicionar(ItemPedido itemPedido, int idPedido);
 	List<ItemPedido> buscarItens(int idPedido);
 }

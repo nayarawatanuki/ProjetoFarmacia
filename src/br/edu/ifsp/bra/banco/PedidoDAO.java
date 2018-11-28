@@ -13,8 +13,8 @@ import br.edu.ifsp.bra.modelo.Pedido.StatusPedido;
 
 public class PedidoDAO implements IPedidoDAO {
 	
-	ItemPedidoDAO itensDAO = new ItemPedidoDAO();
-
+	IItemPedidoDAO itensDAO = new ItemPedidoDAO();
+	
 	@Override
 	public int adicionar(Pedido pedido) {
 		
@@ -33,7 +33,7 @@ public class PedidoDAO implements IPedidoDAO {
 			if (rs.next()) {
 				int id = rs.getInt(1);
 				for(ItemPedido item : pedido.getItens()) {
-					itensDAO.adiciona(item, id);
+					itensDAO.adicionar(item, id);
 				}
 				return id;
 			}

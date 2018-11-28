@@ -13,13 +13,11 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifsp.bra.modelo.ItemPedido;
 
-public class ItemPedidoDAO implements IITemPedidoDAO {
-
-	@Override
-	public boolean adiciona(ItemPedido itempedido, int pedidoId) {
-		
+public class ItemPedidoDAO implements IItemPedidoDAO {
 		Connection connection = ConnectionFactory.getConnection();
-		
+
+		@Override
+		public boolean adicionar(ItemPedido itempedido, int pedidoId) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO itens_pedido VALUES (?, ?, ?, ?)");
 			ps.setInt(1, pedidoId);	
