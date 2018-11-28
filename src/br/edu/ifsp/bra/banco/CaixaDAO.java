@@ -9,7 +9,7 @@ import java.util.List;
 
 import br.edu.ifsp.bra.modelo.Caixa;
 
-public class CaixaDAO {
+public class CaixaDAO implements ICaixaDAO{
 
 	public Caixa getCaixa(int id) {
 		Connection connection = ConnectionFactory.getConnection();
