@@ -280,9 +280,44 @@ public class FrmVendas {
 		panelOpcoes.add(btnCancelar);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(btnCancelar.getText() == "Cancelar Venda") {
+					
+					facade.cancelaVenda();
+					
+					lblCliente.setText("Cliente: ");
+					
+					String caixa = vlrTotal.getText();
+					vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
+					
+					lblTotalpedido.setText("");
+					
+					itens.selectAll();
+					((DefaultTableModel) itens.getModel()).setRowCount(0);
+					itens = new JTable(model);
+					
+					btnCancelar.setText("Cancelar Venda");
+					
+					facade.novoPedido();
+					
+				}else if(btnCancelar.getText() == "Novo Pedido") {
+					
+					lblCliente.setText("Cliente: ");
+					
+					String caixa = vlrTotal.getText();
+					vlrTotal.setText("" + (Double.parseDouble(lblTotalpedido.getText()) + Double.parseDouble(caixa)));
+					
+					lblTotalpedido.setText("");
+					
+					itens.selectAll();
+					((DefaultTableModel) itens.getModel()).setRowCount(0);
+					
+					
+					btnCancelar.setText("Cancelar Venda");
+					
+					facade.novoPedido();
+					
+				}
 				
-				frame.dispose();
-				facade.cancelaVenda();
 			}
 		});
 		
@@ -306,6 +341,9 @@ public class FrmVendas {
 				facade.realizaPagamento(pgto);
 				JOptionPane.showMessageDialog(null, "Pagamento por dinheiro realizado com sucesso.");
 				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(true);
+				btnCancelar.setText("Novo Pedido");
+				
 			}
 		});
 		panelPagamento.add(btnDinheiro);
@@ -321,6 +359,8 @@ public class FrmVendas {
 				facade.realizaPagamento(pgto);
 				JOptionPane.showMessageDialog(null, "Pagamento por credito realizado com sucesso.");
 				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(true);
+				btnCancelar.setText("Novo Pedido");
 			}
 		});
 		panelPagamento.add(btnCredito);
@@ -333,8 +373,10 @@ public class FrmVendas {
 				Pagamento pgto = new Cartao( p.getId(), p.getTotal(), TipoPagamento.DEBITO, "1364","25745-3");				
 				pgto.setClienteId(idValido());
 				facade.realizaPagamento(pgto);
-				JOptionPane.showMessageDialog(null, "Pagamento por débito realizado com sucesso.");
+				JOptionPane.showMessageDialog(null, "Pagamento por debito realizado com sucesso.");
 				panelPagamento.setVisible(false);
+				panelOpcoes.setVisible(true);
+				btnCancelar.setText("Novo Pedido");
 			}
 		});
 		panelPagamento.add(btnDebito);

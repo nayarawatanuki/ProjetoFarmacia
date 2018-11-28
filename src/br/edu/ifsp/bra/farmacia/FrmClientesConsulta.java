@@ -111,11 +111,17 @@ public class FrmClientesConsulta {
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cliente.setClienteAtual(listaCliente.get(clientes.getSelectedRow()));
+				try {
+					Cliente.setClienteAtual(listaCliente.get(clientes.getSelectedRow()));
+					
+					FrmVendas.lblCliente.setText("Cliente: " + Cliente.getClienteAtual().getNome());
+					
+					frame.dispose();
+				}catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, "Por favor, selecione o cliente.");
+					e1.getStackTrace();
+				}
 				
-				FrmVendas.lblCliente.setText("Cliente: " + Cliente.getClienteAtual().getNome());
-				
-				frame.dispose();
 			}
 		});
 		

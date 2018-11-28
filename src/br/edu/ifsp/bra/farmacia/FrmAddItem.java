@@ -78,6 +78,7 @@ public class FrmAddItem {
 					popularTabela(
 							Pedido.getPedidoAtual().getItens().get((Pedido.getPedidoAtual().getItens().size()) - 1));
 					btnPesquisar.setEnabled(false);
+					btnAdicionar.setEnabled(true);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -87,6 +88,7 @@ public class FrmAddItem {
 		panel.add(btnPesquisar);
 
 		btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.setEnabled(false);
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
