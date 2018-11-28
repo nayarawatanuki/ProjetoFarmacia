@@ -58,6 +58,7 @@ public class FrmAbertura {
 		frame = new JFrame("Abertura de caixa");
 		frame.setBounds(100, 100, 297, 217);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());

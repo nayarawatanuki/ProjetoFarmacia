@@ -1,34 +1,41 @@
 package br.edu.ifsp.bra.farmacia;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifsp.bra.dominio.CaixaFacade;
 import br.edu.ifsp.bra.modelo.Caixa;
+import br.edu.ifsp.bra.modelo.Cartao;
+import br.edu.ifsp.bra.modelo.Cliente;
+import br.edu.ifsp.bra.modelo.Dinheiro;
 import br.edu.ifsp.bra.modelo.ItemPedido;
+import br.edu.ifsp.bra.modelo.Pagamento;
+import br.edu.ifsp.bra.modelo.Pagamento.TipoPagamento;
 import br.edu.ifsp.bra.modelo.Pedido;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
-import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JTextPane;
-import java.awt.FlowLayout;
 
 public class FrmVendas {
 
@@ -40,21 +47,25 @@ public class FrmVendas {
 	private DefaultTableModel model;
 	private JButton btnAddItem;
 	private JTable itens;
-	
-	
-	
+	private CaixaFacade facade;
 	public FrmVendas()
 	{
-		initialize();
-		CaixaFacade facade = new CaixaFacade();
+		this.facade = new CaixaFacade();
 		facade.novoPedido();
+		initialize();
+
 	}
+	
+	private int idValido() {
+		return Cliente.getClienteAtual() != null ? Cliente.getClienteAtual().getId() : 0; 
+	}
+	
 	public void initialize()
 	{
 		frame = new JFrame("  Venda  ");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(499, 715);
-		
+		frame.setLocationRelativeTo(null);
 		panel = new JPanel();
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -74,6 +85,7 @@ public class FrmVendas {
 				new FrmClientesConsulta();
 			}
 		});
+
 		
 		JScrollPane scpTotal = new JScrollPane();
 		scpTotal.setViewportBorder(new TitledBorder(null, "TOTAL:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -270,7 +282,6 @@ public class FrmVendas {
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				CaixaFacade facade = new CaixaFacade();
 				facade.cancelaVenda();
 			}
 		});
@@ -288,8 +299,13 @@ public class FrmVendas {
 		JButton btnDinheiro = new JButton("Dinheiro");
 		btnDinheiro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CaixaFacade facade = new CaixaFacade();
 				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
+				Pedido p = Pedido.getPedidoAtual();
+				Pagamento pgto = new Dinheiro(p.getId(), p.getTotal(), TipoPagamento.DINHEIRO, 0);
+				pgto.setClienteId(idValido());
+				facade.realizaPagamento(pgto);
+				JOptionPane.showMessageDialog(null, "Pagamento por dinheiro realizado com sucesso.");
+				panelPagamento.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnDinheiro);
@@ -297,8 +313,14 @@ public class FrmVendas {
 		JButton btnCredito = new JButton("Credito");
 		btnCredito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CaixaFacade facade = new CaixaFacade();
 				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
+				Pedido p = Pedido.getPedidoAtual();
+				Pagamento pgto = new Cartao( p.getId(), p.getTotal(), TipoPagamento.CREDITO, "1364","25745-3");
+				pgto.setClienteId(idValido());
+					
+				facade.realizaPagamento(pgto);
+				JOptionPane.showMessageDialog(null, "Pagamento por credito realizado com sucesso.");
+				panelPagamento.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnCredito);
@@ -306,8 +328,13 @@ public class FrmVendas {
 		JButton btnDebito = new JButton("Debito");
 		btnDebito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CaixaFacade facade = new CaixaFacade();
 				Pedido.getPedidoAtual().setId(facade.efetuaVenda());
+				Pedido p = Pedido.getPedidoAtual();
+				Pagamento pgto = new Cartao( p.getId(), p.getTotal(), TipoPagamento.DEBITO, "1364","25745-3");				
+				pgto.setClienteId(idValido());
+				facade.realizaPagamento(pgto);
+				JOptionPane.showMessageDialog(null, "Pagamento por débito realizado com sucesso.");
+				panelPagamento.setVisible(false);
 			}
 		});
 		panelPagamento.add(btnDebito);
@@ -315,7 +342,6 @@ public class FrmVendas {
 		JButton btnCancelarpg = new JButton("Voltar");
 		btnCancelarpg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				panelOpcoes.setVisible(true);
 				panelPagamento.setVisible(false);
 			}
@@ -325,12 +351,13 @@ public class FrmVendas {
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(FrmVendas.isAtualizada)
-					 new FrmAddItem();
-				else
+				if(FrmVendas.isAtualizada) {
+					new FrmAddItem();
+			}else
 				{
 					JOptionPane.showMessageDialog(null, "Atualize a tabela antes");
 				}
+				popularTabela();
 				
 			}
 		});
@@ -356,7 +383,8 @@ public class FrmVendas {
 		model.addColumn("Quantidade");
 		model.addColumn("Preco Total");
 	}
-	private void popularTabela()
+	
+	public void popularTabela()
 	{
 		while(model.getRowCount()>0)
 		{

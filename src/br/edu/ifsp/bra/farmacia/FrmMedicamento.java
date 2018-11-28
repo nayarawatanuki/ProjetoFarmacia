@@ -90,7 +90,7 @@ public class FrmMedicamento {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 660, 600);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+		frame.setLocationRelativeTo(null);
 		
 		criarTabela();
 		

@@ -6,8 +6,8 @@ public class Cartao extends Pagamento {
 	private String agencia;
 	
 	public Cartao() {}
-	public Cartao(int clienteId, int pedidoId, double total, TipoPagamento tipo, String conta, String agencia) {
-		super(clienteId, pedidoId, total, tipo);
+	public Cartao( int pedidoId, double total, TipoPagamento tipo, String conta, String agencia) {
+		super(pedidoId, total, tipo);
 		this.conta = conta;
 		this.agencia = agencia;
 	}

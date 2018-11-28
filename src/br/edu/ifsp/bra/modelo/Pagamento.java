@@ -44,8 +44,7 @@ public abstract class Pagamento {
 	private TipoPagamento tipo;
 
 	public Pagamento() {}
-	public Pagamento(int clienteId, int pedidoId, double total, TipoPagamento tipo) {
-		this.clienteId = clienteId;
+	public Pagamento( int pedidoId, double total, TipoPagamento tipo) {
 		this.pedidoId = pedidoId;
 		this.total = total;
 		this.valorFinal = this.total - this.getTotalDesconto();

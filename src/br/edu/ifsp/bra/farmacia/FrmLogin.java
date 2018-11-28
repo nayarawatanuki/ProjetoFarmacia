@@ -32,9 +32,11 @@ public class FrmLogin {
 	private CaixaBLL caixaBLL = new CaixaBLL();
 	private FuncionarioBLL funcionarioBLL = new FuncionarioBLL();
 
+	/*
 	/**
 	 * Launch the application.
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -62,6 +64,7 @@ public class FrmLogin {
 		frame = new JFrame("Farmácia IFSP - Entrar");
 		frame.setBounds(100, 100, 346, 273);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Entrar", TitledBorder.LEADING, TitledBorder.TOP, null, null));

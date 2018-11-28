@@ -5,8 +5,8 @@ public class Dinheiro extends Pagamento{
 	private double pago;
 
 	public Dinheiro() {}
-	public Dinheiro(int clienteId, int pedidoId, double total, TipoPagamento tipo, double pago) {
-		super(clienteId, pedidoId, total, tipo);
+	public Dinheiro(int pedidoId, double total, TipoPagamento tipo, double pago) {
+		super(pedidoId, total, tipo);
 		this.pago = pago;
 	}
 	public double getPago() {
