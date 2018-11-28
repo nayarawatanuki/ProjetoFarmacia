@@ -8,6 +8,7 @@ import br.edu.ifsp.bra.modelo.CaixaHistorico;
 import br.edu.ifsp.bra.modelo.Cartao;
 import br.edu.ifsp.bra.modelo.Dinheiro;
 import br.edu.ifsp.bra.modelo.Funcionario;
+import br.edu.ifsp.bra.modelo.IPagamento;
 import br.edu.ifsp.bra.modelo.ItemPedido;
 import br.edu.ifsp.bra.modelo.Medicamento;
 import br.edu.ifsp.bra.modelo.Pagamento;
@@ -71,7 +72,7 @@ public class CaixaFacade {
 		return this.pedidoBLL.adicionar(CaixaFacade.getPedidoAtual());
 	}
 	
-	public int realizaPagamento(Pagamento p) {
+	public int realizaPagamento(IPagamento p) {
 		Pedido.setPedidoAtual(null);
 		switch (p.getTipo()) {
 		case DINHEIRO:

@@ -1,6 +1,6 @@
 package br.edu.ifsp.bra.modelo;
 
-public abstract class Pagamento {
+public abstract class Pagamento implements IPagamento {
 
 	public enum TipoPagamento {
 		NENHUM, DINHEIRO, DEBITO, CREDITO;
