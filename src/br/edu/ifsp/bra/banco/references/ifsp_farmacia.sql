@@ -130,7 +130,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES (1,1,'atendente','123','Atendente','Rua JoÃƒÆ’Ã‚Â£o Pedro Veloso, 1046','(11) 99411-2210','123.456.789-01','1990-09-09'),(2,2,'gerente','123','Gerente','Avenida JoÃƒÆ’Ã‚Â£o InÃƒÆ’Ã‚Â¡cio, 940','(11) 2477-1756','123.456.789-01','1990-09-09');
+INSERT INTO `funcionario` VALUES (1,1,'atendente','123','Atendente','Rua Joao Pedro Veloso, 1046','(11) 99411-2210','123.456.789-01','1990-09-09'),(2,2,'gerente','123','Gerente','Avenida Joao Inacio, 940','(11) 2477-1756','123.456.789-01','1990-09-09');
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -353,7 +353,7 @@ CREATE TABLE `tipo_medicamento` (
 
 LOCK TABLES `tipo_medicamento` WRITE;
 /*!40000 ALTER TABLE `tipo_medicamento` DISABLE KEYS */;
-INSERT INTO `tipo_medicamento` VALUES (1,'PÃƒÂ­lula'),(2,'CÃƒÂ¡psula'),(3,'DrÃƒÂ¡gea');
+INSERT INTO `tipo_medicamento` VALUES (1,'Pilula'),(2,'Capsula'),(3,'Dragea');
 /*!40000 ALTER TABLE `tipo_medicamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
