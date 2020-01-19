@@ -60,7 +60,7 @@ public class FrmLogin {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Farmácia IFSP - Entrar");
+		frame = new JFrame("Farmacia IFSP - Entrar");
 		frame.setBounds(100, 100, 346, 273);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
@@ -68,7 +68,7 @@ public class FrmLogin {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Entrar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
-		JLabel lblUsuario = new JLabel("Usuário:");
+		JLabel lblUsuario = new JLabel("Usuario:");
 		JLabel lblSenha = new JLabel("Senha:");
 		JLabel lblCaixa = new JLabel("Caixa:");
 
